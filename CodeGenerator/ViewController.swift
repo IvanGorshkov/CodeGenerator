@@ -11,8 +11,8 @@ class ViewController: NSViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
+        let start = StartBlock(name: "Старт", frame: NSRect(x: 150, y: 200, width: 80, height: 55))
+        view.addSubview(start)
     }
 
     override var representedObject: Any? {
