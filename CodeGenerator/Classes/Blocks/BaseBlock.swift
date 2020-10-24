@@ -11,10 +11,11 @@ class BaseBlock: NSButton {
     var blockName: String?
     var numberOfExit: Int?
     var numberOfEnters: Int?
-    init(nameBlock: String, frame: NSRect) {
+    init(nameBlock: String, frame: NSRect, numberOfExit: Int?, numberOfEnters: Int?) {
         super.init(frame: frame)
         blockName = nameBlock;
-        
+        self.numberOfExit = numberOfExit
+        self.numberOfEnters = numberOfEnters
         self.wantsLayer = true
         self.layer?.backgroundColor = NSColor.white.cgColor
         self.isBordered = false
@@ -30,4 +31,11 @@ class BaseBlock: NSButton {
 
     }
     
+    func setTag(tag: Int) {
+        self.tag = tag
+    }
+    
+    func getTag() -> Int {
+        return tag
+    }
 }

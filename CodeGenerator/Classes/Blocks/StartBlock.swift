@@ -9,10 +9,8 @@ import Cocoa
 
 class StartBlock: BaseBlock {
     convenience init(name: String, frame: NSRect) {
-        self.init(nameBlock: name, frame: frame)
+        self.init(nameBlock: name, frame: frame, numberOfExit: 1, numberOfEnters: 0)
         title =  "Старт"
-        numberOfExit = 1
-        numberOfEnters = 0
         self.layer?.cornerRadius = self.frame.height / 2.0
         contentTintColor = .black
         

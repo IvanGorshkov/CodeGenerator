@@ -9,14 +9,13 @@ import Cocoa
 
 class EndBlock: BaseBlock {
     convenience init(name: String, frame: NSRect) {
-        self.init(nameBlock: name, frame: frame)
+        self.init(nameBlock: name, frame: frame, numberOfExit: 0, numberOfEnters: 1)
         title =  "Конец"
-        numberOfExit = 0
-        numberOfEnters = 1
         self.layer?.cornerRadius = self.frame.height / 2.0
         contentTintColor = .black
         
     }
+    
     override func draw(_ dirtyRect: NSRect) {
         super.draw(dirtyRect)
 
