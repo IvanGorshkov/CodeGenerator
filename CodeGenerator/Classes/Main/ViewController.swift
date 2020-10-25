@@ -23,13 +23,19 @@ class ViewController: NSViewController {
         didSet { }
     }
     
-    lazy var sheetViewController: AddNewBlockController = {
-        return self.storyboard!.instantiateController(withIdentifier: "AddNewBlockController") as! AddNewBlockController
+    lazy var sheetViewController: EditBlockProsessViewController = {
+        return self.storyboard!.instantiateController(withIdentifier: "EditBlockProsessViewController") as! EditBlockProsessViewController
     }()
+    
     override func viewDidAppear() {
         super.viewDidAppear()
         self.view.window?.title = "BlockToGode"
     }
+    @objc func printSomething(_ sender: ProssesBlock) {
+        sheetViewController.tag = sender.tag
+        self.view.window?.contentViewController = sheetViewController
+    }
+    
     override func viewWillAppear() {
         var i = 0;
         
@@ -50,8 +56,11 @@ class ViewController: NSViewController {
             
             if AppDelegate.genModel.nodeAt(index: i)?.value.blocks == .prosess {
                 let prosess = ProssesBlock(name: (AppDelegate.genModel.nodeAt(index: i)?.value.blocks.name())!, frame: NSRect(x: 80, y: 10 + (70*i), width: 80, height: 55))
+                prosess.tag = i
                 scrollSize.height = prosess.frame.origin.y + prosess.frame.size.height
                 documentView.addSubview(prosess)
+                prosess.target = self
+                prosess.action = #selector(ViewController.printSomething(_:))
             }
            
             i += 1
@@ -72,6 +81,13 @@ class ViewController: NSViewController {
 
     @IBAction func addNewBlock(_ sender: Any) {
         if let controller = self.storyboard?.instantiateController(withIdentifier: "AddNewBlockController") as? AddNewBlockController {
+            self.view.window?.contentViewController = controller
+        }
+    }
+    
+    @IBAction func addNewVars(_ sender: Any) {
+        if let controller = self.storyboard?.instantiateController(withIdentifier: "NewVarsController") as? NewVarsController {
+            controller.directoryItems = AppDelegate.genModel.getArrayType()
             self.view.window?.contentViewController = controller
         }
     }

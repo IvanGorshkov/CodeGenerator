@@ -13,6 +13,8 @@ class AddNewBlockController: NSViewController {
     @IBOutlet weak var blockIn: NSPopUpButton!
     @IBOutlet weak var blockOut: NSPopUpButton!
     var blocksArray = [Blocks]()
+    var blocksIn = [Node]()
+    var blocksOut = [Node]()
     override func viewWillAppear() {
         super.viewWillAppear()
         for value in Blocks.allCases {
@@ -33,12 +35,13 @@ class AddNewBlockController: NSViewController {
             let block = AppDelegate.genModel.nodeAt(index: i)?.value
             if block!.countEnters != 0 && block!.countEnters != block!.countEntersBusy {
                 blockOut.addItem(withTitle: (AppDelegate.genModel.nodeAt(index: i)?.value.name)!)
+                blocksOut.append(AppDelegate.genModel.nodeAt(index: i)!)
             }
             
             if block!.countExit != 0 && block!.countExit != block!.countExitBusy {
                 blockIn.addItem(withTitle: (AppDelegate.genModel.nodeAt(index: i)?.value.name)!)
+                blocksIn.append(AppDelegate.genModel.nodeAt(index: i)!)
             }
-            
             i += 1
         }
         
@@ -71,7 +74,7 @@ class AddNewBlockController: NSViewController {
     
     @IBAction func save(_ sender: Any) {
         let block =  blocksArray[blockType.indexOfSelectedItem]
-        var createdBlock = InfoAboutBlock.shared.getBlocks(selected: block)
+        let createdBlock = InfoAboutBlock.shared.getBlocks(selected: block)
         createdBlock.tag = AppDelegate.genModel.count
         createdBlock.name = block.name() + " \(AppDelegate.genModel.count + 1)"
         switch block {
@@ -83,7 +86,7 @@ class AddNewBlockController: NSViewController {
             AppDelegate.genModel.append(value: createdBlock)
             break
         case .prosess:
-            AppDelegate.genModel.append(value: createdBlock)
+            AppDelegate.genModel.addPreEnd(value: createdBlock)
         }
        
         if let controller = self.storyboard?.instantiateController(withIdentifier: "ViewController") as? ViewController {

@@ -57,7 +57,6 @@ class GenModelController {
         }
         tail = newNode
         if tail?.previous != nil {
-            
             if (tail?.previous?.value.countExitBusy)! < (tail?.previous?.value.countExit)! {
                 tail?.previous?.value.countExitBusy += 1
                 tail?.value.countEntersBusy += 1
@@ -130,9 +129,43 @@ class GenModelController {
         }
         return false
     }
+    public func addPreEnd(value: ModelBlock) {
+        let newNode = Node(value: value)
+        if head == nil {
+            addBegin(value: value)
+            return
+        }
+        
+        if tail != nil {
+            newNode.previous = tail?.previous
+            tail?.previous?.next = newNode
+            newNode.next = tail
+            tail?.previous = newNode
+        } else {
+            append(value: value)
+            return
+        }
+        
+        _count += 1
+    }
+    
+    public func addType(name: String, type: VarType) {
+        var_types.append(ModelType(name: name, type: type))
+    }
+    
+    public func removeType(index: Int) {
+        var_types.remove(at: index)
+    }
+    
+    public func getArrayType() -> [ModelType] {
+        return var_types
+    }
+    
+    private var var_types = [ModelType]()
 }
 
 public class Node {
+    
     var value: ModelBlock
     var next: Node?
     weak var previous: Node?

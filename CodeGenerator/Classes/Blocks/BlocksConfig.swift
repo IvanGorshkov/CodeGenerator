@@ -24,7 +24,7 @@ enum Blocks:String, CaseIterable {
     func name() ->String { return self.rawValue }
 }
 
-struct ModelBlock {
+class ModelBlock {
     let blocks: Blocks
     let countEnters: Int
     let countExit: Int
@@ -32,13 +32,18 @@ struct ModelBlock {
     var countEntersBusy: Int = 0
     var countExitBusy: Int = 0
     var name: String?
-    
+    var values: [String]?
     init(blocks: Blocks, countEnters: Int, countExit: Int) {
         self.blocks = blocks
         self.countEnters = countEnters
         self.countExit = countExit
     }
 }
+
+class IfBlock: ModelBlock {
+    
+}
+
 
 class InfoAboutBlock {
     let blockStart: ModelBlock

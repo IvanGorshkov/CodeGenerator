@@ -7,6 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		7047DF6E254610AB009005ED /* EditBlock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7047DF6D254610AB009005ED /* EditBlock.swift */; };
+		7047DF6F254610AB009005ED /* EditBlock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7047DF6D254610AB009005ED /* EditBlock.swift */; };
+		7047DF70254610AB009005ED /* EditBlock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7047DF6D254610AB009005ED /* EditBlock.swift */; };
+		7047DF7B25462413009005ED /* EditBlockProsessViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7047DF7925462413009005ED /* EditBlockProsessViewController.swift */; };
+		7047DF7C25462413009005ED /* EditBlockProsessViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7047DF7925462413009005ED /* EditBlockProsessViewController.swift */; };
+		7047DF7D25462413009005ED /* EditBlockProsessViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7047DF7925462413009005ED /* EditBlockProsessViewController.swift */; };
 		705A01DD254343AF0055C15B /* AddNewBlockController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 705A01DC254343AF0055C15B /* AddNewBlockController.swift */; };
 		705A01E2254347340055C15B /* BlocksConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 705A01E1254347340055C15B /* BlocksConfig.swift */; };
 		705A01EA25447E640055C15B /* Generation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 705A01E925447E640055C15B /* Generation.swift */; };
@@ -15,6 +21,12 @@
 		705A01F12544A4890055C15B /* ProssesBlock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 705A01F02544A4890055C15B /* ProssesBlock.swift */; };
 		705A01F22544A4890055C15B /* ProssesBlock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 705A01F02544A4890055C15B /* ProssesBlock.swift */; };
 		705A01F32544A4890055C15B /* ProssesBlock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 705A01F02544A4890055C15B /* ProssesBlock.swift */; };
+		705A01F82545B3700055C15B /* NewVarsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 705A01F72545B3700055C15B /* NewVarsController.swift */; };
+		705A01F92545B3700055C15B /* NewVarsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 705A01F72545B3700055C15B /* NewVarsController.swift */; };
+		705A01FA2545B3700055C15B /* NewVarsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 705A01F72545B3700055C15B /* NewVarsController.swift */; };
+		705A02032545BA050055C15B /* VarType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 705A02022545BA050055C15B /* VarType.swift */; };
+		705A02042545BA050055C15B /* VarType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 705A02022545BA050055C15B /* VarType.swift */; };
+		705A02052545BA050055C15B /* VarType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 705A02022545BA050055C15B /* VarType.swift */; };
 		705B17C625422B7A0091D0EA /* BaseBlock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 705B17C525422B7A0091D0EA /* BaseBlock.swift */; };
 		705B17C725422B7A0091D0EA /* BaseBlock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 705B17C525422B7A0091D0EA /* BaseBlock.swift */; };
 		705B17C825422B7A0091D0EA /* BaseBlock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 705B17C525422B7A0091D0EA /* BaseBlock.swift */; };
@@ -59,10 +71,14 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		7047DF6D254610AB009005ED /* EditBlock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditBlock.swift; sourceTree = "<group>"; };
+		7047DF7925462413009005ED /* EditBlockProsessViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditBlockProsessViewController.swift; sourceTree = "<group>"; };
 		705A01DC254343AF0055C15B /* AddNewBlockController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddNewBlockController.swift; sourceTree = "<group>"; };
 		705A01E1254347340055C15B /* BlocksConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlocksConfig.swift; sourceTree = "<group>"; };
 		705A01E925447E640055C15B /* Generation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Generation.swift; sourceTree = "<group>"; };
 		705A01F02544A4890055C15B /* ProssesBlock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProssesBlock.swift; sourceTree = "<group>"; };
+		705A01F72545B3700055C15B /* NewVarsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewVarsController.swift; sourceTree = "<group>"; };
+		705A02022545BA050055C15B /* VarType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VarType.swift; sourceTree = "<group>"; };
 		705B17C525422B7A0091D0EA /* BaseBlock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseBlock.swift; sourceTree = "<group>"; };
 		705B17CF25422D370091D0EA /* StartBlock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartBlock.swift; sourceTree = "<group>"; };
 		705B17D6254235000091D0EA /* EndBlock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EndBlock.swift; sourceTree = "<group>"; };
@@ -109,12 +125,29 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		7047DF7425462122009005ED /* EditBlock */ = {
+			isa = PBXGroup;
+			children = (
+				7047DF7925462413009005ED /* EditBlockProsessViewController.swift */,
+			);
+			path = EditBlock;
+			sourceTree = "<group>";
+		};
 		705A01DB254343910055C15B /* AddBlock */ = {
 			isa = PBXGroup;
 			children = (
 				705A01DC254343AF0055C15B /* AddNewBlockController.swift */,
 			);
 			path = AddBlock;
+			sourceTree = "<group>";
+		};
+		705A01FE2545B3760055C15B /* Vars */ = {
+			isa = PBXGroup;
+			children = (
+				705A01F72545B3700055C15B /* NewVarsController.swift */,
+				705A02022545BA050055C15B /* VarType.swift */,
+			);
+			path = Vars;
 			sourceTree = "<group>";
 		};
 		705B17C125422AA60091D0EA /* Blocks */ = {
@@ -132,6 +165,8 @@
 		705B17DD254235480091D0EA /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				7047DF7425462122009005ED /* EditBlock */,
+				705A01FE2545B3760055C15B /* Vars */,
 				705A01DB254343910055C15B /* AddBlock */,
 				705B18062543430C0091D0EA /* Main */,
 				705B17F925424DC60091D0EA /* SaveFileMenu.swift */,
@@ -139,6 +174,7 @@
 				705B17DE254235740091D0EA /* GenModelController.swift */,
 				705B17E8254249FC0091D0EA /* SaveXMLFile.swift */,
 				705A01E925447E640055C15B /* Generation.swift */,
+				7047DF6D254610AB009005ED /* EditBlock.swift */,
 			);
 			path = Classes;
 			sourceTree = "<group>";
@@ -331,7 +367,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7047DF6E254610AB009005ED /* EditBlock.swift in Sources */,
 				705B17FA25424DC60091D0EA /* SaveFileMenu.swift in Sources */,
+				705A02032545BA050055C15B /* VarType.swift in Sources */,
 				705B17D7254235000091D0EA /* EndBlock.swift in Sources */,
 				705B17D025422D370091D0EA /* StartBlock.swift in Sources */,
 				705A01EA25447E640055C15B /* Generation.swift in Sources */,
@@ -343,6 +381,8 @@
 				705B17DF254235740091D0EA /* GenModelController.swift in Sources */,
 				70E7B6E3251B9301005B8656 /* AppDelegate.swift in Sources */,
 				705A01E2254347340055C15B /* BlocksConfig.swift in Sources */,
+				7047DF7B25462413009005ED /* EditBlockProsessViewController.swift in Sources */,
+				705A01F82545B3700055C15B /* NewVarsController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -353,11 +393,15 @@
 				705B17C725422B7A0091D0EA /* BaseBlock.swift in Sources */,
 				705A01F22544A4890055C15B /* ProssesBlock.swift in Sources */,
 				705B17FB25424DC60091D0EA /* SaveFileMenu.swift in Sources */,
+				7047DF6F254610AB009005ED /* EditBlock.swift in Sources */,
 				70E7B6F6251B9302005B8656 /* CodeGeneratorTests.swift in Sources */,
 				705B17D125422D370091D0EA /* StartBlock.swift in Sources */,
+				7047DF7C25462413009005ED /* EditBlockProsessViewController.swift in Sources */,
 				705B17D8254235000091D0EA /* EndBlock.swift in Sources */,
 				705B17EA254249FC0091D0EA /* SaveXMLFile.swift in Sources */,
 				705B17E0254235740091D0EA /* GenModelController.swift in Sources */,
+				705A01F92545B3700055C15B /* NewVarsController.swift in Sources */,
+				705A02042545BA050055C15B /* VarType.swift in Sources */,
 				705A01EB25447E640055C15B /* Generation.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -369,11 +413,15 @@
 				705B17C825422B7A0091D0EA /* BaseBlock.swift in Sources */,
 				705A01F32544A4890055C15B /* ProssesBlock.swift in Sources */,
 				705B17FC25424DC60091D0EA /* SaveFileMenu.swift in Sources */,
+				7047DF70254610AB009005ED /* EditBlock.swift in Sources */,
 				70E7B701251B9302005B8656 /* CodeGeneratorUITests.swift in Sources */,
 				705B17D225422D370091D0EA /* StartBlock.swift in Sources */,
+				7047DF7D25462413009005ED /* EditBlockProsessViewController.swift in Sources */,
 				705B17D9254235000091D0EA /* EndBlock.swift in Sources */,
 				705B17EB254249FC0091D0EA /* SaveXMLFile.swift in Sources */,
 				705B17E1254235740091D0EA /* GenModelController.swift in Sources */,
+				705A01FA2545B3700055C15B /* NewVarsController.swift in Sources */,
+				705A02052545BA050055C15B /* VarType.swift in Sources */,
 				705A01EC25447E640055C15B /* Generation.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
