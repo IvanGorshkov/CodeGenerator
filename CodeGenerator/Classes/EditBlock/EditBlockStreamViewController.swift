@@ -1,38 +1,57 @@
 //
-//  NewVarsController.swift
+//  EditBlockStreamViewController.swift
 //  CodeGenerator
 //
-//  Created by Ivan Gorshkov on 25.10.2020.
+//  Created by Ivan Gorshkov on 29.10.2020.
 //
 
 import Cocoa
 
-class EditBlockProsessViewController: NSViewController {
+class EditBlockStreamViewController: NSViewController {
+    private(set) var popUpInitiallySelectedItem: NSMenuItem?
     @IBOutlet weak var tableView: NSTableView!
     @IBOutlet weak var types: NSPopUpButton!
     @IBOutlet weak var textField: NSTextField!
-    var typesArray = [ModelType]()
-    var directoryItems = [ModelType]()
+    var streamInArray = [inS]()
+    var streamOutArray = [outS]()
     var sentacis = [String]()
+    var nameFunc = ""
     var tag: Int?
     
     override func viewDidLoad() {
         super.viewDidLoad()
         tableView.delegate = self
         tableView.dataSource = self
-        directoryItems = GenModelController.shared.getArrayType()
-        for value in directoryItems {
-            typesArray.append(value)
-            types.addItem(withTitle: value.name)
+        let index = GenModelController.shared.blocksList.index(GenModelController.shared.blocksList.startIndex, offsetBy: tag ?? 0)
+        if GenModelController.shared.blocksList[index].blocks == .instream {
+            for value in inS.allCases {
+                streamInArray.append(value)
+                types.addItem(withTitle: value.name())
+            }
+        } else {
+            for value in outS.allCases {
+                streamOutArray.append(value)
+                types.addItem(withTitle: value.name())
+            }
         }
         
+        nameFunc = types.selectedItem!.title
     }
+    @IBAction func popUpSelectionDidChange(_ sender: NSPopUpButton) {
+        if sender.selectedItem === popUpInitiallySelectedItem {
+            nameFunc = types.selectedItem!.title
+        } else {
+            nameFunc = types.selectedItem!.title
+        }
+    }
+    
     @IBAction func add(_ sender: Any) {
-       sentacis.append("\(typesArray[types.indexOfSelectedItem].name) := \(textField.stringValue)")
-        let index = GenModelController.shared.blocksList.index(GenModelController.shared.blocksList.startIndex, offsetBy: tag ?? 0)
+        sentacis.append("\(nameFunc)(\(textField.stringValue));")
+         let index = GenModelController.shared.blocksList.index(GenModelController.shared.blocksList.startIndex, offsetBy: tag ?? 0)
+         
+         GenModelController.shared.blocksList[index].values = sentacis
+         tableView.reloadData()
         
-        GenModelController.shared.blocksList[index].values = sentacis
-        tableView.reloadData()
     }
     
     func dialogOKCancel(question: String, text: String) -> Bool {
@@ -56,13 +75,13 @@ class EditBlockProsessViewController: NSViewController {
     }
 }
 
-extension EditBlockProsessViewController: NSTableViewDataSource {
+extension EditBlockStreamViewController: NSTableViewDataSource {
     func numberOfRows(in tableView: NSTableView) -> Int {
         return sentacis.count
     }
 }
 
-extension EditBlockProsessViewController: NSTableViewDelegate {
+extension EditBlockStreamViewController: NSTableViewDelegate {
     func tableViewSelectionDidChange(_ notification: Notification) {
         let index = notification.object as! NSTableView
         if index.selectedRow == -1 {
@@ -89,7 +108,7 @@ extension EditBlockProsessViewController: NSTableViewDelegate {
     }
     
     func tableView(_ tableView: NSTableView, viewFor tableColumn: NSTableColumn?, row: Int) -> NSView? {
-        let text: String = sentacis[row] 
+        let text: String = sentacis[row]
         var cellIdentifier: String = ""
         cellIdentifier = CellIdentifiers.NameCell
         

@@ -51,6 +51,23 @@
 		70E7B6EA251B9302005B8656 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 70E7B6E8251B9302005B8656 /* Main.storyboard */; };
 		70E7B6F6251B9302005B8656 /* CodeGeneratorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70E7B6F5251B9302005B8656 /* CodeGeneratorTests.swift */; };
 		70E7B701251B9302005B8656 /* CodeGeneratorUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70E7B700251B9302005B8656 /* CodeGeneratorUITests.swift */; };
+		70F566C0254A1F900031F371 /* StreamBlock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70F566BF254A1F900031F371 /* StreamBlock.swift */; };
+		70F566C5254A28C40031F371 /* CenterTextLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70F566C4254A28C40031F371 /* CenterTextLayer.swift */; };
+		70F566D0254ACA2A0031F371 /* EditBlockStreamViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70F566CF254ACA2A0031F371 /* EditBlockStreamViewController.swift */; };
+		70F566D1254ACA2A0031F371 /* EditBlockStreamViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70F566CF254ACA2A0031F371 /* EditBlockStreamViewController.swift */; };
+		70F566D2254ACA2A0031F371 /* EditBlockStreamViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70F566CF254ACA2A0031F371 /* EditBlockStreamViewController.swift */; };
+		70F566D7254AEDD80031F371 /* Line.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70F566D6254AEDD80031F371 /* Line.swift */; };
+		70F566D8254AEDD80031F371 /* Line.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70F566D6254AEDD80031F371 /* Line.swift */; };
+		70F566D9254AEDD80031F371 /* Line.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70F566D6254AEDD80031F371 /* Line.swift */; };
+		70F566E1254C6FFB0031F371 /* ReloadDataDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70F566E0254C6FFB0031F371 /* ReloadDataDelegate.swift */; };
+		70F566E2254C6FFB0031F371 /* ReloadDataDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70F566E0254C6FFB0031F371 /* ReloadDataDelegate.swift */; };
+		70F566E3254C6FFB0031F371 /* ReloadDataDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70F566E0254C6FFB0031F371 /* ReloadDataDelegate.swift */; };
+		70F566EC254C85990031F371 /* BlockFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70F566EB254C85990031F371 /* BlockFactory.swift */; };
+		70F566ED254C85990031F371 /* BlockFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70F566EB254C85990031F371 /* BlockFactory.swift */; };
+		70F566EE254C85990031F371 /* BlockFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70F566EB254C85990031F371 /* BlockFactory.swift */; };
+		70F566F3254C89CD0031F371 /* SaveBlock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70F566F2254C89CD0031F371 /* SaveBlock.swift */; };
+		70F566F4254C89CD0031F371 /* SaveBlock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70F566F2254C89CD0031F371 /* SaveBlock.swift */; };
+		70F566F5254C89CD0031F371 /* SaveBlock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70F566F2254C89CD0031F371 /* SaveBlock.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -98,6 +115,13 @@
 		70E7B6FC251B9302005B8656 /* CodeGeneratorUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CodeGeneratorUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		70E7B700251B9302005B8656 /* CodeGeneratorUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CodeGeneratorUITests.swift; sourceTree = "<group>"; };
 		70E7B702251B9302005B8656 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		70F566BF254A1F900031F371 /* StreamBlock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StreamBlock.swift; sourceTree = "<group>"; };
+		70F566C4254A28C40031F371 /* CenterTextLayer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CenterTextLayer.swift; sourceTree = "<group>"; };
+		70F566CF254ACA2A0031F371 /* EditBlockStreamViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditBlockStreamViewController.swift; sourceTree = "<group>"; };
+		70F566D6254AEDD80031F371 /* Line.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Line.swift; sourceTree = "<group>"; };
+		70F566E0254C6FFB0031F371 /* ReloadDataDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReloadDataDelegate.swift; sourceTree = "<group>"; };
+		70F566EB254C85990031F371 /* BlockFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlockFactory.swift; sourceTree = "<group>"; };
+		70F566F2254C89CD0031F371 /* SaveBlock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SaveBlock.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -129,6 +153,7 @@
 			isa = PBXGroup;
 			children = (
 				7047DF7925462413009005ED /* EditBlockProsessViewController.swift */,
+				70F566CF254ACA2A0031F371 /* EditBlockStreamViewController.swift */,
 			);
 			path = EditBlock;
 			sourceTree = "<group>";
@@ -137,6 +162,7 @@
 			isa = PBXGroup;
 			children = (
 				705A01DC254343AF0055C15B /* AddNewBlockController.swift */,
+				70F566F2254C89CD0031F371 /* SaveBlock.swift */,
 			);
 			path = AddBlock;
 			sourceTree = "<group>";
@@ -158,6 +184,8 @@
 				705B17D6254235000091D0EA /* EndBlock.swift */,
 				705A01E1254347340055C15B /* BlocksConfig.swift */,
 				705A01F02544A4890055C15B /* ProssesBlock.swift */,
+				70F566BF254A1F900031F371 /* StreamBlock.swift */,
+				70F566D6254AEDD80031F371 /* Line.swift */,
 			);
 			path = Blocks;
 			sourceTree = "<group>";
@@ -165,6 +193,7 @@
 		705B17DD254235480091D0EA /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				70F566E7254C82D00031F371 /* Protocols */,
 				7047DF7425462122009005ED /* EditBlock */,
 				705A01FE2545B3760055C15B /* Vars */,
 				705A01DB254343910055C15B /* AddBlock */,
@@ -175,6 +204,7 @@
 				705B17E8254249FC0091D0EA /* SaveXMLFile.swift */,
 				705A01E925447E640055C15B /* Generation.swift */,
 				7047DF6D254610AB009005ED /* EditBlock.swift */,
+				70F566C4254A28C40031F371 /* CenterTextLayer.swift */,
 			);
 			path = Classes;
 			sourceTree = "<group>";
@@ -236,6 +266,15 @@
 				70E7B702251B9302005B8656 /* Info.plist */,
 			);
 			path = CodeGeneratorUITests;
+			sourceTree = "<group>";
+		};
+		70F566E7254C82D00031F371 /* Protocols */ = {
+			isa = PBXGroup;
+			children = (
+				70F566E0254C6FFB0031F371 /* ReloadDataDelegate.swift */,
+				70F566EB254C85990031F371 /* BlockFactory.swift */,
+			);
+			path = Protocols;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -301,7 +340,7 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 1200;
-				LastUpgradeCheck = 1200;
+				LastUpgradeCheck = 1210;
 				TargetAttributes = {
 					70E7B6DE251B9301005B8656 = {
 						CreatedOnToolsVersion = 12.0;
@@ -370,19 +409,26 @@
 				7047DF6E254610AB009005ED /* EditBlock.swift in Sources */,
 				705B17FA25424DC60091D0EA /* SaveFileMenu.swift in Sources */,
 				705A02032545BA050055C15B /* VarType.swift in Sources */,
+				70F566C5254A28C40031F371 /* CenterTextLayer.swift in Sources */,
 				705B17D7254235000091D0EA /* EndBlock.swift in Sources */,
 				705B17D025422D370091D0EA /* StartBlock.swift in Sources */,
 				705A01EA25447E640055C15B /* Generation.swift in Sources */,
 				705B17E9254249FC0091D0EA /* SaveXMLFile.swift in Sources */,
 				705A01DD254343AF0055C15B /* AddNewBlockController.swift in Sources */,
+				70F566D7254AEDD80031F371 /* Line.swift in Sources */,
 				705B17C625422B7A0091D0EA /* BaseBlock.swift in Sources */,
 				705A01F12544A4890055C15B /* ProssesBlock.swift in Sources */,
 				70E7B6E5251B9301005B8656 /* ViewController.swift in Sources */,
 				705B17DF254235740091D0EA /* GenModelController.swift in Sources */,
+				70F566EC254C85990031F371 /* BlockFactory.swift in Sources */,
 				70E7B6E3251B9301005B8656 /* AppDelegate.swift in Sources */,
+				70F566C0254A1F900031F371 /* StreamBlock.swift in Sources */,
 				705A01E2254347340055C15B /* BlocksConfig.swift in Sources */,
+				70F566E1254C6FFB0031F371 /* ReloadDataDelegate.swift in Sources */,
+				70F566F3254C89CD0031F371 /* SaveBlock.swift in Sources */,
 				7047DF7B25462413009005ED /* EditBlockProsessViewController.swift in Sources */,
 				705A01F82545B3700055C15B /* NewVarsController.swift in Sources */,
+				70F566D0254ACA2A0031F371 /* EditBlockStreamViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -395,14 +441,19 @@
 				705B17FB25424DC60091D0EA /* SaveFileMenu.swift in Sources */,
 				7047DF6F254610AB009005ED /* EditBlock.swift in Sources */,
 				70E7B6F6251B9302005B8656 /* CodeGeneratorTests.swift in Sources */,
+				70F566ED254C85990031F371 /* BlockFactory.swift in Sources */,
 				705B17D125422D370091D0EA /* StartBlock.swift in Sources */,
 				7047DF7C25462413009005ED /* EditBlockProsessViewController.swift in Sources */,
 				705B17D8254235000091D0EA /* EndBlock.swift in Sources */,
 				705B17EA254249FC0091D0EA /* SaveXMLFile.swift in Sources */,
+				70F566F4254C89CD0031F371 /* SaveBlock.swift in Sources */,
+				70F566D8254AEDD80031F371 /* Line.swift in Sources */,
 				705B17E0254235740091D0EA /* GenModelController.swift in Sources */,
 				705A01F92545B3700055C15B /* NewVarsController.swift in Sources */,
 				705A02042545BA050055C15B /* VarType.swift in Sources */,
+				70F566D1254ACA2A0031F371 /* EditBlockStreamViewController.swift in Sources */,
 				705A01EB25447E640055C15B /* Generation.swift in Sources */,
+				70F566E2254C6FFB0031F371 /* ReloadDataDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -415,14 +466,19 @@
 				705B17FC25424DC60091D0EA /* SaveFileMenu.swift in Sources */,
 				7047DF70254610AB009005ED /* EditBlock.swift in Sources */,
 				70E7B701251B9302005B8656 /* CodeGeneratorUITests.swift in Sources */,
+				70F566EE254C85990031F371 /* BlockFactory.swift in Sources */,
 				705B17D225422D370091D0EA /* StartBlock.swift in Sources */,
 				7047DF7D25462413009005ED /* EditBlockProsessViewController.swift in Sources */,
 				705B17D9254235000091D0EA /* EndBlock.swift in Sources */,
 				705B17EB254249FC0091D0EA /* SaveXMLFile.swift in Sources */,
+				70F566F5254C89CD0031F371 /* SaveBlock.swift in Sources */,
+				70F566D9254AEDD80031F371 /* Line.swift in Sources */,
 				705B17E1254235740091D0EA /* GenModelController.swift in Sources */,
 				705A01FA2545B3700055C15B /* NewVarsController.swift in Sources */,
 				705A02052545BA050055C15B /* VarType.swift in Sources */,
+				70F566D2254ACA2A0031F371 /* EditBlockStreamViewController.swift in Sources */,
 				705A01EC25447E640055C15B /* Generation.swift in Sources */,
+				70F566E3254C6FFB0031F371 /* ReloadDataDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -574,6 +630,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = CodeGenerator/CodeGenerator.entitlements;
+				CODE_SIGN_IDENTITY = "-";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEVELOPMENT_TEAM = 58T4L2QKV7;
@@ -595,6 +652,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = CodeGenerator/CodeGenerator.entitlements;
+				CODE_SIGN_IDENTITY = "-";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEVELOPMENT_TEAM = 58T4L2QKV7;

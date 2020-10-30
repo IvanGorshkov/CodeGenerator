@@ -11,15 +11,16 @@ class EndBlock: BaseBlock {
     convenience init(name: String, frame: NSRect) {
         self.init(nameBlock: name, frame: frame, numberOfExit: 0, numberOfEnters: 1)
         title =  "Конец"
-        self.layer?.cornerRadius = self.frame.height / 2.0
         contentTintColor = .black
-        
+        self.wantsLayer = true
+        self.layer?.backgroundColor = NSColor.white.cgColor
+        self.isBordered = false
+        self.layer?.cornerRadius = self.frame.height / 2.0
+        self.layer?.borderWidth = 2
     }
     
     override func draw(_ dirtyRect: NSRect) {
         super.draw(dirtyRect)
-
-        // Drawing code here.
     }
     
 }

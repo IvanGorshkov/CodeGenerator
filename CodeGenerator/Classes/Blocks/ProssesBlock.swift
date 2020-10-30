@@ -12,12 +12,14 @@ class ProssesBlock: BaseBlock {
         self.init(nameBlock: name, frame: frame, numberOfExit: 1, numberOfEnters: 1)
         title =  "Процесс"
         contentTintColor = .black
+        self.wantsLayer = true
+        self.layer?.backgroundColor = NSColor.white.cgColor
+        self.isBordered = false
+        self.layer?.borderWidth = 2
     }
     
     override func draw(_ dirtyRect: NSRect) {
         super.draw(dirtyRect)
-
-        // Drawing code here.
     }
     
 }

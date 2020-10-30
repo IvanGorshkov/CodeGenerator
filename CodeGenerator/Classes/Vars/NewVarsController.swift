@@ -21,12 +21,12 @@ class NewVarsController: NSViewController {
             typesArray.append(value)
             types.addItem(withTitle: value.name())
         }
-        directoryItems = AppDelegate.genModel.getArrayType()
+        directoryItems = GenModelController.shared.getArrayType()
     }
     
     @IBAction func add(_ sender: Any) {
-        AppDelegate.genModel.addType(name: textField.stringValue, type: typesArray[types.indexOfSelectedItem] )
-        directoryItems = AppDelegate.genModel.getArrayType() 
+        GenModelController.shared.addType(name: textField.stringValue, type: typesArray[types.indexOfSelectedItem] )
+        directoryItems = GenModelController.shared.getArrayType() 
         tableView.reloadData()
         
        
@@ -70,8 +70,8 @@ extension NewVarsController: NSTableViewDelegate {
             let answer = dialogOKCancel(question: "Удалить переменную", text: "Вы уверены, что хотите удалить переменную?")
             if answer == true {
                 let selectedTableView = notification.object as! NSTableView
-                AppDelegate.genModel.removeType(index: selectedTableView.selectedRow)
-                directoryItems = AppDelegate.genModel.getArrayType()
+                GenModelController.shared.removeType(index: selectedTableView.selectedRow)
+                directoryItems = GenModelController.shared.getArrayType()
                 let indexSet = IndexSet(integer:selectedTableView.selectedRow)
                 tableView.removeRows(at:indexSet, withAnimation:.effectFade)
                 tableView.reloadData()

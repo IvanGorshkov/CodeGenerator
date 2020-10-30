@@ -13,7 +13,7 @@ class Generation {
     }
     
     func generat() -> String {
-        var str = "Program BlockToGode;\n\n"
+        var str = "Program BlockToCode;\n\n"
         var i = 0
         for value in VarType.allCases {
             while i < data.getArrayType().count {
@@ -26,11 +26,9 @@ class Generation {
             i = 0
         }
         
-
-        i = 0;
-        while i < data.count {
-            let block = data.nodeAt(index: i)?.value.blocks
-            switch block {
+        for block in data.blocksList {
+            let blockE = block.blocks
+            switch blockE {
             case .start:
                 str += "Begin\n"
                 break;
@@ -38,14 +36,18 @@ class Generation {
                 str += "End.\n"
                 break;
             case .prosess:
-                for i in data.nodeAt(index: i)?.value.values ?? [] {
-                    str += i + "\n"
+                for line in block.values ?? [] {
+                    str += "\t" + line + "\n"
                 }
-                
-            case .none:
-                break;
+            case .instream:
+                for line in block.values ?? [] {
+                    str += "\t" + line + "\n"
+                }
+            case .outstream:
+                for line in block.values ?? [] {
+                    str += "\t" + line + "\n"
+                }
             }
-            i += 1
         }
         
         return str

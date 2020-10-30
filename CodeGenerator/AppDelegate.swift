@@ -9,10 +9,7 @@ import Cocoa
 
 @NSApplicationMain
 class AppDelegate: NSObject, NSApplicationDelegate {
-    static let genModel = GenModelController()
-
     func applicationDidFinishLaunching(_ aNotification: Notification) {
-
     }
 
     func applicationWillTerminate(_ aNotification: Notification) {
