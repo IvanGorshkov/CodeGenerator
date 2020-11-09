@@ -1,43 +1,13 @@
 //
-//  StreamBlock.swift
+//  IfBlock.swift
 //  CodeGenerator
 //
-//  Created by Ivan Gorshkov on 29.10.2020.
+//  Created by Ivan Gorshkov on 03.11.2020.
 //
 
 import Cocoa
 
-enum outS: String, CaseIterable {
-    case write = "Write"
-    case writeln = "WriteLn"
-    
-    init?(id : Int) {
-        switch id {
-        case 1: self = .write
-        case 2: self = .writeln
-        default: return nil
-        }
-    }
-    
-    func name() ->String { return self.rawValue }
-}
- 
-
-enum inS: String, CaseIterable  {
-    case read = "Read"
-    case readln = "ReadLn"
-    init?(id : Int) {
-        switch id {
-        case 1: self = .read
-        case 2: self = .readln
-        default: return nil
-        }
-    }
-    
-    func name() ->String { return self.rawValue }
-}
-
-class StreamBlock: BaseBlock {
+class IfBlock: BaseBlock {
     convenience init(name: String, frame: NSRect) {
         self.init(nameBlock: name, frame: frame, numberOfExit: 1, numberOfEnters: 1)
         self.name = name
@@ -50,10 +20,10 @@ class StreamBlock: BaseBlock {
     var name: String?
     
     override func draw(_ rect: CGRect) {
-        path.move(to: CGPoint(x: bounds.minX + offset, y: bounds.minY))
-        path.line(to: CGPoint(x: bounds.maxX, y: bounds.minY))
-        path.line(to: CGPoint(x: bounds.maxX - offset, y: bounds.maxY))
-        path.line(to: CGPoint(x: bounds.minX, y: bounds.maxY))
+        path.move(to: CGPoint(x: bounds.midX, y: bounds.minY + 0))
+        path.line(to: CGPoint(x: bounds.maxX - 0, y: bounds.midY))
+        path.line(to: CGPoint(x: bounds.midX, y: bounds.maxY - 0))
+        path.line(to: CGPoint(x: bounds.minX + 0, y: bounds.midY))
         path.close()
         fillColor.setFill()
         path.fill()
@@ -63,11 +33,10 @@ class StreamBlock: BaseBlock {
         
         createTextLayer()
     }
-    
+
     func createTextLayer() {
         textLayer.frame = bounds
         textLayer.string = name
-        textLayer.masksToBounds = true
         textLayer.alignmentMode = .center
         textLayer.foregroundColor = NSColor.black.cgColor
         self.layer?.addSublayer(textLayer)

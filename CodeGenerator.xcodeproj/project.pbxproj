@@ -13,6 +13,12 @@
 		7047DF7B25462413009005ED /* EditBlockProsessViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7047DF7925462413009005ED /* EditBlockProsessViewController.swift */; };
 		7047DF7C25462413009005ED /* EditBlockProsessViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7047DF7925462413009005ED /* EditBlockProsessViewController.swift */; };
 		7047DF7D25462413009005ED /* EditBlockProsessViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7047DF7925462413009005ED /* EditBlockProsessViewController.swift */; };
+		70510FB725581E5D000BE887 /* EditBlockWhileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70510FB625581E5D000BE887 /* EditBlockWhileViewController.swift */; };
+		70510FB825581E5D000BE887 /* EditBlockWhileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70510FB625581E5D000BE887 /* EditBlockWhileViewController.swift */; };
+		70510FB925581E5D000BE887 /* EditBlockWhileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70510FB625581E5D000BE887 /* EditBlockWhileViewController.swift */; };
+		70510FBE25594B9B000BE887 /* XML.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70510FBD25594B9B000BE887 /* XML.swift */; };
+		70510FBF25594B9B000BE887 /* XML.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70510FBD25594B9B000BE887 /* XML.swift */; };
+		70510FC025594B9B000BE887 /* XML.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70510FBD25594B9B000BE887 /* XML.swift */; };
 		705A01DD254343AF0055C15B /* AddNewBlockController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 705A01DC254343AF0055C15B /* AddNewBlockController.swift */; };
 		705A01E2254347340055C15B /* BlocksConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 705A01E1254347340055C15B /* BlocksConfig.swift */; };
 		705A01EA25447E640055C15B /* Generation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 705A01E925447E640055C15B /* Generation.swift */; };
@@ -68,6 +74,18 @@
 		70F566F3254C89CD0031F371 /* SaveBlock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70F566F2254C89CD0031F371 /* SaveBlock.swift */; };
 		70F566F4254C89CD0031F371 /* SaveBlock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70F566F2254C89CD0031F371 /* SaveBlock.swift */; };
 		70F566F5254C89CD0031F371 /* SaveBlock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70F566F2254C89CD0031F371 /* SaveBlock.swift */; };
+		70F566FB254C8DAE0031F371 /* DeleteAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70F566FA254C8DAE0031F371 /* DeleteAlert.swift */; };
+		70F566FC254C8DAE0031F371 /* DeleteAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70F566FA254C8DAE0031F371 /* DeleteAlert.swift */; };
+		70F566FD254C8DAE0031F371 /* DeleteAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70F566FA254C8DAE0031F371 /* DeleteAlert.swift */; };
+		70F567052550B44C0031F371 /* IfBlock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70F567042550B44C0031F371 /* IfBlock.swift */; };
+		70F567062550B44C0031F371 /* IfBlock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70F567042550B44C0031F371 /* IfBlock.swift */; };
+		70F567072550B44C0031F371 /* IfBlock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70F567042550B44C0031F371 /* IfBlock.swift */; };
+		70F5670C25514C070031F371 /* EditIfBlockController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70F5670B25514C070031F371 /* EditIfBlockController.swift */; };
+		70F5670D25514C070031F371 /* EditIfBlockController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70F5670B25514C070031F371 /* EditIfBlockController.swift */; };
+		70F5670E25514C070031F371 /* EditIfBlockController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70F5670B25514C070031F371 /* EditIfBlockController.swift */; };
+		70F567132552F5BA0031F371 /* CellDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70F567122552F5BA0031F371 /* CellDelegate.swift */; };
+		70F567142552F5BA0031F371 /* CellDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70F567122552F5BA0031F371 /* CellDelegate.swift */; };
+		70F567152552F5BA0031F371 /* CellDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70F567122552F5BA0031F371 /* CellDelegate.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -90,6 +108,8 @@
 /* Begin PBXFileReference section */
 		7047DF6D254610AB009005ED /* EditBlock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditBlock.swift; sourceTree = "<group>"; };
 		7047DF7925462413009005ED /* EditBlockProsessViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditBlockProsessViewController.swift; sourceTree = "<group>"; };
+		70510FB625581E5D000BE887 /* EditBlockWhileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditBlockWhileViewController.swift; sourceTree = "<group>"; };
+		70510FBD25594B9B000BE887 /* XML.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = XML.swift; sourceTree = "<group>"; };
 		705A01DC254343AF0055C15B /* AddNewBlockController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddNewBlockController.swift; sourceTree = "<group>"; };
 		705A01E1254347340055C15B /* BlocksConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlocksConfig.swift; sourceTree = "<group>"; };
 		705A01E925447E640055C15B /* Generation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Generation.swift; sourceTree = "<group>"; };
@@ -122,6 +142,10 @@
 		70F566E0254C6FFB0031F371 /* ReloadDataDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReloadDataDelegate.swift; sourceTree = "<group>"; };
 		70F566EB254C85990031F371 /* BlockFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlockFactory.swift; sourceTree = "<group>"; };
 		70F566F2254C89CD0031F371 /* SaveBlock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SaveBlock.swift; sourceTree = "<group>"; };
+		70F566FA254C8DAE0031F371 /* DeleteAlert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeleteAlert.swift; sourceTree = "<group>"; };
+		70F567042550B44C0031F371 /* IfBlock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IfBlock.swift; sourceTree = "<group>"; };
+		70F5670B25514C070031F371 /* EditIfBlockController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditIfBlockController.swift; sourceTree = "<group>"; };
+		70F567122552F5BA0031F371 /* CellDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CellDelegate.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -154,6 +178,8 @@
 			children = (
 				7047DF7925462413009005ED /* EditBlockProsessViewController.swift */,
 				70F566CF254ACA2A0031F371 /* EditBlockStreamViewController.swift */,
+				70F5670B25514C070031F371 /* EditIfBlockController.swift */,
+				70510FB625581E5D000BE887 /* EditBlockWhileViewController.swift */,
 			);
 			path = EditBlock;
 			sourceTree = "<group>";
@@ -186,6 +212,7 @@
 				705A01F02544A4890055C15B /* ProssesBlock.swift */,
 				70F566BF254A1F900031F371 /* StreamBlock.swift */,
 				70F566D6254AEDD80031F371 /* Line.swift */,
+				70F567042550B44C0031F371 /* IfBlock.swift */,
 			);
 			path = Blocks;
 			sourceTree = "<group>";
@@ -193,6 +220,7 @@
 		705B17DD254235480091D0EA /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				70F566F9254C8D880031F371 /* Alert */,
 				70F566E7254C82D00031F371 /* Protocols */,
 				7047DF7425462122009005ED /* EditBlock */,
 				705A01FE2545B3760055C15B /* Vars */,
@@ -205,6 +233,7 @@
 				705A01E925447E640055C15B /* Generation.swift */,
 				7047DF6D254610AB009005ED /* EditBlock.swift */,
 				70F566C4254A28C40031F371 /* CenterTextLayer.swift */,
+				70510FBD25594B9B000BE887 /* XML.swift */,
 			);
 			path = Classes;
 			sourceTree = "<group>";
@@ -273,8 +302,17 @@
 			children = (
 				70F566E0254C6FFB0031F371 /* ReloadDataDelegate.swift */,
 				70F566EB254C85990031F371 /* BlockFactory.swift */,
+				70F567122552F5BA0031F371 /* CellDelegate.swift */,
 			);
 			path = Protocols;
+			sourceTree = "<group>";
+		};
+		70F566F9254C8D880031F371 /* Alert */ = {
+			isa = PBXGroup;
+			children = (
+				70F566FA254C8DAE0031F371 /* DeleteAlert.swift */,
+			);
+			path = Alert;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -408,24 +446,30 @@
 			files = (
 				7047DF6E254610AB009005ED /* EditBlock.swift in Sources */,
 				705B17FA25424DC60091D0EA /* SaveFileMenu.swift in Sources */,
+				70510FB725581E5D000BE887 /* EditBlockWhileViewController.swift in Sources */,
 				705A02032545BA050055C15B /* VarType.swift in Sources */,
 				70F566C5254A28C40031F371 /* CenterTextLayer.swift in Sources */,
 				705B17D7254235000091D0EA /* EndBlock.swift in Sources */,
 				705B17D025422D370091D0EA /* StartBlock.swift in Sources */,
 				705A01EA25447E640055C15B /* Generation.swift in Sources */,
+				70F566FB254C8DAE0031F371 /* DeleteAlert.swift in Sources */,
 				705B17E9254249FC0091D0EA /* SaveXMLFile.swift in Sources */,
+				70F567052550B44C0031F371 /* IfBlock.swift in Sources */,
 				705A01DD254343AF0055C15B /* AddNewBlockController.swift in Sources */,
 				70F566D7254AEDD80031F371 /* Line.swift in Sources */,
 				705B17C625422B7A0091D0EA /* BaseBlock.swift in Sources */,
 				705A01F12544A4890055C15B /* ProssesBlock.swift in Sources */,
+				70F567132552F5BA0031F371 /* CellDelegate.swift in Sources */,
 				70E7B6E5251B9301005B8656 /* ViewController.swift in Sources */,
 				705B17DF254235740091D0EA /* GenModelController.swift in Sources */,
 				70F566EC254C85990031F371 /* BlockFactory.swift in Sources */,
 				70E7B6E3251B9301005B8656 /* AppDelegate.swift in Sources */,
 				70F566C0254A1F900031F371 /* StreamBlock.swift in Sources */,
+				70510FBE25594B9B000BE887 /* XML.swift in Sources */,
 				705A01E2254347340055C15B /* BlocksConfig.swift in Sources */,
 				70F566E1254C6FFB0031F371 /* ReloadDataDelegate.swift in Sources */,
 				70F566F3254C89CD0031F371 /* SaveBlock.swift in Sources */,
+				70F5670C25514C070031F371 /* EditIfBlockController.swift in Sources */,
 				7047DF7B25462413009005ED /* EditBlockProsessViewController.swift in Sources */,
 				705A01F82545B3700055C15B /* NewVarsController.swift in Sources */,
 				70F566D0254ACA2A0031F371 /* EditBlockStreamViewController.swift in Sources */,
@@ -446,13 +490,19 @@
 				7047DF7C25462413009005ED /* EditBlockProsessViewController.swift in Sources */,
 				705B17D8254235000091D0EA /* EndBlock.swift in Sources */,
 				705B17EA254249FC0091D0EA /* SaveXMLFile.swift in Sources */,
+				70F567142552F5BA0031F371 /* CellDelegate.swift in Sources */,
 				70F566F4254C89CD0031F371 /* SaveBlock.swift in Sources */,
 				70F566D8254AEDD80031F371 /* Line.swift in Sources */,
+				70510FBF25594B9B000BE887 /* XML.swift in Sources */,
+				70F566FC254C8DAE0031F371 /* DeleteAlert.swift in Sources */,
 				705B17E0254235740091D0EA /* GenModelController.swift in Sources */,
+				70510FB825581E5D000BE887 /* EditBlockWhileViewController.swift in Sources */,
+				70F567062550B44C0031F371 /* IfBlock.swift in Sources */,
 				705A01F92545B3700055C15B /* NewVarsController.swift in Sources */,
 				705A02042545BA050055C15B /* VarType.swift in Sources */,
 				70F566D1254ACA2A0031F371 /* EditBlockStreamViewController.swift in Sources */,
 				705A01EB25447E640055C15B /* Generation.swift in Sources */,
+				70F5670D25514C070031F371 /* EditIfBlockController.swift in Sources */,
 				70F566E2254C6FFB0031F371 /* ReloadDataDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -471,13 +521,19 @@
 				7047DF7D25462413009005ED /* EditBlockProsessViewController.swift in Sources */,
 				705B17D9254235000091D0EA /* EndBlock.swift in Sources */,
 				705B17EB254249FC0091D0EA /* SaveXMLFile.swift in Sources */,
+				70F567152552F5BA0031F371 /* CellDelegate.swift in Sources */,
 				70F566F5254C89CD0031F371 /* SaveBlock.swift in Sources */,
 				70F566D9254AEDD80031F371 /* Line.swift in Sources */,
+				70510FC025594B9B000BE887 /* XML.swift in Sources */,
+				70F566FD254C8DAE0031F371 /* DeleteAlert.swift in Sources */,
 				705B17E1254235740091D0EA /* GenModelController.swift in Sources */,
+				70510FB925581E5D000BE887 /* EditBlockWhileViewController.swift in Sources */,
+				70F567072550B44C0031F371 /* IfBlock.swift in Sources */,
 				705A01FA2545B3700055C15B /* NewVarsController.swift in Sources */,
 				705A02052545BA050055C15B /* VarType.swift in Sources */,
 				70F566D2254ACA2A0031F371 /* EditBlockStreamViewController.swift in Sources */,
 				705A01EC25447E640055C15B /* Generation.swift in Sources */,
+				70F5670E25514C070031F371 /* EditIfBlockController.swift in Sources */,
 				70F566E3254C6FFB0031F371 /* ReloadDataDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -10,19 +10,23 @@ import Foundation
 class SaveBlock {
     public func save() {
         let gemMC = GenModelController.shared
-        let blockfactory = InfoAboutBlock(selected: block, name: block.name() + " \(gemMC.blocksList.count + 1)", tag:  gemMC.blocksList.count)
+        let blockfactory = InfoAboutBlock(selected: block, name: (name == nil ? block.name() + " \(gemMC.blocksList.count + 1)" : name)!, tag:  gemMC.blocksList.count)
         let createdBlock = blockfactory.produce()
         switch block {
         case .start:
             gemMC.blocksList.prepend(createdBlock)
             break
-            
         case .end:
             gemMC.blocksList.append(createdBlock)
             break
         case .prosess, .instream, .outstream:
             addBodyBlock(createdBlock: createdBlock, currentEnum: block)
             break
+        case .ifblock:
+            addBodyBlock(createdBlock: createdBlock, currentEnum: block)
+            break
+        case .whileblock:
+            addBodyBlock(createdBlock: createdBlock, currentEnum: block)
         }
         
         var i = 0
@@ -45,9 +49,11 @@ class SaveBlock {
         }
     }
     
-    public init(block: Blocks) {
+    public init(block: Blocks, name: String?) {
         self.block = block
+        self.name = name
     }
     
     private let block: Blocks
+    private let name: String?
 }

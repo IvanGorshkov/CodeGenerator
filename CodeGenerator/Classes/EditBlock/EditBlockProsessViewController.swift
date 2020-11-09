@@ -11,13 +11,16 @@ class EditBlockProsessViewController: NSViewController {
     @IBOutlet weak var tableView: NSTableView!
     @IBOutlet weak var types: NSPopUpButton!
     @IBOutlet weak var textField: NSTextField!
+    @IBOutlet weak var blockName: NSTextField!
     var typesArray = [ModelType]()
     var directoryItems = [ModelType]()
     var sentacis = [String]()
-    var tag: Int?
+    var myProcess: ModelBlock?
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        blockName.stringValue = "Блок: \(myProcess?.name ?? "")"
+        sentacis = myProcess?.values ?? []
         tableView.delegate = self
         tableView.dataSource = self
         directoryItems = GenModelController.shared.getArrayType()
@@ -28,26 +31,17 @@ class EditBlockProsessViewController: NSViewController {
         
     }
     @IBAction func add(_ sender: Any) {
-       sentacis.append("\(typesArray[types.indexOfSelectedItem].name) := \(textField.stringValue)")
-        let index = GenModelController.shared.blocksList.index(GenModelController.shared.blocksList.startIndex, offsetBy: tag ?? 0)
+        if textField.stringValue.isEmpty || typesArray.isEmpty {
+            let answer = DeleteAlert(question: "Ошибка данных", text: "Незаполненные данные")
+            answer.showError()
+            return
+        }
         
-        GenModelController.shared.blocksList[index].values = sentacis
+        sentacis.append("\(typesArray[types.indexOfSelectedItem].name) := \(textField.stringValue)")
+        myProcess?.values = sentacis
         tableView.reloadData()
     }
     
-    func dialogOKCancel(question: String, text: String) -> Bool {
-        let alert: NSAlert = NSAlert()
-        alert.messageText = question
-        alert.informativeText = text
-        alert.alertStyle = NSAlert.Style.informational
-        alert.addButton(withTitle: "Да")
-        alert.addButton(withTitle: "Нет")
-        let res = alert.runModal()
-        if res == NSApplication.ModalResponse.alertFirstButtonReturn {
-            return true
-        }
-        return false
-    }
 
     @IBAction func close(_ sender: Any) {
         if let controller = self.storyboard?.instantiateController(withIdentifier: "ViewController") as? ViewController {
@@ -70,13 +64,11 @@ extension EditBlockProsessViewController: NSTableViewDelegate {
         }
         
         DispatchQueue.main.async { [self] in
-            let answer = dialogOKCancel(question: "Удалить операцию", text: "Вы уверены, что хотите удалить операцию?")
-            if answer == true {
+            let answer = DeleteAlert(question: "Удалить операцию", text: "Вы уверены, что хотите удалить операцию?")
+            if answer.showAlrt() == true {
                 let selectedTableView = notification.object as! NSTableView
-                let index = GenModelController.shared.blocksList.index(GenModelController.shared.blocksList.startIndex, offsetBy: selectedTableView.selectedRow)
-                
-                GenModelController.shared.blocksList[index].values?.remove(at: selectedTableView.selectedRow)
-                sentacis = GenModelController.shared.blocksList[index].values ?? []
+                myProcess?.values?.remove(at: selectedTableView.selectedRow)
+                sentacis = myProcess?.values ?? []
                 let indexSet = IndexSet(integer:selectedTableView.selectedRow)
                 tableView.removeRows(at:indexSet, withAnimation:.effectFade)
                 tableView.reloadData()

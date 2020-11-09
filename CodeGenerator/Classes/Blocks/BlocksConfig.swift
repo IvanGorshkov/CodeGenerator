@@ -13,6 +13,8 @@ enum Blocks:String, CaseIterable {
     case prosess = "Процесс"
     case instream = "Ввод"
     case outstream = "Вывод"
+    case ifblock = "Условие"
+    case whileblock = "Цикл с предусловием"
     
     init?(id : Int) {
         switch id {
@@ -21,6 +23,8 @@ enum Blocks:String, CaseIterable {
         case 3: self = .prosess
         case 4: self = .instream
         case 5: self = .outstream
+        case 6: self = .ifblock
+        case 7: self = .whileblock
         default: return nil
         }
     }
@@ -46,13 +50,24 @@ class ModelBlock {
     }
 }
 
-class IfBlock: ModelBlock {
-    
+class IfModelBlock: ModelBlock {
+    var left = LinkedList<ModelBlock>()
+    var right = LinkedList<ModelBlock>()
+}
+
+class WhileModelBlock: ModelBlock {
+    var body = LinkedList<ModelBlock>()
 }
 
 
 class InfoAboutBlock: BlockFactory {
     func produce() -> ModelBlock {
+        if block == .ifblock {
+            return IfModelBlock(blocks: block, countEnters: 0, countExit: 1, name: name, tag: tag)
+        }
+        if block == .whileblock {
+            return WhileModelBlock(blocks: block, countEnters: 0, countExit: 1, name: name, tag: tag)
+        }
         return ModelBlock(blocks: block, countEnters: 0, countExit: 1, name: name, tag: tag)
     }
     

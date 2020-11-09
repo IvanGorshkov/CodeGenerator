@@ -9,6 +9,20 @@ import Cocoa
 
 class AddNewBlockController: NSViewController {
     @IBOutlet weak var blockType: NSPopUpButton!
+    @IBOutlet weak var textField: NSTextField!
+    @IBAction func close(_ sender: Any) {
+        if let controller = self.storyboard?.instantiateController(withIdentifier: "ViewController") as? ViewController {
+            self.view.window?.contentViewController = controller
+        }
+    }
+    
+    @IBAction func save(_ sender: Any) {
+        savingBlock()
+        if let controller = self.storyboard?.instantiateController(withIdentifier: "ViewController") as? ViewController {
+            self.view.window?.contentViewController = controller
+        }
+    }
+    
     var blocksArray = [Blocks]()
     override func viewWillAppear() {
         super.viewWillAppear()
@@ -30,21 +44,8 @@ class AddNewBlockController: NSViewController {
         return false
     }
     
-    @IBAction func close(_ sender: Any) {
-        if let controller = self.storyboard?.instantiateController(withIdentifier: "ViewController") as? ViewController {
-            self.view.window?.contentViewController = controller
-        }
-    }
-    
-    @IBAction func save(_ sender: Any) {
-        savingBlock()
-        if let controller = self.storyboard?.instantiateController(withIdentifier: "ViewController") as? ViewController {
-            self.view.window?.contentViewController = controller
-        }
-    }
-    
     func savingBlock() {
-        let saveBlock = SaveBlock(block: blocksArray[blockType.indexOfSelectedItem])
+        let saveBlock = SaveBlock(block: blocksArray[blockType.indexOfSelectedItem], name: textField.stringValue.isEmpty ? nil : textField.stringValue)
         saveBlock.save()
     }
 }

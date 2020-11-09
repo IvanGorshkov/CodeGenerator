@@ -25,27 +25,27 @@ class NewVarsController: NSViewController {
     }
     
     @IBAction func add(_ sender: Any) {
+        if textField.stringValue.isEmpty {
+            let answer = DeleteAlert(question: "Ошибка данных", text: "Незаполненные данные")
+            answer.showError()
+            return
+        }
+        
+        let isInclude = directoryItems.first { (row) -> Bool in
+            row.name == textField.stringValue
+        }
+        
+        if isInclude?.name == textField.stringValue {
+            let answer = DeleteAlert(question: "Ошибка данных", text: "Такокая переменная уже существует")
+            answer.showError()
+            return
+        }
+        
         GenModelController.shared.addType(name: textField.stringValue, type: typesArray[types.indexOfSelectedItem] )
         directoryItems = GenModelController.shared.getArrayType() 
         tableView.reloadData()
-        
-       
     }
     
-    func dialogOKCancel(question: String, text: String) -> Bool {
-        let alert: NSAlert = NSAlert()
-        alert.messageText = question
-        alert.informativeText = text
-        alert.alertStyle = NSAlert.Style.informational
-        alert.addButton(withTitle: "Да")
-        alert.addButton(withTitle: "Нет")
-        let res = alert.runModal()
-        if res == NSApplication.ModalResponse.alertFirstButtonReturn {
-            return true
-        }
-        return false
-    }
-
     @IBAction func close(_ sender: Any) {
         if let controller = self.storyboard?.instantiateController(withIdentifier: "ViewController") as? ViewController {
             self.view.window?.contentViewController = controller
@@ -67,8 +67,8 @@ extension NewVarsController: NSTableViewDelegate {
         }
         
         DispatchQueue.main.async { [self] in
-            let answer = dialogOKCancel(question: "Удалить переменную", text: "Вы уверены, что хотите удалить переменную?")
-            if answer == true {
+            let answer = DeleteAlert(question: "Удалить операцию", text: "Вы уверены, что хотите удалить операцию?")
+            if answer.showAlrt() == true {
                 let selectedTableView = notification.object as! NSTableView
                 GenModelController.shared.removeType(index: selectedTableView.selectedRow)
                 directoryItems = GenModelController.shared.getArrayType()

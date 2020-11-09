@@ -12,18 +12,20 @@ class EditBlockStreamViewController: NSViewController {
     @IBOutlet weak var tableView: NSTableView!
     @IBOutlet weak var types: NSPopUpButton!
     @IBOutlet weak var textField: NSTextField!
+    @IBOutlet weak var blockName: NSTextField!
     var streamInArray = [inS]()
     var streamOutArray = [outS]()
     var sentacis = [String]()
     var nameFunc = ""
-    var tag: Int?
+    var myStream: ModelBlock?
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        blockName.stringValue = "Блок: \(myStream?.name ?? "")"
+        sentacis = myStream?.values ?? []
         tableView.delegate = self
         tableView.dataSource = self
-        let index = GenModelController.shared.blocksList.index(GenModelController.shared.blocksList.startIndex, offsetBy: tag ?? 0)
-        if GenModelController.shared.blocksList[index].blocks == .instream {
+        if myStream?.blocks == .instream {
             for value in inS.allCases {
                 streamInArray.append(value)
                 types.addItem(withTitle: value.name())
@@ -37,6 +39,7 @@ class EditBlockStreamViewController: NSViewController {
         
         nameFunc = types.selectedItem!.title
     }
+    
     @IBAction func popUpSelectionDidChange(_ sender: NSPopUpButton) {
         if sender.selectedItem === popUpInitiallySelectedItem {
             nameFunc = types.selectedItem!.title
@@ -46,28 +49,26 @@ class EditBlockStreamViewController: NSViewController {
     }
     
     @IBAction func add(_ sender: Any) {
+        let answer = DeleteAlert(question: "Ошибка данных", text: "Незаполненные данные")
+        if myStream?.blocks == .instream {
+            if textField.stringValue.isEmpty || streamInArray.isEmpty {
+                answer.showError()
+                return
+            }
+        } else {
+            if textField.stringValue.isEmpty || streamOutArray.isEmpty {
+                answer.showError()
+                return
+            }
+            
+        }
         sentacis.append("\(nameFunc)(\(textField.stringValue));")
-         let index = GenModelController.shared.blocksList.index(GenModelController.shared.blocksList.startIndex, offsetBy: tag ?? 0)
-         
-         GenModelController.shared.blocksList[index].values = sentacis
-         tableView.reloadData()
+        myStream?.values = sentacis
+        tableView.reloadData()
+        
         
     }
     
-    func dialogOKCancel(question: String, text: String) -> Bool {
-        let alert: NSAlert = NSAlert()
-        alert.messageText = question
-        alert.informativeText = text
-        alert.alertStyle = NSAlert.Style.informational
-        alert.addButton(withTitle: "Да")
-        alert.addButton(withTitle: "Нет")
-        let res = alert.runModal()
-        if res == NSApplication.ModalResponse.alertFirstButtonReturn {
-            return true
-        }
-        return false
-    }
-
     @IBAction func close(_ sender: Any) {
         if let controller = self.storyboard?.instantiateController(withIdentifier: "ViewController") as? ViewController {
             self.view.window?.contentViewController = controller
@@ -89,13 +90,12 @@ extension EditBlockStreamViewController: NSTableViewDelegate {
         }
         
         DispatchQueue.main.async { [self] in
-            let answer = dialogOKCancel(question: "Удалить операцию", text: "Вы уверены, что хотите удалить операцию?")
-            if answer == true {
+            let answer = DeleteAlert(question: "Удалить операцию", text: "Вы уверены, что хотите удалить операцию?")
+            if answer.showAlrt() == true {
                 let selectedTableView = notification.object as! NSTableView
-                let index = GenModelController.shared.blocksList.index(GenModelController.shared.blocksList.startIndex, offsetBy: selectedTableView.selectedRow)
+                myStream?.values?.remove(at: selectedTableView.selectedRow)
+                sentacis = myStream?.values ?? []
                 
-                GenModelController.shared.blocksList[index].values?.remove(at: selectedTableView.selectedRow)
-                sentacis = GenModelController.shared.blocksList[index].values ?? []
                 let indexSet = IndexSet(integer:selectedTableView.selectedRow)
                 tableView.removeRows(at:indexSet, withAnimation:.effectFade)
                 tableView.reloadData()

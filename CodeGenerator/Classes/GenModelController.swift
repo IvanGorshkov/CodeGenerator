@@ -19,6 +19,11 @@ class GenModelController {
         var_types.remove(at: index)
     }
     
+    public func removeTypeAll() {
+        var_types.removeAll()
+    }
+    
+    
     public func getArrayType() -> [ModelType] {
         return var_types
     }

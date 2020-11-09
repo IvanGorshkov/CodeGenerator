@@ -21,8 +21,6 @@ class StartBlock: BaseBlock {
     
     override func draw(_ dirtyRect: NSRect) {
         super.draw(dirtyRect)
-
-        // Drawing code here.
     }
     
 }
