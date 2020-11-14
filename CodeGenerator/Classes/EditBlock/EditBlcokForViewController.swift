@@ -90,6 +90,12 @@ class EditBlcokForViewController: NSViewController, CellDelegate {
     }
     
     @IBAction func save(_ sender: Any) {
+        let answer = DeleteAlert(question: "Ошибка данных", text: "Введите условие!")
+        if from.stringValue.isEmpty || to.stringValue.isEmpty || ((varity.selectedItem?.title.isEmpty) == nil) {
+            answer.showError()
+            return
+        }
+        
         myWileBlock?.values = ["\(varity.selectedItem?.title ?? "") := \(from.stringValue) \(forType.selectedItem?.title ?? "") \(to.stringValue)"]
     }
     
