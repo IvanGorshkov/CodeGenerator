@@ -96,13 +96,13 @@ class XMLParserAlg {
             case "Цикл с предусловием":
                 let factory = InfoAboutBlock(selected: .whileblock, name: name ?? "", tag: i)
                 var whileBody = factory.produce() as! WhileModelBlock
-                WhileBody(parent: blocks, index: i, whileblock: &whileBody)
+                CycleBody(parent: blocks, index: i, whileblock: &whileBody)
                 parantList.append(whileBody)
                 break;
             case "Счетный цикл":
-                let factory = InfoAboutBlock(selected: .whileblock, name: name ?? "", tag: i)
+                let factory = InfoAboutBlock(selected: .forblock, name: name ?? "", tag: i)
                 var forBody = factory.produce() as! WhileModelBlock
-                WhileBody(parent: blocks, index: i, whileblock: &forBody)
+                CycleBody(parent: blocks, index: i, whileblock: &forBody)
                 parantList.append(forBody)
                 break;
             default:
@@ -126,7 +126,7 @@ class XMLParserAlg {
         }
     }
     
-    private func WhileBody(parent: XMLNode, index: Int, whileblock: inout WhileModelBlock) {
+    private func CycleBody(parent: XMLNode, index: Int, whileblock: inout WhileModelBlock) {
         for value in parent.children {
             if value.name == "value_1" {
                 whileblock.values?.append(value.attributes["name"]!)
