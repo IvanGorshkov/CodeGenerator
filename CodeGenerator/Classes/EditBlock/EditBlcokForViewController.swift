@@ -67,10 +67,10 @@ class EditBlcokForViewController: NSViewController, CellDelegate {
         tableView.registerForDraggedTypes([.string])
         
 
-        let strFor = myWileBlock?.values?[0]
-        if strFor != nil {
-            let dateAsArray = strFor?.split(separator: " ").map{ String($0) }
-            if dateAsArray![3] == "downto" {
+        if myWileBlock?.values?.count != 0 {
+            guard let strFor = myWileBlock?.values?[0] else { return }
+            let ForAsArray = strFor.split(separator: " ").map{ String($0) }
+            if ForAsArray[3] == "downto" {
                 forType.selectItem(at: 1)
             } else {
                 forType.selectItem(at: 0)
@@ -78,13 +78,13 @@ class EditBlcokForViewController: NSViewController, CellDelegate {
             }
             
             for item in varity.itemArray {
-                if item.title == dateAsArray?[0] {
+                if item.title == ForAsArray[0] {
                     varity.select(item)
                     break;
                 }
             }
-            from.stringValue = dateAsArray![2]
-            to.stringValue = dateAsArray![4]
+            from.stringValue = ForAsArray[2]
+            to.stringValue = ForAsArray[4]
         }
 
     }

@@ -225,32 +225,30 @@ class ViewController: NSViewController, ReloadDataDelegate {
     }
     
     private func drawProcess(jscrollSize : inout CGSize, item: ModelBlock, offset: Int, completion: @escaping (BaseBlock)->()) {
-        let prosess = ProssesBlock(name: item.name ?? "no name", frame: NSRect(x: offset, y: Int(jscrollSize.height), width: 100, height: 50))
+        let prosess = ProssesBlock(name: textInBlock(item: item), frame: NSRect(x: offset, y: Int(jscrollSize.height), width: 100, height: 50))
         prosess.title = textInBlock(item: item)
         completion(prosess)
-        jscrollSize.height = prosess.frame.origin.y + prosess.frame.size.height
-        documentView.addSubview(prosess)
-        drawLine(offset: CGFloat(offset), scrollSize: &jscrollSize)
-        maxXForScroll(scrollSize: &jscrollSize, maxX: prosess.frame.maxX)
+        addToDocumentView(jscrollSize: &jscrollSize, offset: offset, item: prosess)
     }
     
     private func drawProc(jscrollSize : inout CGSize, item: ModelBlock, offset: Int, completion: @escaping (BaseBlock)->()) {
-        let prosess = ProcBlock(name: item.name ?? "no name", frame: NSRect(x: offset, y: Int(jscrollSize.height), width: 100, height: 50))
-        prosess.title = textInBlock(item: item)
-        completion(prosess)
-        jscrollSize.height = prosess.frame.origin.y + prosess.frame.size.height
-        documentView.addSubview(prosess)
-        drawLine(offset: CGFloat(offset), scrollSize: &jscrollSize)
-        maxXForScroll(scrollSize: &jscrollSize, maxX: prosess.frame.maxX)
+        let proc = ProcBlock(name: textInBlock(item: item), frame: NSRect(x: offset, y: Int(jscrollSize.height), width: 100, height: 50))
+        proc.title = textInBlock(item: item)
+        completion(proc)
+        addToDocumentView(jscrollSize: &jscrollSize, offset: offset, item: proc)
     }
     
     private func drawStream(jscrollSize : inout CGSize, item: ModelBlock, offset: Int, completion: @escaping (BaseBlock)->()) {
         let stream = StreamBlock(name: textInBlock(item: item), frame: NSRect(x: offset, y: Int(jscrollSize.height), width: 100, height: 50))
         completion(stream)
-        jscrollSize.height = stream.frame.origin.y + stream.frame.size.height
-        documentView.addSubview(stream)
+        addToDocumentView(jscrollSize: &jscrollSize, offset: offset, item: stream)
+    }
+    
+    private func addToDocumentView(jscrollSize : inout CGSize, offset: Int, item: BaseBlock) {
+        jscrollSize.height = item.frame.origin.y + item.frame.size.height
+        documentView.addSubview(item)
         drawLine(offset: CGFloat(offset), scrollSize: &jscrollSize)
-        maxXForScroll(scrollSize: &jscrollSize, maxX: stream.frame.maxX)
+        maxXForScroll(scrollSize: &jscrollSize, maxX: item.frame.maxX)
     }
     
     private func textInBlock(item: ModelBlock) -> String {
@@ -268,60 +266,49 @@ class ViewController: NSViewController, ReloadDataDelegate {
         return pTitle
     }
     
-    private func drawFor(scrollSize : inout CGSize, block: ModelBlock, offset: Int, completion: @escaping (BaseBlock)->()) {
+    private func getNameCondition(block: ModelBlock) -> String {
         var blockName = ""
         if block.values == nil || block.values?.count == 0 {
             blockName = "Условие"
         } else {
             blockName = (block.values?[0])!
         }
-        
-        let forblock = ForBlock(name: blockName, frame: NSRect(x: offset, y: Int(scrollSize.height), width: 100, height: 50))
+        return blockName
+    }
+    
+    private func drawFor(scrollSize : inout CGSize, block: ModelBlock, offset: Int, completion: @escaping (BaseBlock)->()) {
+        let forblock = ForBlock(name: getNameCondition(block: block), frame: NSRect(x: offset, y: Int(scrollSize.height), width: 100, height: 50))
         scrollSize.height = forblock.frame.origin.y + forblock.frame.size.height
         completion(forblock)
         documentView.addSubview(forblock)
-        
-        drawLables(title: "да", rect: CGRect(x: Int(forblock.frame.maxX) - 5, y: Int(forblock.frame.midY) - 20, width: 25, height: 25))
-        drawLables(title: "нет", rect: CGRect(x: Int(forblock.frame.midX) - 30, y: Int(forblock.frame.maxY), width: 25, height: 25))
-        
         let topWhileLine = TopWhileLine(frame: NSRect(x: Int(forblock.frame.minX) - 50, y: Int(forblock.frame.midY) - 10, width: Int(forblock.frame.width), height: 50))
         documentView.addSubview(topWhileLine, positioned: .below, relativeTo: forblock)
-        
-        let outWileLine = OutWileLine(frame: NSRect(x:  Int(forblock.frame.maxX) - 58, y: Int(scrollSize.height - forblock.frame.height/2) - 1, width: 116, height: 50))
-        drawLine(offset: CGFloat(offset), scrollSize: &scrollSize)
-        scrollSize.height = outWileLine.frame.origin.y + outWileLine.frame.size.height
-        documentView.addSubview(outWileLine, positioned: .below, relativeTo: forblock)
-        
-        drawBodyWhile(scrollSize : &scrollSize, block: block, parent: forblock)
+        cycleEndPart(whileblock: forblock, block: block, offset: offset, scrollSize: &scrollSize)
     }
     
     private func drawWhile(scrollSize : inout CGSize, block: ModelBlock, offset: Int, completion: @escaping (BaseBlock)->()) {
-        var blockName = ""
-        if block.values == nil || block.values?.count == 0 {
-            blockName = "Условие"
-        } else {
-            blockName = (block.values?[0])!
-        }
-        
-        let whileblock = IfBlock(name: blockName, frame: NSRect(x: offset, y: Int(scrollSize.height), width: 100, height: 50))
+        let whileblock = IfBlock(name: getNameCondition(block: block), frame: NSRect(x: offset, y: Int(scrollSize.height), width: 100, height: 50))
         scrollSize.height = whileblock.frame.origin.y + whileblock.frame.size.height
         completion(whileblock)
         documentView.addSubview(whileblock)
-        drawLables(title: "да", rect: CGRect(x: Int(whileblock.frame.maxX) - 5, y: Int(whileblock.frame.midY) - 20, width: 25, height: 25))
-        drawLables(title: "нет", rect: CGRect(x: Int(whileblock.frame.midX) - 30, y: Int(whileblock.frame.maxY), width: 25, height: 25))
         let topWhileLine = TopWhileLine(frame: NSRect(x: Int(whileblock.frame.minX) - 50, y: Int(scrollSize.height - whileblock.frame.height) - 15, width: 146 + Int(whileblock.frame.width)/2, height: 50))
         documentView.addSubview(topWhileLine, positioned: .below, relativeTo: whileblock)
+        cycleEndPart(whileblock: whileblock, block: block, offset: offset, scrollSize: &scrollSize)
+    }
+    
+    private func cycleEndPart(whileblock:BaseBlock, block: ModelBlock, offset: Int, scrollSize: inout CGSize) {
+        drawLables(title: "да", rect: CGRect(x: Int(whileblock.frame.maxX) - 5, y: Int(whileblock.frame.midY) - 20, width: 25, height: 25))
+        drawLables(title: "нет", rect: CGRect(x: Int(whileblock.frame.midX) - 30, y: Int(whileblock.frame.maxY), width: 25, height: 25))
         let outWileLine = OutWileLine(frame: NSRect(x:  Int(whileblock.frame.maxX) - 58, y: Int(scrollSize.height - whileblock.frame.height/2) - 1, width: 116, height: 50))
         drawLine(offset: CGFloat(offset), scrollSize: &scrollSize)
         scrollSize.height = outWileLine.frame.origin.y + outWileLine.frame.size.height
         documentView.addSubview(outWileLine, positioned: .below, relativeTo: whileblock)
-        
         drawBodyWhile(scrollSize : &scrollSize, block: block, parent: whileblock)
     }
     
     private func drawBodyWhile(scrollSize : inout CGSize, block: ModelBlock, parent: BaseBlock) {
         for item in (block as! WhileModelBlock).body {
-            branch(scrollSize: &scrollSize, parent: parent as! IfBlock, item: item, xOffset: Int(parent.frame.minX))
+            branch(scrollSize: &scrollSize, item: item, xOffset: Int(parent.frame.minX))
         }
         
         let line = Line(frame: NSRect(x: parent.frame.minX - 49, y: parent.frame.minY + 30, width: 2, height: scrollSize.height - parent.frame.maxY))
@@ -336,6 +323,7 @@ class ViewController: NSViewController, ReloadDataDelegate {
         maxXForScroll(scrollSize: &scrollSize, maxX: endIfLine.frame.maxX)
     }
     
+    
     private func drawLables(title: String, rect: CGRect) {
         let label = NSTextField(string: title)
         label.backgroundColor = .clear
@@ -347,14 +335,7 @@ class ViewController: NSViewController, ReloadDataDelegate {
     }
     
     private func drawIf(scrollSize : inout CGSize, block: ModelBlock, offset: Int, completion: @escaping (BaseBlock)->()) {
-        var blockName = ""
-        if block.values == nil || block.values?.count == 0 {
-            blockName = "Условие"
-        } else {
-            blockName = (block.values?[0])!
-        }
-        
-        let ifblock = IfBlock(name: blockName, frame: NSRect(x: offset, y: Int(scrollSize.height), width: 100, height: 50))
+        let ifblock = IfBlock(name: getNameCondition(block: block), frame: NSRect(x: offset, y: Int(scrollSize.height), width: 100, height: 50))
         scrollSize.height = ifblock.frame.origin.y + ifblock.frame.size.height
         completion(ifblock)
         documentView.addSubview(ifblock)
@@ -374,7 +355,33 @@ class ViewController: NSViewController, ReloadDataDelegate {
         maxXForScroll(scrollSize: &scrollSize, maxX: EndlineFalse.frame.maxX + 5)
     }
     
-    private func branch(scrollSize: inout CGSize, parent: IfBlock, item: ModelBlock, xOffset: Int) {
+    private func drawBodyIf(scrollSize : inout CGSize, block: ModelBlock, parent: IfBlock) {
+        var jscrollSize = scrollSize
+        
+        for item in (block as! IfModelBlock).left {
+            branch(scrollSize: &jscrollSize, item: item, xOffset: Int(parent.frame.minX) - Int(parent.frame.width) + 2)
+        }
+        
+        var kscrollSize = scrollSize
+        for item in (block as! IfModelBlock).right {
+            branch(scrollSize: &kscrollSize, item: item, xOffset: Int(parent.frame.maxX) - 2)
+        }
+        
+        scrollSize.height = max(kscrollSize.height, jscrollSize.height)
+        scrollSize.width = max(kscrollSize.width, jscrollSize.width)
+        scrollSize.width += 50
+        width = scrollSize.width
+        if kscrollSize.height < jscrollSize.height {
+            let line = Line(frame: NSRect(x: parent.frame.maxX + 47, y: kscrollSize.height, width: 2, height: jscrollSize.height - kscrollSize.height))
+            documentView.addSubview(line)
+            
+        } else {
+            let line = Line(frame: NSRect(x: parent.frame.minX - 49, y: jscrollSize.height, width: 2, height: kscrollSize.height - jscrollSize.height))
+            documentView.addSubview(line)
+        }
+    }
+    
+    private func branch(scrollSize: inout CGSize, item: ModelBlock, xOffset: Int) {
         let blockE = item.blocks
         switch blockE {
         case .prosess:
@@ -395,32 +402,6 @@ class ViewController: NSViewController, ReloadDataDelegate {
             drawFor(scrollSize: &scrollSize, block: item, offset: xOffset) { (block) in }
         default:
             break
-        }
-    }
-    
-    private func drawBodyIf(scrollSize : inout CGSize, block: ModelBlock, parent: IfBlock) {
-        var jscrollSize = scrollSize
-        
-        for item in (block as! IfModelBlock).left {
-            branch(scrollSize: &jscrollSize, parent: parent, item: item, xOffset: Int(parent.frame.minX) - Int(parent.frame.width) + 2)
-        }
-        
-        var kscrollSize = scrollSize
-        for item in (block as! IfModelBlock).right {
-            branch(scrollSize: &kscrollSize, parent: parent, item: item, xOffset: Int(parent.frame.maxX) - 2)
-        }
-        
-        scrollSize.height = max(kscrollSize.height, jscrollSize.height)
-        scrollSize.width = max(kscrollSize.width, jscrollSize.width)
-        scrollSize.width += 50
-        width = scrollSize.width
-        if kscrollSize.height < jscrollSize.height {
-            let line = Line(frame: NSRect(x: parent.frame.maxX + 47, y: kscrollSize.height, width: 2, height: jscrollSize.height - kscrollSize.height))
-            documentView.addSubview(line)
-            
-        } else {
-            let line = Line(frame: NSRect(x: parent.frame.minX - 49, y: jscrollSize.height, width: 2, height: kscrollSize.height - jscrollSize.height))
-            documentView.addSubview(line)
         }
     }
 }
