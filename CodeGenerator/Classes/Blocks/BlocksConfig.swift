@@ -45,6 +45,7 @@ class ModelBlock {
         self.blocks = blocks
         self.name = name
         self.tag = tag
+        values = []
     }
 }
 
@@ -73,6 +74,16 @@ class InfoAboutBlock: BlockFactory {
         
         return ModelBlock(blocks: block, name: name, tag: tag)
     }
+    
+    func produceWithValue(blocks: XMLNode) -> ModelBlock {
+        let block = produce()
+        for value in blocks.children {
+            block.values?.append(value.attributes["name"]!)
+        }
+        
+        return block
+    }
+    
     
     init(selected block: Blocks, name: String, tag: Int) {
         self.block = block
