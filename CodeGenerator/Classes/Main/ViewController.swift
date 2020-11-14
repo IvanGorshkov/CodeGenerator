@@ -152,7 +152,7 @@ class ViewController: NSViewController, ReloadDataDelegate {
                     process.target = self
                     process.delegate = self
                     process.action = #selector(ViewController.goEditProssesBlock(_:))
-                    }
+                }
             }
             
             if blocksList.contains(where: { (in_block) -> Bool in
@@ -293,12 +293,12 @@ class ViewController: NSViewController, ReloadDataDelegate {
         documentView.addSubview(whileblock)
         let topWhileLine = TopWhileLine(frame: NSRect(x: Int(whileblock.frame.minX) - 50, y: Int(scrollSize.height - whileblock.frame.height) - 15, width: 146 + Int(whileblock.frame.width)/2, height: 50))
         documentView.addSubview(topWhileLine, positioned: .below, relativeTo: whileblock)
+        drawLables(title: "нет", rect: CGRect(x: Int(whileblock.frame.maxX) - 5, y: Int(whileblock.frame.midY) - 20, width: 25, height: 25))
+        drawLables(title: "да", rect: CGRect(x: Int(whileblock.frame.midX) - 30, y: Int(whileblock.frame.maxY), width: 25, height: 25))
         cycleEndPart(whileblock: whileblock, block: block, offset: offset, scrollSize: &scrollSize)
     }
     
     private func cycleEndPart(whileblock:BaseBlock, block: ModelBlock, offset: Int, scrollSize: inout CGSize) {
-        drawLables(title: "да", rect: CGRect(x: Int(whileblock.frame.maxX) - 5, y: Int(whileblock.frame.midY) - 20, width: 25, height: 25))
-        drawLables(title: "нет", rect: CGRect(x: Int(whileblock.frame.midX) - 30, y: Int(whileblock.frame.maxY), width: 25, height: 25))
         let outWileLine = OutWileLine(frame: NSRect(x:  Int(whileblock.frame.maxX) - 58, y: Int(scrollSize.height - whileblock.frame.height/2) - 1, width: 116, height: 50))
         drawLine(offset: CGFloat(offset), scrollSize: &scrollSize)
         scrollSize.height = outWileLine.frame.origin.y + outWileLine.frame.size.height
