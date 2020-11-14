@@ -276,19 +276,23 @@ class ViewController: NSViewController, ReloadDataDelegate {
             blockName = (block.values?[0])!
         }
         
-        let whileblock = ForBlock(name: blockName, frame: NSRect(x: offset, y: Int(scrollSize.height), width: 100, height: 50))
-        scrollSize.height = whileblock.frame.origin.y + whileblock.frame.size.height
-        completion(whileblock)
-        documentView.addSubview(whileblock)
-        let topWhileLine = TopWhileLine(frame: NSRect(x: Int(whileblock.frame.minX) - 50, y: Int(whileblock.frame.midY) - 10, width: Int(whileblock.frame.width), height: 50))
-        documentView.addSubview(topWhileLine, positioned: .below, relativeTo: whileblock)
+        let forblock = ForBlock(name: blockName, frame: NSRect(x: offset, y: Int(scrollSize.height), width: 100, height: 50))
+        scrollSize.height = forblock.frame.origin.y + forblock.frame.size.height
+        completion(forblock)
+        documentView.addSubview(forblock)
         
-        let outWileLine = OutWileLine(frame: NSRect(x:  Int(whileblock.frame.maxX) - 58, y: Int(scrollSize.height - whileblock.frame.height/2) - 1, width: 116, height: 50))
+        drawLables(title: "да", rect: CGRect(x: Int(forblock.frame.maxX) - 5, y: Int(forblock.frame.midY) - 20, width: 25, height: 25))
+        drawLables(title: "нет", rect: CGRect(x: Int(forblock.frame.midX) - 30, y: Int(forblock.frame.maxY), width: 25, height: 25))
+        
+        let topWhileLine = TopWhileLine(frame: NSRect(x: Int(forblock.frame.minX) - 50, y: Int(forblock.frame.midY) - 10, width: Int(forblock.frame.width), height: 50))
+        documentView.addSubview(topWhileLine, positioned: .below, relativeTo: forblock)
+        
+        let outWileLine = OutWileLine(frame: NSRect(x:  Int(forblock.frame.maxX) - 58, y: Int(scrollSize.height - forblock.frame.height/2) - 1, width: 116, height: 50))
         drawLine(offset: CGFloat(offset), scrollSize: &scrollSize)
         scrollSize.height = outWileLine.frame.origin.y + outWileLine.frame.size.height
-        documentView.addSubview(outWileLine, positioned: .below, relativeTo: whileblock)
+        documentView.addSubview(outWileLine, positioned: .below, relativeTo: forblock)
         
-        drawBodyWhile(scrollSize : &scrollSize, block: block, parent: whileblock)
+        drawBodyWhile(scrollSize : &scrollSize, block: block, parent: forblock)
     }
     
     private func drawWhile(scrollSize : inout CGSize, block: ModelBlock, offset: Int, completion: @escaping (BaseBlock)->()) {
@@ -317,27 +321,9 @@ class ViewController: NSViewController, ReloadDataDelegate {
     
     private func drawBodyWhile(scrollSize : inout CGSize, block: ModelBlock, parent: BaseBlock) {
         for item in (block as! WhileModelBlock).body {
-            let blockE = item.blocks
-            switch blockE {
-            case .prosess:
-                drawProcess(jscrollSize: &scrollSize, item: item, offset: Int(parent.frame.minX)) { (block) in }
-                break;
-            case .procedure:
-                drawProc(jscrollSize: &scrollSize, item: item, offset: Int(parent.frame.minX)) { (block) in }
-                break;
-            case .instream, .outstream:
-                drawStream(jscrollSize: &scrollSize, item: item, offset: Int(parent.frame.minX)) { (block) in }
-                break;
-            case .ifblock:
-                drawIf(scrollSize: &scrollSize, block: item, offset: Int(parent.frame.minX)) { (block) in }
-            case .whileblock:
-                drawWhile(scrollSize: &scrollSize, block: item, offset: Int(parent.frame.minX)) { (block) in }
-            case .forblock:
-                drawFor(scrollSize: &scrollSize, block: item, offset: Int(parent.frame.minX)) { (block) in }
-            default:
-                break
-            }
+            branch(scrollSize: &scrollSize, parent: parent as! IfBlock, item: item, xOffset: Int(parent.frame.minX))
         }
+        
         let line = Line(frame: NSRect(x: parent.frame.minX - 49, y: parent.frame.minY + 30, width: 2, height: scrollSize.height - parent.frame.maxY))
         documentView.addSubview(line)
         let lineEnd = Line(frame: NSRect(x: parent.frame.maxX + 47, y: parent.frame.maxY, width: 2, height: scrollSize.height - parent.frame.maxY))
@@ -388,7 +374,7 @@ class ViewController: NSViewController, ReloadDataDelegate {
         maxXForScroll(scrollSize: &scrollSize, maxX: EndlineFalse.frame.maxX + 5)
     }
     
-    private func branchIf(scrollSize: inout CGSize, parent: IfBlock, item: ModelBlock, xOffset: Int) {
+    private func branch(scrollSize: inout CGSize, parent: IfBlock, item: ModelBlock, xOffset: Int) {
         let blockE = item.blocks
         switch blockE {
         case .prosess:
@@ -416,12 +402,12 @@ class ViewController: NSViewController, ReloadDataDelegate {
         var jscrollSize = scrollSize
         
         for item in (block as! IfModelBlock).left {
-            branchIf(scrollSize: &jscrollSize, parent: parent, item: item, xOffset: Int(parent.frame.minX) - Int(parent.frame.width) + 2)
+            branch(scrollSize: &jscrollSize, parent: parent, item: item, xOffset: Int(parent.frame.minX) - Int(parent.frame.width) + 2)
         }
         
         var kscrollSize = scrollSize
         for item in (block as! IfModelBlock).right {
-            branchIf(scrollSize: &kscrollSize, parent: parent, item: item, xOffset: Int(parent.frame.maxX) - 2)
+            branch(scrollSize: &kscrollSize, parent: parent, item: item, xOffset: Int(parent.frame.maxX) - 2)
         }
         
         scrollSize.height = max(kscrollSize.height, jscrollSize.height)
