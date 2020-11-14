@@ -1,17 +1,20 @@
 //
-//  NewVarsController.swift
+//  EditProcedure.swift
 //  CodeGenerator
 //
-//  Created by Ivan Gorshkov on 25.10.2020.
+//  Created by Ivan Gorshkov on 10.11.2020.
 //
 
 import Cocoa
 
-class EditBlockProsessViewController: NSViewController {
+class EditProcedureViewController: NSViewController {
     @IBOutlet weak var tableView: NSTableView!
     @IBOutlet weak var types: NSPopUpButton!
-    @IBOutlet weak var textField: NSTextField!
+    @IBOutlet weak var typesProc: NSPopUpButton!
+    @IBOutlet weak var textFieldName: NSTextField!
+    @IBOutlet weak var textFieldParams: NSTextField!
     @IBOutlet weak var blockName: NSTextField!
+    @IBOutlet weak var eql: NSTextField!
     private var typesArray = [ModelType]()
     private var directoryItems = [ModelType]()
     private var sentacis = [String]()
@@ -23,6 +26,7 @@ class EditBlockProsessViewController: NSViewController {
         sentacis = myProcess?.values ?? []
         tableView.delegate = self
         tableView.dataSource = self
+        typesProc.addItems(withTitles: ["function", "procedure"])
         directoryItems = GenModelController.shared.getArrayType()
         for value in directoryItems {
             typesArray.append(value)
@@ -30,14 +34,37 @@ class EditBlockProsessViewController: NSViewController {
         }
     }
     
-    @IBAction func add(_ sender: Any) {
-        if textField.stringValue.isEmpty || typesArray.isEmpty {
-            let answer = DeleteAlert(question: "Ошибка данных", text: "Незаполненные данные")
-            answer.showError()
-            return
+    @IBAction func popUpSelectionDidChange(_ sender: NSPopUpButton) {
+        if typesProc.indexOfSelectedItem == 1 {
+            types.isHidden = true
+            eql.isHidden = true
+        } else {
+            types.isHidden = false
+            eql.isHidden = false
+            
         }
-        
-        sentacis.append("\(typesArray[types.indexOfSelectedItem].name) := \(textField.stringValue)")
+    }
+    
+    
+    @IBAction func add(_ sender: Any) {
+        if typesProc.indexOfSelectedItem == 1 {
+            if textFieldName.stringValue.isEmpty {
+                let answer = DeleteAlert(question: "Ошибка данных", text: "Незаполненные данные")
+                answer.showError()
+                return
+            }
+            
+            sentacis.append("\(textFieldName.stringValue)(\(textFieldParams.stringValue));")
+        } else {
+            if textFieldName.stringValue.isEmpty || typesArray.isEmpty {
+                let answer = DeleteAlert(question: "Ошибка данных", text: "Незаполненные данные")
+                answer.showError()
+                return
+            }
+            
+            sentacis.append("\(typesArray[types.indexOfSelectedItem].name) := \(textFieldName.stringValue)(\(textFieldParams.stringValue));")
+            
+        }
         myProcess?.values = sentacis
         tableView.reloadData()
     }
@@ -50,13 +77,13 @@ class EditBlockProsessViewController: NSViewController {
     }
 }
 
-extension EditBlockProsessViewController: NSTableViewDataSource {
+extension EditProcedureViewController: NSTableViewDataSource {
     func numberOfRows(in tableView: NSTableView) -> Int {
         return sentacis.count
     }
 }
 
-extension EditBlockProsessViewController: NSTableViewDelegate {
+extension EditProcedureViewController: NSTableViewDelegate {
     func tableViewSelectionDidChange(_ notification: Notification) {
         let index = notification.object as! NSTableView
         if index.selectedRow == -1 {
@@ -78,7 +105,7 @@ extension EditBlockProsessViewController: NSTableViewDelegate {
     
     
     func tableView(_ tableView: NSTableView, viewFor tableColumn: NSTableColumn?, row: Int) -> NSView? {
-        let text = sentacis[row] 
+        let text = sentacis[row]
         let cellIdentifier: String = "Cell1"
         if let cell = tableView.makeView(withIdentifier: NSUserInterfaceItemIdentifier(rawValue: cellIdentifier), owner: nil) as? NSTableCellView {
             cell.textField?.stringValue = text

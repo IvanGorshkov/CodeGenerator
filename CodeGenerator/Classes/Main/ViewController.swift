@@ -6,36 +6,64 @@
 //
 
 import Cocoa
-class View: NSView {
-    override var isFlipped: Bool { return true }
-}
 
 class ViewController: NSViewController, ReloadDataDelegate {
-    @IBOutlet weak var textView: NSTextView!
-    @IBOutlet weak var scroll: NSScrollView!
-    var width: CGFloat = 200
-    let documentView = View(frame: NSRect(x: 0, y: 0, width: 0, height: 0))
-    lazy var editBlockProsessViewController: EditBlockProsessViewController = {
+    @IBOutlet private weak var textView: NSTextView!
+    @IBOutlet private weak var scroll: NSScrollView!
+    private var width: CGFloat = 200
+    private let documentView = View(frame: NSRect(x: 0, y: 0, width: 0, height: 0))
+    private var index: LinkedList<ModelBlock>.Index!
+    private var gemMC: GenModelController!
+    private lazy var editBlockProsessViewController: EditBlockProsessViewController = {
         return self.storyboard!.instantiateController(withIdentifier: "EditBlockProsessViewController") as! EditBlockProsessViewController
     }()
-    lazy var editBlockStreamViewController: EditBlockStreamViewController = {
+    private lazy var editBlockStreamViewController: EditBlockStreamViewController = {
         return self.storyboard!.instantiateController(withIdentifier: "EditBlockStreamViewController") as! EditBlockStreamViewController
     }()
-    lazy var editIfBlockController: EditIfBlockController = {
+    private lazy var editIfBlockController: EditIfBlockController = {
         return self.storyboard!.instantiateController(withIdentifier: "EditIfBlockController") as! EditIfBlockController
     }()
-    lazy var editBlockWhileViewController: EditBlockWhileViewController = {
+    private lazy var editBlockWhileViewController: EditBlockWhileViewController = {
         return self.storyboard!.instantiateController(withIdentifier: "EditBlockWhileViewController") as! EditBlockWhileViewController
+    }()
+    private lazy var editProcedureViewController: EditProcedureViewController = {
+        return self.storyboard!.instantiateController(withIdentifier: "EditProcedureViewController") as! EditProcedureViewController
+    }()
+    private lazy var editBlcokForViewController: EditBlcokForViewController = {
+        return self.storyboard!.instantiateController(withIdentifier: "EditBlcokForViewController") as! EditBlcokForViewController
     }()
     
     func reloadTable() {
         documentView.subviews.forEach({ $0.removeFromSuperview() })
         drawBlokAlg(offset: 80)
         documentView.subviews.forEach({ $0.removeFromSuperview() })
-        drawBlokAlg(offset:  width / 2)
+        drawBlokAlg(offset: width / 2)
     }
-
+    
+    @IBAction func addNewBlock(_ sender: Any) {
+        if let controller = self.storyboard?.instantiateController(withIdentifier: "AddNewBlockController") as? AddNewBlockController {
+            self.view.window?.contentViewController = controller
+        }
+    }
+    
+    @IBAction func addNewVars(_ sender: Any) {
+        if let controller = self.storyboard?.instantiateController(withIdentifier: "NewVarsController") as? NewVarsController {
+            self.view.window?.contentViewController = controller
+        }
+    }
+    
+    @IBAction func generate(_ sender: Any) {
+        let generation = Generation(generated: gemMC)
+        if !generation.algIsCorrect() {
+            let errorAlert = DeleteAlert(question: "Ошибка при генерации", text: generation.getError())
+            errorAlert.showError()
+            return
+        }
+        textView.string = generation.generat()
+    }
+    
     override func viewDidLoad() {
+        gemMC = GenModelController.shared
         super.viewDidLoad()
     }
     
@@ -46,50 +74,58 @@ class ViewController: NSViewController, ReloadDataDelegate {
         self.view.window?.title = "BlockToCode"
     }
     
-    @objc func goEditProssesBlock(_ sender: ProssesBlock) {
-        let index = GenModelController.shared.blocksList.index(GenModelController.shared.blocksList.startIndex, offsetBy: sender.tag )
-        editBlockProsessViewController.myProcess = GenModelController.shared.blocksList[index]
+    @objc private func goEditProssesBlock(_ sender: ProssesBlock) {
+        index = gemMC.blocksList.index(gemMC.blocksList.startIndex, offsetBy: sender.tag )
+        editBlockProsessViewController.myProcess = gemMC.blocksList[index]
         self.view.window?.contentViewController = editBlockProsessViewController
     }
     
-    @objc func goEditStreamBlock(_ sender: StreamBlock) {
-        print(sender.tag)
-        let index = GenModelController.shared.blocksList.index(GenModelController.shared.blocksList.startIndex, offsetBy: sender.tag )
-        editBlockStreamViewController.myStream = GenModelController.shared.blocksList[index]
+    @objc private func goEditStreamBlock(_ sender: StreamBlock) {
+        index = gemMC.blocksList.index(gemMC.blocksList.startIndex, offsetBy: sender.tag )
+        editBlockStreamViewController.myStream = gemMC.blocksList[index]
         self.view.window?.contentViewController = editBlockStreamViewController
     }
     
-    @objc func goEditIfBlock(_ sender: StreamBlock) {
-        print(sender.tag)
-        editIfBlockController.tag = sender.tag
-        let index = GenModelController.shared.blocksList.index(GenModelController.shared.blocksList.startIndex, offsetBy: sender.tag )
-        editIfBlockController.myIfModel = (GenModelController.shared.blocksList[index] as! IfModelBlock)
-        
+    @objc private func goEditIfBlock(_ sender: IfBlock) {
+        index = gemMC.blocksList.index(gemMC.blocksList.startIndex, offsetBy: sender.tag )
+        editIfBlockController.myIfModel = gemMC.blocksList[index] as? IfModelBlock
         self.view.window?.contentViewController = editIfBlockController
     }
     
-    @objc func goEditWhileBlock(_ sender: IfBlock) {
-        print(sender.tag)
-        editBlockWhileViewController.tag = sender.tag
-        let index = GenModelController.shared.blocksList.index(GenModelController.shared.blocksList.startIndex, offsetBy: sender.tag )
-        editBlockWhileViewController.myWileBlock = GenModelController.shared.blocksList[index] as? WhileModelBlock
-        
-        
+    @objc private func goEditWhileBlock(_ sender: IfBlock) {
+        index = gemMC.blocksList.index(gemMC.blocksList.startIndex, offsetBy: sender.tag )
+        editBlockWhileViewController.myWileBlock = gemMC.blocksList[index] as? WhileModelBlock
         self.view.window?.contentViewController = editBlockWhileViewController
+    }
+    
+    @objc private func goEditForBlock(_ sender: IfBlock) {
+        index = gemMC.blocksList.index(gemMC.blocksList.startIndex, offsetBy: sender.tag )
+        editBlcokForViewController.myWileBlock = gemMC.blocksList[index] as? WhileModelBlock
+        self.view.window?.contentViewController = editBlcokForViewController
+    }
+    
+    @objc private func goEditProcedure(_ sender: ProssesBlock) {
+        index = gemMC.blocksList.index(gemMC.blocksList.startIndex, offsetBy: sender.tag )
+        editProcedureViewController.myProcess = gemMC.blocksList[index]
+        self.view.window?.contentViewController = editProcedureViewController
     }
     
     override func viewWillAppear() {
         drawBlokAlg(offset: 80)
         documentView.subviews.forEach({ $0.removeFromSuperview() })
         drawBlokAlg(offset:  width / 2)
-        
     }
     
-    func drawBlokAlg(offset: CGFloat) {
+    private func drawLine(offset: CGFloat, scrollSize: inout CGSize) {
+        let line = Line(frame: NSRect(x: offset, y: scrollSize.height, width: 100, height: 25))
+        scrollSize.height = line.frame.origin.y + line.frame.size.height
+        documentView.addSubview(line)
+    }
+    
+    private func drawBlokAlg(offset: CGFloat) {
         var i = 0;
         var scrollSize = CGSize(width: scroll.frame.size.width, height: 0)
-        var subviewFrame = CGRect(origin: .zero, size: scrollSize)
-        let blocksList = GenModelController.shared.blocksList
+        let blocksList = gemMC.blocksList
         for block in blocksList {
             if blocksList.contains(where: { (in_block) -> Bool in
                 return (block.blocks == in_block.blocks) && block.blocks == .end
@@ -105,114 +141,119 @@ class ViewController: NSViewController, ReloadDataDelegate {
                 let start = StartBlock(name: block.name ?? "no name", frame: NSRect(x: offset, y: scrollSize.height, width: 100, height: 50))
                 scrollSize.height = start.frame.origin.y + start.frame.size.height
                 documentView.addSubview(start)
-                let line = Line(frame: NSRect(x: offset, y: scrollSize.height, width: 100, height: 25))
-                scrollSize.height = line.frame.origin.y + line.frame.size.height
-                documentView.addSubview(line)
+                drawLine(offset: offset, scrollSize: &scrollSize)
             }
             
             if blocksList.contains(where: { (in_block) -> Bool in
                 return (block.blocks == in_block.blocks) && block.blocks == .prosess
             }) {
-                drawProcess(jscrollSize: &scrollSize, item: block, offset: Int(offset), tag: i, isFirst: true)
+                drawProcess(jscrollSize: &scrollSize, item: block, offset: Int(offset)) { (process) in
+                    process.tag = i
+                    process.target = self
+                    process.delegate = self
+                    process.action = #selector(ViewController.goEditProssesBlock(_:))
+                    }
             }
+            
             if blocksList.contains(where: { (in_block) -> Bool in
-                return (block.blocks == in_block.blocks) && block.blocks == .instream
+                return (block.blocks == in_block.blocks) && block.blocks == .procedure
             }) {
-                drawStream(jscrollSize: &scrollSize, item: block, offset: Int(offset), tag: i, isFirst: true)
+                drawProc(jscrollSize: &scrollSize, item: block, offset: Int(offset)) { (process) in
+                    process.tag = i
+                    process.target = self
+                    process.delegate = self
+                    process.action = #selector(ViewController.goEditProcedure(_:))
+                }
             }
+            
             if blocksList.contains(where: { (in_block) -> Bool in
-                return (block.blocks == in_block.blocks) && block.blocks == .outstream
+                return (block.blocks == in_block.blocks) && (block.blocks == .outstream || block.blocks == .instream)
             }) {
-                drawStream(jscrollSize: &scrollSize, item: block, offset: Int(offset), tag: i, isFirst: true)
+                drawStream(jscrollSize: &scrollSize, item: block, offset: Int(offset)) { (stream) in
+                    stream.tag = i
+                    stream.target = self
+                    stream.action = #selector(ViewController.goEditStreamBlock(_:))
+                    stream.delegate = self
+                }
             }
             
             if blocksList.contains(where: { (in_block) -> Bool in
                 return (block.blocks == in_block.blocks) && block.blocks == .ifblock
             }) {
-                drawIf(scrollSize: &scrollSize, tag: i, block: block, offset: Int(offset), isFirst: true)
+                drawIf(scrollSize: &scrollSize, block: block, offset: Int(offset)) { (ifblock) in
+                    ifblock.tag = i
+                    ifblock.target = self
+                    ifblock.action = #selector(ViewController.goEditIfBlock(_:))
+                    ifblock.delegate = self
+                }
             }
             
             if blocksList.contains(where: { (in_block) -> Bool in
                 return (block.blocks == in_block.blocks) && block.blocks == .whileblock
             }) {
-                drawWhile(scrollSize: &scrollSize, tag: i, block: block, offset: Int(offset), isFirst: true)
+                drawWhile(scrollSize: &scrollSize, block: block, offset: Int(offset)) { (blockWhile) in
+                    blockWhile.tag = i
+                    blockWhile.target = self
+                    blockWhile.action = #selector(ViewController.goEditWhileBlock(_:))
+                    blockWhile.delegate = self
+                }
+            }
+            
+            if blocksList.contains(where: { (in_block) -> Bool in
+                return (block.blocks == in_block.blocks) && block.blocks == .forblock
+            }) {
+                drawFor(scrollSize: &scrollSize, block: block, offset: Int(offset)) { (blockWhile) in
+                    blockWhile.tag = i
+                    blockWhile.target = self
+                    blockWhile.action = #selector(ViewController.goEditForBlock(_:))
+                    blockWhile.delegate = self
+                }
             }
             
             i += 1
         }
         
-        subviewFrame.size = scrollSize
+        let subviewFrame = CGRect(origin: .zero, size: scrollSize)
         documentView.frame = subviewFrame
         documentView.wantsLayer = true
         scroll.documentView = documentView
         scroll.contentView.scroll(to: .zero)
     }
     
-    func maxXForScroll(scrollSize: inout CGSize, maxX: CGFloat) {
+    private func maxXForScroll(scrollSize: inout CGSize, maxX: CGFloat) {
         scrollSize.width = max(maxX, scrollSize.width)
     }
     
-    @IBAction func addNewBlock(_ sender: Any) {
-        if let controller = self.storyboard?.instantiateController(withIdentifier: "AddNewBlockController") as? AddNewBlockController {
-            self.view.window?.contentViewController = controller
-        }
-    }
-    
-    @IBAction func addNewVars(_ sender: Any) {
-        if let controller = self.storyboard?.instantiateController(withIdentifier: "NewVarsController") as? NewVarsController {
-            controller.directoryItems = GenModelController.shared.getArrayType()
-            self.view.window?.contentViewController = controller
-        }
-    }
-    
-    @IBAction func generate(_ sender: Any) {
-        let generation = Generation(generated: GenModelController.shared)
-        if !generation.algIsCorrect() {
-            let errorAlert = DeleteAlert(question: "Ошибка при генерации", text: generation.getError())
-            errorAlert.showError()
-            return
-        }
-        textView.string = generation.generat()
-    }
-    
-    func drawProcess(jscrollSize : inout CGSize, item: ModelBlock, offset: Int, tag: Int, isFirst: Bool) {
+    private func drawProcess(jscrollSize : inout CGSize, item: ModelBlock, offset: Int, completion: @escaping (BaseBlock)->()) {
         let prosess = ProssesBlock(name: item.name ?? "no name", frame: NSRect(x: offset, y: Int(jscrollSize.height), width: 100, height: 50))
         prosess.title = textInBlock(item: item)
-        
-        if isFirst {
-            prosess.tag = tag
-            prosess.target = self
-            prosess.delegate = self
-            prosess.action = #selector(ViewController.goEditProssesBlock(_:))
-        }
-        
+        completion(prosess)
         jscrollSize.height = prosess.frame.origin.y + prosess.frame.size.height
         documentView.addSubview(prosess)
-        let line = Line(frame: NSRect(x: offset, y: Int(jscrollSize.height), width: 100, height: 25))
-        jscrollSize.height = line.frame.origin.y + line.frame.size.height
-        documentView.addSubview(line)
+        drawLine(offset: CGFloat(offset), scrollSize: &jscrollSize)
         maxXForScroll(scrollSize: &jscrollSize, maxX: prosess.frame.maxX)
     }
     
-    func drawStream(jscrollSize : inout CGSize, item: ModelBlock, offset: Int, tag: Int, isFirst: Bool) {
+    private func drawProc(jscrollSize : inout CGSize, item: ModelBlock, offset: Int, completion: @escaping (BaseBlock)->()) {
+        let prosess = ProcBlock(name: item.name ?? "no name", frame: NSRect(x: offset, y: Int(jscrollSize.height), width: 100, height: 50))
+        prosess.title = textInBlock(item: item)
+        completion(prosess)
+        jscrollSize.height = prosess.frame.origin.y + prosess.frame.size.height
+        documentView.addSubview(prosess)
+        drawLine(offset: CGFloat(offset), scrollSize: &jscrollSize)
+        maxXForScroll(scrollSize: &jscrollSize, maxX: prosess.frame.maxX)
+    }
+    
+    private func drawStream(jscrollSize : inout CGSize, item: ModelBlock, offset: Int, completion: @escaping (BaseBlock)->()) {
         let stream = StreamBlock(name: textInBlock(item: item), frame: NSRect(x: offset, y: Int(jscrollSize.height), width: 100, height: 50))
-        
-        if isFirst {
-            stream.tag = tag
-            stream.target = self
-            stream.action = #selector(ViewController.goEditStreamBlock(_:))
-            stream.delegate = self
-        }
-        
+        completion(stream)
         jscrollSize.height = stream.frame.origin.y + stream.frame.size.height
         documentView.addSubview(stream)
-        let line = Line(frame: NSRect(x: offset, y: Int(jscrollSize.height), width: 100, height: 25))
-        jscrollSize.height = line.frame.origin.y + line.frame.size.height
-        documentView.addSubview(line)
+        drawLine(offset: CGFloat(offset), scrollSize: &jscrollSize)
         maxXForScroll(scrollSize: &jscrollSize, maxX: stream.frame.maxX)
     }
     
-    func textInBlock(item: ModelBlock) -> String {
+    private func textInBlock(item: ModelBlock) -> String {
         var pTitle = ""
         if item.values != nil && item.values?.count != 0 {
             var i = 1
@@ -227,7 +268,30 @@ class ViewController: NSViewController, ReloadDataDelegate {
         return pTitle
     }
     
-    func drawWhile(scrollSize : inout CGSize, tag: Int, block: ModelBlock, offset: Int, isFirst: Bool) {
+    private func drawFor(scrollSize : inout CGSize, block: ModelBlock, offset: Int, completion: @escaping (BaseBlock)->()) {
+        var blockName = ""
+        if block.values == nil || block.values?.count == 0 {
+            blockName = "Условие"
+        } else {
+            blockName = (block.values?[0])!
+        }
+        
+        let whileblock = ForBlock(name: blockName, frame: NSRect(x: offset, y: Int(scrollSize.height), width: 100, height: 50))
+        scrollSize.height = whileblock.frame.origin.y + whileblock.frame.size.height
+        completion(whileblock)
+        documentView.addSubview(whileblock)
+        let topWhileLine = TopWhileLine(frame: NSRect(x: Int(whileblock.frame.minX) - 50, y: Int(whileblock.frame.midY) - 10, width: Int(whileblock.frame.width), height: 50))
+        documentView.addSubview(topWhileLine, positioned: .below, relativeTo: whileblock)
+        
+        let outWileLine = OutWileLine(frame: NSRect(x:  Int(whileblock.frame.maxX) - 58, y: Int(scrollSize.height - whileblock.frame.height/2) - 1, width: 116, height: 50))
+        drawLine(offset: CGFloat(offset), scrollSize: &scrollSize)
+        scrollSize.height = outWileLine.frame.origin.y + outWileLine.frame.size.height
+        documentView.addSubview(outWileLine, positioned: .below, relativeTo: whileblock)
+        
+        drawBodyWhile(scrollSize : &scrollSize, block: block, parent: whileblock)
+    }
+    
+    private func drawWhile(scrollSize : inout CGSize, block: ModelBlock, offset: Int, completion: @escaping (BaseBlock)->()) {
         var blockName = ""
         if block.values == nil || block.values?.count == 0 {
             blockName = "Условие"
@@ -237,49 +301,44 @@ class ViewController: NSViewController, ReloadDataDelegate {
         
         let whileblock = IfBlock(name: blockName, frame: NSRect(x: offset, y: Int(scrollSize.height), width: 100, height: 50))
         scrollSize.height = whileblock.frame.origin.y + whileblock.frame.size.height
-        if isFirst {
-            whileblock.tag = tag
-            whileblock.target = self
-            whileblock.action = #selector(ViewController.goEditWhileBlock(_:))
-            whileblock.delegate = self
-        }
+        completion(whileblock)
         documentView.addSubview(whileblock)
+        drawLables(title: "да", rect: CGRect(x: Int(whileblock.frame.maxX) - 5, y: Int(whileblock.frame.midY) - 20, width: 25, height: 25))
+        drawLables(title: "нет", rect: CGRect(x: Int(whileblock.frame.midX) - 30, y: Int(whileblock.frame.maxY), width: 25, height: 25))
         let topWhileLine = TopWhileLine(frame: NSRect(x: Int(whileblock.frame.minX) - 50, y: Int(scrollSize.height - whileblock.frame.height) - 15, width: 146 + Int(whileblock.frame.width)/2, height: 50))
         documentView.addSubview(topWhileLine, positioned: .below, relativeTo: whileblock)
-        
-        let line = Line(frame: NSRect(x: offset, y: Int(scrollSize.height), width: 100, height: 25))
-        documentView.addSubview(line)
         let outWileLine = OutWileLine(frame: NSRect(x:  Int(whileblock.frame.maxX) - 58, y: Int(scrollSize.height - whileblock.frame.height/2) - 1, width: 116, height: 50))
-        scrollSize.height = line.frame.origin.y + line.frame.size.height
+        drawLine(offset: CGFloat(offset), scrollSize: &scrollSize)
         scrollSize.height = outWileLine.frame.origin.y + outWileLine.frame.size.height
         documentView.addSubview(outWileLine, positioned: .below, relativeTo: whileblock)
         
         drawBodyWhile(scrollSize : &scrollSize, block: block, parent: whileblock)
     }
-    func drawBodyWhile(scrollSize : inout CGSize, block: ModelBlock, parent: IfBlock) {
+    
+    private func drawBodyWhile(scrollSize : inout CGSize, block: ModelBlock, parent: BaseBlock) {
         for item in (block as! WhileModelBlock).body {
             let blockE = item.blocks
             switch blockE {
-            case .start:
-                break;
-            case .end:
-                break;
             case .prosess:
-                drawProcess(jscrollSize: &scrollSize, item: item, offset: Int(parent.frame.minX), tag: 0, isFirst: false)
+                drawProcess(jscrollSize: &scrollSize, item: item, offset: Int(parent.frame.minX)) { (block) in }
                 break;
-            case .instream:
-                drawStream(jscrollSize: &scrollSize, item: item, offset: Int(parent.frame.minX), tag: 0, isFirst: false)
+            case .procedure:
+                drawProc(jscrollSize: &scrollSize, item: item, offset: Int(parent.frame.minX)) { (block) in }
                 break;
-            case .outstream:
-                drawStream(jscrollSize: &scrollSize, item: item, offset: Int(parent.frame.minX), tag: 0, isFirst: false)
+            case .instream, .outstream:
+                drawStream(jscrollSize: &scrollSize, item: item, offset: Int(parent.frame.minX)) { (block) in }
                 break;
             case .ifblock:
-                drawIf(scrollSize: &scrollSize, tag: 1, block: item, offset: Int(parent.frame.minX), isFirst: false)
+                drawIf(scrollSize: &scrollSize, block: item, offset: Int(parent.frame.minX)) { (block) in }
             case .whileblock:
-                drawWhile(scrollSize: &scrollSize, tag: 1, block: item, offset: Int(parent.frame.minX), isFirst: false)
+                drawWhile(scrollSize: &scrollSize, block: item, offset: Int(parent.frame.minX)) { (block) in }
+            case .forblock:
+                drawFor(scrollSize: &scrollSize, block: item, offset: Int(parent.frame.minX)) { (block) in }
+            default:
+                break
             }
         }
-        let line = Line(frame: NSRect(x: parent.frame.minX - 49, y: parent.frame.minY, width: 2, height: scrollSize.height - parent.frame.maxY + 25))
+        let line = Line(frame: NSRect(x: parent.frame.minX - 49, y: parent.frame.minY + 30, width: 2, height: scrollSize.height - parent.frame.maxY))
         documentView.addSubview(line)
         let lineEnd = Line(frame: NSRect(x: parent.frame.maxX + 47, y: parent.frame.maxY, width: 2, height: scrollSize.height - parent.frame.maxY))
         documentView.addSubview(lineEnd)
@@ -291,7 +350,17 @@ class ViewController: NSViewController, ReloadDataDelegate {
         maxXForScroll(scrollSize: &scrollSize, maxX: endIfLine.frame.maxX)
     }
     
-    func drawIf(scrollSize : inout CGSize, tag: Int, block: ModelBlock, offset: Int, isFirst: Bool) {
+    private func drawLables(title: String, rect: CGRect) {
+        let label = NSTextField(string: title)
+        label.backgroundColor = .clear
+        label.isEditable = false
+        label.isBordered = false
+        label.isSelectable = false
+        label.frame = rect
+        documentView.addSubview(label)
+    }
+    
+    private func drawIf(scrollSize : inout CGSize, block: ModelBlock, offset: Int, completion: @escaping (BaseBlock)->()) {
         var blockName = ""
         if block.values == nil || block.values?.count == 0 {
             blockName = "Условие"
@@ -301,17 +370,13 @@ class ViewController: NSViewController, ReloadDataDelegate {
         
         let ifblock = IfBlock(name: blockName, frame: NSRect(x: offset, y: Int(scrollSize.height), width: 100, height: 50))
         scrollSize.height = ifblock.frame.origin.y + ifblock.frame.size.height
-        if isFirst {
-            ifblock.tag = tag
-            ifblock.target = self
-            ifblock.action = #selector(ViewController.goEditIfBlock(_:))
-            ifblock.delegate = self
-        }
+        completion(ifblock)
         documentView.addSubview(ifblock)
+        drawLables(title: "да", rect: CGRect(x: Int(ifblock.frame.minX) - 10, y: Int(ifblock.frame.midY) - 20, width: 25, height: 25))
+        drawLables(title: "нет", rect: CGRect(x: Int(ifblock.frame.maxX) - 5, y: Int(ifblock.frame.midY) - 20, width: 25, height: 25))
         let lineTrue = IfLine(frame: NSRect(x: Int(ifblock.frame.minX) - 58, y: Int(scrollSize.height - ifblock.frame.height/2) - 1, width: 130, height: 50), dir: true)
         documentView.addSubview(lineTrue, positioned: .below, relativeTo: ifblock)
         let lineFalse = IfLine(frame: NSRect(x:  Int(ifblock.frame.maxX) - 58, y: Int(scrollSize.height - ifblock.frame.height/2) - 1, width: 116, height: 50), dir: false)
-        
         scrollSize.height = lineFalse.frame.origin.y + lineFalse.frame.size.height
         documentView.addSubview(lineFalse, positioned: .below, relativeTo: ifblock)
         drawBodyIf(scrollSize: &scrollSize, block: block, parent: ifblock)
@@ -323,54 +388,40 @@ class ViewController: NSViewController, ReloadDataDelegate {
         maxXForScroll(scrollSize: &scrollSize, maxX: EndlineFalse.frame.maxX + 5)
     }
     
-    func drawBodyIf(scrollSize : inout CGSize, block: ModelBlock, parent: IfBlock) {
+    private func branchIf(scrollSize: inout CGSize, parent: IfBlock, item: ModelBlock, xOffset: Int) {
+        let blockE = item.blocks
+        switch blockE {
+        case .prosess:
+            drawProcess(jscrollSize: &scrollSize, item: item, offset: xOffset) { (block) in }
+            break
+        case .procedure:
+            drawProc(jscrollSize: &scrollSize, item: item, offset: xOffset) { (block) in }
+        case .instream, .outstream:
+            drawStream(jscrollSize: &scrollSize, item: item, offset: xOffset) { (block) in }
+            break
+        case .ifblock:
+            drawIf(scrollSize: &scrollSize, block: item, offset: xOffset) { (block) in }
+            break;
+        case .whileblock:
+            drawWhile(scrollSize: &scrollSize, block: item, offset: xOffset) { (block) in }
+            break
+        case .forblock:
+            drawFor(scrollSize: &scrollSize, block: item, offset: xOffset) { (block) in }
+        default:
+            break
+        }
+    }
+    
+    private func drawBodyIf(scrollSize : inout CGSize, block: ModelBlock, parent: IfBlock) {
         var jscrollSize = scrollSize
         
         for item in (block as! IfModelBlock).left {
-            let blockE = item.blocks
-            switch blockE {
-            case .start:
-                break;
-            case .end:
-                break;
-            case .prosess:
-                drawProcess(jscrollSize: &jscrollSize, item: item, offset: Int(parent.frame.minX) - Int(parent.frame.width) + 2, tag: 0, isFirst: false)
-                break;
-            case .instream:
-                drawStream(jscrollSize: &jscrollSize, item: item, offset: Int(parent.frame.minX) - Int(parent.frame.width) + 2, tag: 0, isFirst: false)
-                break;
-            case .outstream:
-                drawStream(jscrollSize: &jscrollSize, item: item, offset: Int(parent.frame.minX) - Int(parent.frame.width) + 2, tag: 0, isFirst: false)
-                break;
-            case .ifblock:
-                drawIf(scrollSize: &jscrollSize, tag: 1, block: item, offset: Int(parent.frame.minX) - Int(parent.frame.width) + 2, isFirst: false)
-            case .whileblock:
-                drawWhile(scrollSize: &jscrollSize, tag: 1, block: item, offset: Int(parent.frame.minX) - Int(parent.frame.width) + 2, isFirst: false)
-            }
+            branchIf(scrollSize: &jscrollSize, parent: parent, item: item, xOffset: Int(parent.frame.minX) - Int(parent.frame.width) + 2)
         }
         
         var kscrollSize = scrollSize
         for item in (block as! IfModelBlock).right {
-            let blockE = item.blocks
-            switch blockE {
-            case .start:
-                break;
-            case .end:
-                break;
-            case .prosess:
-                drawProcess(jscrollSize: &kscrollSize, item: item, offset: Int(parent.frame.maxX) - 2, tag: 0, isFirst: false)
-                break;
-            case .instream:
-                drawStream(jscrollSize: &kscrollSize, item: item, offset: Int(parent.frame.maxX) - 2, tag: 0, isFirst: false)
-                break;
-            case .outstream:
-                drawStream(jscrollSize: &kscrollSize, item: item, offset: Int(parent.frame.maxX) - 2, tag: 0, isFirst: false)
-                break;
-            case .ifblock:
-                drawIf(scrollSize: &kscrollSize, tag: 1, block: item, offset: Int(parent.frame.maxX) - 2, isFirst: false)
-            case .whileblock:
-                drawWhile(scrollSize: &kscrollSize, tag: 1, block: item, offset: Int(parent.frame.maxX) - 2, isFirst: false)
-            }
+            branchIf(scrollSize: &kscrollSize, parent: parent, item: item, xOffset: Int(parent.frame.maxX) - 2)
         }
         
         scrollSize.height = max(kscrollSize.height, jscrollSize.height)
@@ -386,6 +437,4 @@ class ViewController: NSViewController, ReloadDataDelegate {
             documentView.addSubview(line)
         }
     }
-    
 }
-

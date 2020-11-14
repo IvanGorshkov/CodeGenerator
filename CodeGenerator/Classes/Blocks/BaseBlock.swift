@@ -8,22 +8,19 @@
 import Cocoa
 
 class BaseBlock: NSButton {
-    var blockName: String?
-    var numberOfExit: Int?
-    var numberOfEnters: Int?
+    private var blockName: String?
     var delegate: ReloadDataDelegate!
-    init(nameBlock: String, frame: NSRect, numberOfExit: Int?, numberOfEnters: Int?) {
+    private var data: GenModelController
+    init(nameBlock: String, frame: NSRect) {
+        data = GenModelController.shared
         super.init(frame: frame)
         blockName = nameBlock;
-        self.numberOfExit = numberOfExit
-        self.numberOfEnters = numberOfEnters
         font = NSFont.systemFont(ofSize: 13, weight: NSFont.Weight.medium)
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
     
     override func draw(_ dirtyRect: NSRect) {
         super.draw(dirtyRect)
@@ -37,23 +34,21 @@ class BaseBlock: NSButton {
         return tag
     }
     
-    @objc
-    func swap(sender: NSMenuItem)  {
-        print(self.getTag())
-        print("\(sender.title)  \(sender.tag)")
-        let indexFrom = GenModelController.shared.blocksList.index(GenModelController.shared.blocksList.startIndex, offsetBy: self.getTag() )
-        let indexTo = GenModelController.shared.blocksList.index(GenModelController.shared.blocksList.startIndex, offsetBy: sender.tag )
-        GenModelController.shared.blocksList[indexTo].tag = self.getTag()
-        GenModelController.shared.blocksList[indexFrom].tag = sender.tag
-        GenModelController.shared.blocksList.swapAt(indexFrom, indexTo)
+    @objc func swap(sender: NSMenuItem)  {
+        let indexFrom = data.blocksList.index(data.blocksList.startIndex, offsetBy: self.getTag())
+        let indexTo = data.blocksList.index(data.blocksList.startIndex, offsetBy: sender.tag)
+        data.blocksList[indexTo].tag = self.getTag()
+        data.blocksList[indexFrom].tag = sender.tag
+        data.blocksList.swapAt(indexFrom, indexTo)
         delegate.reloadTable()
     }
-    @objc
-    func deleteblock(sender: NSMenuItem)  {
-        let index = GenModelController.shared.blocksList.index(GenModelController.shared.blocksList.startIndex, offsetBy: getTag())
-        GenModelController.shared.blocksList.remove(at: index)
+    
+    @objc func deleteblock(sender: NSMenuItem)  {
+        let index = data.blocksList.index(data.blocksList.startIndex, offsetBy: getTag())
+        data.blocksList.remove(at: index)
         delegate.reloadTable()
     }
+    
     override func rightMouseDown(with theEvent: NSEvent) {
         if self.getTag() == -1 {
             return
@@ -62,7 +57,7 @@ class BaseBlock: NSButton {
         let deleteItem = NSMenuItem(
             title: "Удалить \(self.blockName ?? "")",
             action:  #selector(deleteblock(sender: )),
-            keyEquivalent: ""
+            keyEquivalent: "Q"
         )
         deleteItem.target = self
         menu.addItem(deleteItem)
@@ -72,8 +67,9 @@ class BaseBlock: NSButton {
             action:  nil,
             keyEquivalent: ""
         )
+        aboutItem.target = self
         menu.addItem(aboutItem)
-        for block in GenModelController.shared.blocksList {
+        for block in data.blocksList {
             if block.blocks == .start || block.blocks == .end || block.tag == self.getTag() {
                 continue
             }
@@ -84,7 +80,6 @@ class BaseBlock: NSButton {
             quitItem.target = self
             menu.addItem(quitItem)
         }
-        aboutItem.target = self
         menu.popUp(positioning: aboutItem, at: NSPoint(x: 50, y: 0), in: self)
     }
 }

@@ -33,7 +33,7 @@ public class CenterTextLayer: CATextLayer {
     let yDiff = (height-fontSize)/2 - fontSize/10
 
     ctx.saveGState()
-    ctx.translateBy(x: 0, y: yDiff) // Use -yDiff when in non-flipped coordinates (like macOS's default)
+    ctx.translateBy(x: 0, y: yDiff)
     super.draw(in: ctx)
     ctx.restoreGState()
   }

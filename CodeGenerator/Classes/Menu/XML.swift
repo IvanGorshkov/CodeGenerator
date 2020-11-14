@@ -33,7 +33,7 @@ class XMLNode: NSObject {
     var text = ""
     var children: [XMLNode] = []
     weak var parent: XMLNode?
-
+    
     override init() {
         self.name = "root"
     }
@@ -66,8 +66,8 @@ class XMLNode: NSObject {
         }
         set {
             guard let newNode = newValue,
-                let filteredChild = children.filter({ $0.name == index }).first
-                else {return}
+                  let filteredChild = children.filter({ $0.name == index }).first
+            else {return}
             filteredChild.attributes = newNode.attributes
             filteredChild.text = newNode.text
             filteredChild.children = newNode.children
@@ -114,7 +114,7 @@ extension XMLNode: XMLParserDelegate {
         childNode.parent = self
         childNode.attributes = attributeDict
         parser.delegate = childNode
-
+        
         children.append(childNode)
     }
     func parser(_ parser: XMLParser,

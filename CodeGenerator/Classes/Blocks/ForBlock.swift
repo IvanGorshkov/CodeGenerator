@@ -1,43 +1,13 @@
 //
-//  StreamBlock.swift
+//  ForBlock.swift
 //  CodeGenerator
 //
-//  Created by Ivan Gorshkov on 29.10.2020.
+//  Created by Ivan Gorshkov on 11.11.2020.
 //
 
 import Cocoa
 
-enum outS: String, CaseIterable {
-    case write = "Write"
-    case writeln = "WriteLn"
-    
-    init?(id : Int) {
-        switch id {
-        case 1: self = .write
-        case 2: self = .writeln
-        default: return nil
-        }
-    }
-    
-    func name() ->String { return self.rawValue }
-}
-
-
-enum inS: String, CaseIterable  {
-    case read = "Read"
-    case readln = "ReadLn"
-    init?(id : Int) {
-        switch id {
-        case 1: self = .read
-        case 2: self = .readln
-        default: return nil
-        }
-    }
-    
-    func name() ->String { return self.rawValue }
-}
-
-class StreamBlock: BaseBlock {
+class ForBlock: BaseBlock {
     convenience init(name: String, frame: NSRect) {
         self.init(nameBlock: name, frame: frame)
         self.name = name
@@ -50,10 +20,12 @@ class StreamBlock: BaseBlock {
     private var name: String?
     
     override func draw(_ rect: CGRect) {
-        path.move(to: CGPoint(x: bounds.minX + offset, y: bounds.minY))
-        path.line(to: CGPoint(x: bounds.maxX, y: bounds.minY))
-        path.line(to: CGPoint(x: bounds.maxX - offset, y: bounds.maxY))
-        path.line(to: CGPoint(x: bounds.minX, y: bounds.maxY))
+        path.move(to: CGPoint(x: bounds.minX, y: bounds.midY))
+        path.line(to: CGPoint(x: bounds.minX + 20, y: bounds.maxY))
+        path.line(to: CGPoint(x: bounds.maxX - 20, y: bounds.maxY))
+        path.line(to: CGPoint(x: bounds.maxX, y: bounds.midY))
+        path.line(to: CGPoint(x: bounds.maxX - 20, y: bounds.minY))
+        path.line(to: CGPoint(x: bounds.minX + 20, y: bounds.minY))
         path.close()
         fillColor.setFill()
         path.fill()
@@ -66,12 +38,12 @@ class StreamBlock: BaseBlock {
     func createTextLayer() {
         textLayer.frame = bounds
         textLayer.string = name
-        textLayer.masksToBounds = true
         textLayer.alignmentMode = .center
         textLayer.foregroundColor = NSColor.black.cgColor
         textLayer.fontSize = 15
-        textLayer.contentsScale = 2
+        textLayer.contentsScale=2;
         textLayer.font = NSFont.systemFont(ofSize: 18, weight: NSFont.Weight.medium)
         self.layer?.addSublayer(textLayer)
+        
     }
 }

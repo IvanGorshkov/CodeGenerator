@@ -8,15 +8,14 @@
 import Cocoa
 
 class EditBlockStreamViewController: NSViewController {
-    private(set) var popUpInitiallySelectedItem: NSMenuItem?
     @IBOutlet weak var tableView: NSTableView!
     @IBOutlet weak var types: NSPopUpButton!
     @IBOutlet weak var textField: NSTextField!
     @IBOutlet weak var blockName: NSTextField!
-    var streamInArray = [inS]()
-    var streamOutArray = [outS]()
-    var sentacis = [String]()
-    var nameFunc = ""
+    private var streamInArray = [inS]()
+    private var streamOutArray = [outS]()
+    private var sentacis = [String]()
+    private var nameFunc = ""
     var myStream: ModelBlock?
     
     override func viewDidLoad() {
@@ -41,32 +40,31 @@ class EditBlockStreamViewController: NSViewController {
     }
     
     @IBAction func popUpSelectionDidChange(_ sender: NSPopUpButton) {
-        if sender.selectedItem === popUpInitiallySelectedItem {
-            nameFunc = types.selectedItem!.title
-        } else {
-            nameFunc = types.selectedItem!.title
+        nameFunc = types.selectedItem!.title
+    }
+    
+    private func findErrors() -> Bool {
+        let answer = DeleteAlert(question: "Ошибка данных", text: "Незаполненные данные")
+        if textField.stringValue.isEmpty {
+            answer.showError()
+            return true
         }
+        return false;
     }
     
     @IBAction func add(_ sender: Any) {
-        let answer = DeleteAlert(question: "Ошибка данных", text: "Незаполненные данные")
         if myStream?.blocks == .instream {
-            if textField.stringValue.isEmpty || streamInArray.isEmpty {
-                answer.showError()
+            if findErrors() {
                 return
             }
         } else {
-            if textField.stringValue.isEmpty || streamOutArray.isEmpty {
-                answer.showError()
+            if findErrors() {
                 return
             }
-            
         }
         sentacis.append("\(nameFunc)(\(textField.stringValue));")
         myStream?.values = sentacis
         tableView.reloadData()
-        
-        
     }
     
     @IBAction func close(_ sender: Any) {
@@ -84,18 +82,16 @@ extension EditBlockStreamViewController: NSTableViewDataSource {
 
 extension EditBlockStreamViewController: NSTableViewDelegate {
     func tableViewSelectionDidChange(_ notification: Notification) {
-        let index = notification.object as! NSTableView
-        if index.selectedRow == -1 {
+        let selectedTableView = notification.object as! NSTableView
+        if selectedTableView.selectedRow == -1 {
             return
         }
         
         DispatchQueue.main.async { [self] in
             let answer = DeleteAlert(question: "Удалить операцию", text: "Вы уверены, что хотите удалить операцию?")
             if answer.showAlrt() == true {
-                let selectedTableView = notification.object as! NSTableView
                 myStream?.values?.remove(at: selectedTableView.selectedRow)
                 sentacis = myStream?.values ?? []
-                
                 let indexSet = IndexSet(integer:selectedTableView.selectedRow)
                 tableView.removeRows(at:indexSet, withAnimation:.effectFade)
                 tableView.reloadData()
@@ -103,15 +99,9 @@ extension EditBlockStreamViewController: NSTableViewDelegate {
         }
     }
     
-    fileprivate enum CellIdentifiers {
-        static let NameCell = "Cell1"
-    }
-    
     func tableView(_ tableView: NSTableView, viewFor tableColumn: NSTableColumn?, row: Int) -> NSView? {
-        let text: String = sentacis[row]
-        var cellIdentifier: String = ""
-        cellIdentifier = CellIdentifiers.NameCell
-        
+        let text = sentacis[row]
+        let cellIdentifier = "Cell1"
         
         if let cell = tableView.makeView(withIdentifier: NSUserInterfaceItemIdentifier(rawValue: cellIdentifier), owner: nil) as? NSTableCellView {
             cell.textField?.stringValue = text
@@ -120,5 +110,4 @@ extension EditBlockStreamViewController: NSTableViewDelegate {
         
         return nil
     }
-    
 }

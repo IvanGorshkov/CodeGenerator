@@ -7,7 +7,7 @@
 
 import Foundation
 
-enum VarType:String, CaseIterable {
+enum VarType: String, CaseIterable {
     case integer = "integer"
     case byte = "byte"
     case shortint = "shortint"
@@ -37,7 +37,7 @@ enum VarType:String, CaseIterable {
         }
     }
     
-    func name() ->String { return self.rawValue }
+    func name() -> String { return self.rawValue }
 }
 
 struct ModelType {

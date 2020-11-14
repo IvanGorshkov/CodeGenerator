@@ -9,7 +9,6 @@ import Foundation
 
 class SaveBlock {
     public func save() {
-        let gemMC = GenModelController.shared
         let blockfactory = InfoAboutBlock(selected: block, name: (name == nil ? block.name() + " \(gemMC.blocksList.count + 1)" : name)!, tag:  gemMC.blocksList.count)
         let createdBlock = blockfactory.produce()
         switch block {
@@ -19,13 +18,7 @@ class SaveBlock {
         case .end:
             gemMC.blocksList.append(createdBlock)
             break
-        case .prosess, .instream, .outstream:
-            addBodyBlock(createdBlock: createdBlock, currentEnum: block)
-            break
-        case .ifblock:
-            addBodyBlock(createdBlock: createdBlock, currentEnum: block)
-            break
-        case .whileblock:
+        case .prosess, .instream, .outstream, .ifblock, .whileblock, .procedure, .forblock:
             addBodyBlock(createdBlock: createdBlock, currentEnum: block)
         }
         
@@ -37,13 +30,12 @@ class SaveBlock {
     }
     
     private func addBodyBlock(createdBlock: ModelBlock, currentEnum: Blocks)  {
-        let gemMC = GenModelController.shared
         if  !gemMC.blocksList.contains(where: { (block) -> Bool in
             return block.blocks == .end
         })  {
             gemMC.blocksList.append(createdBlock)
         } else {
-            let end = GenModelController.shared.blocksList.removeLast()
+            let end = gemMC.blocksList.removeLast()
             gemMC.blocksList.append(createdBlock)
             gemMC.blocksList.append(end)
         }
@@ -52,8 +44,10 @@ class SaveBlock {
     public init(block: Blocks, name: String?) {
         self.block = block
         self.name = name
+        gemMC = GenModelController.shared
     }
     
     private let block: Blocks
     private let name: String?
+    private let gemMC: GenModelController
 }

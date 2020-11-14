@@ -1,17 +1,20 @@
 //
-//  EditBlockWhileViewController.swift
+//  EditBlcokForViewController.swift
 //  CodeGenerator
 //
-//  Created by Ivan Gorshkov on 08.11.2020.
+//  Created by Ivan Gorshkov on 11.11.2020.
 //
 
 import Cocoa
 
-class EditBlockWhileViewController: NSViewController, CellDelegate {
+class EditBlcokForViewController: NSViewController, CellDelegate {
     @IBOutlet weak var addBlock: NSPopUpButton!
+    @IBOutlet weak var varity: NSPopUpButton!
+    @IBOutlet weak var forType: NSPopUpButton!
     @IBOutlet weak var tableView: NSTableView!
     @IBOutlet weak var blockName: NSTextField!
-    @IBOutlet weak var textField: NSTextField!
+    @IBOutlet weak var from: NSTextField!
+    @IBOutlet weak var to: NSTextField!
     private lazy var ifEditBlockProsessViewController: EditBlockProsessViewController = {
         return self.storyboard!.instantiateController(withIdentifier: "EditBlockProsessViewController") as! EditBlockProsessViewController
     }()
@@ -54,25 +57,45 @@ class EditBlockWhileViewController: NSViewController, CellDelegate {
             blocksInWileArray.append(item.name ?? "noname")
         }
         
+        let directoryItems = GenModelController.shared.getArrayType()
+        for value in directoryItems {
+            varity.addItem(withTitle: value.name)
+        }
+        forType.addItems(withTitles: ["to", "downto"])
         tableView.delegate = self
         tableView.dataSource = self
         tableView.registerForDraggedTypes([.string])
-        var blockName = ""
-        if myWileBlock?.values == nil || myWileBlock?.values?.count == 0 {
-            blockName = ""
-        } else {
-            blockName = ( myWileBlock?.values?[0])!
+        
+
+        let strFor = myWileBlock?.values?[0]
+        if strFor != nil {
+            let dateAsArray = strFor?.split(separator: " ").map{ String($0) }
+            if dateAsArray![3] == "downto" {
+                forType.selectItem(at: 1)
+            } else {
+                forType.selectItem(at: 0)
+                
+            }
+            
+            for item in varity.itemArray {
+                if item.title == dateAsArray?[0] {
+                    varity.select(item)
+                    break;
+                }
+            }
+            from.stringValue = dateAsArray![2]
+            to.stringValue = dateAsArray![4]
         }
-        textField.stringValue = blockName
+
     }
     
     @IBAction func save(_ sender: Any) {
-        myWileBlock?.values = [textField.stringValue]
+        myWileBlock?.values = ["\(varity.selectedItem?.title ?? "") := \(from.stringValue) \(forType.selectedItem?.title ?? "") \(to.stringValue)"]
     }
     
     @IBAction func add(_ sender: Any) {
         let answer = DeleteAlert(question: "Ошибка данных", text: "Введите условие!")
-        if textField.stringValue.isEmpty {
+        if from.stringValue.isEmpty || to.stringValue.isEmpty || ((varity.selectedItem?.title.isEmpty) == nil) {
             answer.showError()
             return
         }
@@ -93,13 +116,13 @@ class EditBlockWhileViewController: NSViewController, CellDelegate {
 }
 
 
-extension EditBlockWhileViewController: NSTableViewDataSource {
+extension EditBlcokForViewController: NSTableViewDataSource {
     func numberOfRows(in tableView: NSTableView) -> Int {
         return blocksInWileArray.count
     }
 }
 
-extension EditBlockWhileViewController: NSTableViewDelegate {
+extension EditBlcokForViewController: NSTableViewDelegate {
     func tableView(_ tableView: NSTableView, pasteboardWriterForRow row: Int) -> NSPasteboardWriting? {
         return blocksInWileArray[row] as NSString
     }

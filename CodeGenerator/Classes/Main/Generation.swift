@@ -21,6 +21,7 @@ class Generation {
         firstError = "Отсутствует \(item)"
         return false
     }
+    
     private func checkBlock(item: ModelBlock) -> Bool {
         if (item.values == nil || item.values?.count == 0) && item.blocks != .end && item.blocks != .start {
             firstError = "Незаполненные данные \(item.name ?? "")"
@@ -28,6 +29,7 @@ class Generation {
         }
         return true
     }
+    
     func algIsCorrect() -> Bool {
         if !haveHeadOrTail(item: .end) { return false }
         if !haveHeadOrTail(item: .start) { return false }
@@ -45,15 +47,12 @@ class Generation {
         
         return true
     }
+    
     private func checkBlockWhile(item: ModelBlock) -> Bool{
         if !checkBlock(item: item) { return false }
         for item in (item as! WhileModelBlock).body {
             let blockE = item.blocks
             switch blockE {
-            case .start:
-                break;
-            case .end:
-                break;
             case .prosess, .instream, .outstream:
                 if !checkBlock(item: item) { return false }
                 break;
@@ -61,45 +60,37 @@ class Generation {
                 if !checkBlockIf(item: item) { return false }
             case .whileblock:
                 if !checkBlockWhile(item: item) { return false }
+            default:
+                break
             }
         }
         return true
     }
     
-    private func checkBlockIf(item: ModelBlock) -> Bool{
+    private func checkIfBody(item: ModelBlock) -> Bool {
+        let blockE = item.blocks
+        switch blockE {
+        case .prosess, .instream, .outstream:
+            if !checkBlock(item: item) { return false }
+            break;
+        case .ifblock:
+            if !checkBlockIf(item: item) { return false }
+        case .whileblock:
+            if !checkBlockWhile(item: item) { return false }
+        default:
+            break
+        }
+        return true
+    }
+    
+    private func checkBlockIf(item: ModelBlock) -> Bool {
         if !checkBlock(item: item) { return false }
         for item in (item as! IfModelBlock).left {
-            let blockE = item.blocks
-            switch blockE {
-            case .start:
-                break;
-            case .end:
-                break;
-            case .prosess, .instream, .outstream:
-                if !checkBlock(item: item) { return false }
-                break;
-            case .ifblock:
-                if !checkBlockIf(item: item) { return false }
-            case .whileblock:
-                if !checkBlockWhile(item: item) { return false }
-            }
+            if !checkIfBody(item: item) { return false }
         }
         
         for item in (item as! IfModelBlock).right {
-            let blockE = item.blocks
-            switch blockE {
-            case .start:
-                break;
-            case .end:
-                break;
-            case .prosess, .instream, .outstream:
-                if !checkBlock(item: item) { return false }
-                break;
-            case .ifblock:
-                if !checkBlockIf(item: item) {  return false }
-            case .whileblock:
-                if !checkBlockWhile(item: item) { return false }
-            }
+            if !checkIfBody(item: item) { return false }
         }
         
         return true
@@ -128,21 +119,7 @@ class Generation {
             case .end:
                 str += "End.\n"
                 break;
-            case .prosess:
-                t += 1
-                for line in block.values ?? [] {
-                    printT(str: &str)
-                    str +=  line + "\n"
-                }
-                t -= 1
-            case .instream:
-                t += 1
-                for line in block.values ?? [] {
-                    printT(str: &str)
-                    str +=  line + "\n"
-                }
-                t -= 1
-            case .outstream:
+            case .prosess, .instream, .outstream, .procedure:
                 t += 1
                 for line in block.values ?? [] {
                     printT(str: &str)
@@ -155,7 +132,11 @@ class Generation {
                 t -= 1
             case .whileblock:
                 t += 1
-                printWhile(str: &str, block: block)
+                printWhile(str: &str, block: block as! WhileModelBlock, type: "while")
+                t -= 1
+            case .forblock:
+                t += 1
+                printWhile(str: &str, block: block as! WhileModelBlock, type: "for")
                 t -= 1
             }
         }
@@ -169,11 +150,10 @@ class Generation {
         }
     }
     
-    private func printWhile(str: inout String, block: ModelBlock) {
+    private func printWhile(str: inout String, block: WhileModelBlock, type: String) {
         printT(str: &str)
-        str += "while \(block.values?[0] ?? "") do begin\n"
-        let whileblock = (block as! WhileModelBlock)
-        for item in whileblock.body {
+        str += "\(type) \(block.values?[0] ?? "") do begin\n"
+        for item in block.body {
             t += 1
             if item.blocks == .ifblock {
                 printIf(str: &str, block: item)
@@ -182,7 +162,12 @@ class Generation {
             }
             
             if item.blocks == .whileblock {
-                printWhile(str: &str, block: item)
+                printWhile(str: &str, block: item as! WhileModelBlock, type: "while")
+                t -= 1
+                continue
+            }
+            if item.blocks == .forblock {
+                printWhile(str: &str, block: item as! WhileModelBlock, type: "for")
                 t -= 1
                 continue
             }
@@ -209,8 +194,15 @@ class Generation {
                 t -= 1
                 continue
             }
+            
             if item.blocks == .whileblock {
-                printWhile(str: &str, block: item)
+                printWhile(str: &str, block: item as! WhileModelBlock, type: "while")
+                t -= 1
+                continue
+            }
+            
+            if item.blocks == .forblock {
+                printWhile(str: &str, block: item as! WhileModelBlock, type: "for")
                 t -= 1
                 continue
             }
@@ -240,7 +232,13 @@ class Generation {
             }
             
             if item.blocks == .whileblock {
-                printWhile(str: &str, block: item)
+                printWhile(str: &str, block: item as! WhileModelBlock, type: "while")
+                t -= 1
+                continue
+            }
+            
+            if item.blocks == .forblock {
+                printWhile(str: &str, block: item as! WhileModelBlock, type: "for")
                 t -= 1
                 continue
             }

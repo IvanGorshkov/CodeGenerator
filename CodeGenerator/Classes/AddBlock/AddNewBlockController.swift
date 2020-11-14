@@ -8,6 +8,7 @@
 import Cocoa
 
 class AddNewBlockController: NSViewController {
+    private var blocksArray = [Blocks]()
     @IBOutlet weak var blockType: NSPopUpButton!
     @IBOutlet weak var textField: NSTextField!
     @IBAction func close(_ sender: Any) {
@@ -23,7 +24,6 @@ class AddNewBlockController: NSViewController {
         }
     }
     
-    var blocksArray = [Blocks]()
     override func viewWillAppear() {
         super.viewWillAppear()
         for value in Blocks.allCases {

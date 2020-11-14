@@ -7,7 +7,7 @@
 
 import Foundation
 
-enum Blocks:String, CaseIterable {
+enum Blocks: String, CaseIterable {
     case start = "Старт"
     case end = "Конец"
     case prosess = "Процесс"
@@ -15,6 +15,8 @@ enum Blocks:String, CaseIterable {
     case outstream = "Вывод"
     case ifblock = "Условие"
     case whileblock = "Цикл с предусловием"
+    case procedure = "Внешняя процедура"
+    case forblock = "Счетный цикл"
     
     init?(id : Int) {
         switch id {
@@ -25,6 +27,8 @@ enum Blocks:String, CaseIterable {
         case 5: self = .outstream
         case 6: self = .ifblock
         case 7: self = .whileblock
+        case 8: self = .procedure
+        case 9: self = .forblock
         default: return nil
         }
     }
@@ -34,17 +38,11 @@ enum Blocks:String, CaseIterable {
 
 class ModelBlock {
     let blocks: Blocks
-    let countEnters: Int
-    let countExit: Int
     var tag: Int?
-    var countEntersBusy: Int = 0
-    var countExitBusy: Int = 0
     var name: String?
     var values: [String]?
-    init(blocks: Blocks, countEnters: Int, countExit: Int, name: String, tag: Int) {
+    init(blocks: Blocks, name: String, tag: Int) {
         self.blocks = blocks
-        self.countEnters = countEnters
-        self.countExit = countExit
         self.name = name
         self.tag = tag
     }
@@ -59,16 +57,21 @@ class WhileModelBlock: ModelBlock {
     var body = LinkedList<ModelBlock>()
 }
 
-
 class InfoAboutBlock: BlockFactory {
     func produce() -> ModelBlock {
         if block == .ifblock {
-            return IfModelBlock(blocks: block, countEnters: 0, countExit: 1, name: name, tag: tag)
+            return IfModelBlock(blocks: block, name: name, tag: tag)
         }
+
         if block == .whileblock {
-            return WhileModelBlock(blocks: block, countEnters: 0, countExit: 1, name: name, tag: tag)
+            return WhileModelBlock(blocks: block, name: name, tag: tag)
         }
-        return ModelBlock(blocks: block, countEnters: 0, countExit: 1, name: name, tag: tag)
+        
+        if block == .forblock {
+            return WhileModelBlock(blocks: block, name: name, tag: tag)
+        }
+        
+        return ModelBlock(blocks: block, name: name, tag: tag)
     }
     
     init(selected block: Blocks, name: String, tag: Int) {
@@ -76,7 +79,7 @@ class InfoAboutBlock: BlockFactory {
         self.name = name
         self.tag = tag
     }
-
+    
     private let block: Blocks
     private let name: String
     private let tag: Int

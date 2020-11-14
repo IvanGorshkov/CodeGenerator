@@ -28,15 +28,9 @@ class IfLine: NSView {
         if dir == true {
             aPath.line(to: CGPoint(x: 10, y:self.frame.size.height - 2))
             aPath.line(to: CGPoint(x: 10, y:0))
-            aPath.line(to: CGPoint(x: 15, y:5))
-            aPath.line(to: CGPoint(x: 10, y:0))
-            aPath.line(to: CGPoint(x: 5, y:5))
         } else {
             aPath.line(to: CGPoint(x: self.frame.size.width - 10, y:self.frame.size.height - 2))
             aPath.line(to: CGPoint(x: self.frame.size.width - 10, y:0))
-            aPath.line(to: CGPoint(x: self.frame.size.width - 15, y:5))
-            aPath.line(to: CGPoint(x: self.frame.size.width - 10, y:0))
-            aPath.line(to: CGPoint(x: self.frame.size.width - 5, y:5))
         }
         
         NSColor.white.set()
@@ -51,7 +45,7 @@ class IfLine: NSView {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    var dir: Bool
+    private var dir: Bool
 }
 
 class EndIfLine: NSView {
@@ -83,7 +77,7 @@ class EndIfLine: NSView {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    var dir: Bool
+    private var dir: Bool
 }
 
 class EndWhileLine: NSView {

@@ -8,14 +8,17 @@
 import Cocoa
 
 class DeleteAlert: NSAlert {
+    private let question: String
+    private let text: String
     init(question: String, text: String) {
         self.question = question
         self.text = text
         
     }
+    
     func showAlrt() -> Bool {
-        messageText = question ?? ""
-        informativeText = text ?? ""
+        messageText = question
+        informativeText = text
         alertStyle = NSAlert.Style.informational
         addButton(withTitle: "Да")
         addButton(withTitle: "Нет")
@@ -27,13 +30,10 @@ class DeleteAlert: NSAlert {
     }
     
     func showError() {
-        messageText = question ?? ""
-        informativeText = text ?? ""
+        messageText = question
+        informativeText = text 
         alertStyle = NSAlert.Style.informational
         addButton(withTitle: "Понятно")
         runModal()
     }
-    
-    let question: String?
-    let text: String?
 }

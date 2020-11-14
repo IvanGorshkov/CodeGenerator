@@ -9,7 +9,7 @@ import Cocoa
 
 class EndBlock: BaseBlock {
     convenience init(name: String, frame: NSRect) {
-        self.init(nameBlock: name, frame: frame, numberOfExit: 0, numberOfEnters: 1)
+        self.init(nameBlock: name, frame: frame)
         title =  "Конец"
         contentTintColor = .black
         self.wantsLayer = true
