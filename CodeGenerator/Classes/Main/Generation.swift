@@ -40,7 +40,7 @@ class Generation {
                 if !checkBlockIf(item: item) { return false }
             }
             
-            if item.blocks == .whileblock {
+            if item.blocks == .whileblock || item.blocks == .forblock  {
                 if !checkBlockWhile(item: item) { return false }
             }
         }
@@ -51,23 +51,12 @@ class Generation {
     private func checkBlockWhile(item: ModelBlock) -> Bool{
         if !checkBlock(item: item) { return false }
         for item in (item as! WhileModelBlock).body {
-            let blockE = item.blocks
-            switch blockE {
-            case .prosess, .instream, .outstream:
-                if !checkBlock(item: item) { return false }
-                break;
-            case .ifblock:
-                if !checkBlockIf(item: item) { return false }
-            case .whileblock:
-                if !checkBlockWhile(item: item) { return false }
-            default:
-                break
-            }
+            if !checkBranch(item: item) { return false }
         }
         return true
     }
     
-    private func checkIfBody(item: ModelBlock) -> Bool {
+    private func checkBranch(item: ModelBlock) -> Bool {
         let blockE = item.blocks
         switch blockE {
         case .prosess, .instream, .outstream:
@@ -75,7 +64,7 @@ class Generation {
             break;
         case .ifblock:
             if !checkBlockIf(item: item) { return false }
-        case .whileblock:
+        case .whileblock, .forblock:
             if !checkBlockWhile(item: item) { return false }
         default:
             break
@@ -86,11 +75,11 @@ class Generation {
     private func checkBlockIf(item: ModelBlock) -> Bool {
         if !checkBlock(item: item) { return false }
         for item in (item as! IfModelBlock).left {
-            if !checkIfBody(item: item) { return false }
+            if !checkBranch(item: item) { return false }
         }
         
         for item in (item as! IfModelBlock).right {
-            if !checkIfBody(item: item) { return false }
+            if !checkBranch(item: item) { return false }
         }
         
         return true
