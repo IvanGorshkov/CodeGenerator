@@ -154,29 +154,7 @@ class Generation {
         printT(str: &str)
         str += "\(type) \(block.values?[0] ?? "") do begin\n"
         for item in block.body {
-            t += 1
-            if item.blocks == .ifblock {
-                printIf(str: &str, block: item)
-                t -= 1
-                continue
-            }
-            
-            if item.blocks == .whileblock {
-                printWhile(str: &str, block: item as! WhileModelBlock, type: "while")
-                t -= 1
-                continue
-            }
-            if item.blocks == .forblock {
-                printWhile(str: &str, block: item as! WhileModelBlock, type: "for")
-                t -= 1
-                continue
-            }
-            
-            for line in item.values ?? [] {
-                printT(str: &str)
-                str +=  line + "\n"
-            }
-            t -= 1
+            printBranch(str: &str, item: item)
         }
         printT(str: &str)
         str += "end;\n"
@@ -188,30 +166,7 @@ class Generation {
         let ifblock = (block as! IfModelBlock)
         
         for item in ifblock.left {
-            t += 1
-            if item.blocks == .ifblock {
-                printIf(str: &str, block: item)
-                t -= 1
-                continue
-            }
-            
-            if item.blocks == .whileblock {
-                printWhile(str: &str, block: item as! WhileModelBlock, type: "while")
-                t -= 1
-                continue
-            }
-            
-            if item.blocks == .forblock {
-                printWhile(str: &str, block: item as! WhileModelBlock, type: "for")
-                t -= 1
-                continue
-            }
-            
-            for line in item.values ?? [] {
-                printT(str: &str)
-                str += line + "\n"
-            }
-            t -= 1
+            printBranch(str: &str, item: item)
         }
         printT(str: &str)
         str += "end"
@@ -224,30 +179,7 @@ class Generation {
             }
             i += 1
             
-            t += 1
-            if item.blocks == .ifblock {
-                printIf(str: &str, block: item)
-                t -= 1
-                continue
-            }
-            
-            if item.blocks == .whileblock {
-                printWhile(str: &str, block: item as! WhileModelBlock, type: "while")
-                t -= 1
-                continue
-            }
-            
-            if item.blocks == .forblock {
-                printWhile(str: &str, block: item as! WhileModelBlock, type: "for")
-                t -= 1
-                continue
-            }
-            
-            for line in item.values ?? [] {
-                printT(str: &str)
-                str +=  line + "\n"
-            }
-            t -= 1
+            printBranch(str: &str, item: item)
         }
         if i == 0 {
             str += ";\n"
@@ -256,6 +188,32 @@ class Generation {
             printT(str: &str)
             str += "end;\n"
         }
+    }
+    private func printBranch(str: inout String, item: ModelBlock) {
+        t += 1
+        if item.blocks == .ifblock {
+            printIf(str: &str, block: item)
+            t -= 1
+            return
+        }
+        
+        if item.blocks == .whileblock {
+            printWhile(str: &str, block: item as! WhileModelBlock, type: "while")
+            t -= 1
+            return
+        }
+        
+        if item.blocks == .forblock {
+            printWhile(str: &str, block: item as! WhileModelBlock, type: "for")
+            t -= 1
+            return
+        }
+        
+        for line in item.values ?? [] {
+            printT(str: &str)
+            str += line + "\n"
+        }
+        t -= 1
     }
     
     private var t = 0
