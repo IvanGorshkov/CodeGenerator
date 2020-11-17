@@ -9,6 +9,11 @@ import Cocoa
 
 class BaseBlock: NSButton {
     private var blockName: String?
+    var Nameblock: String {
+        get {
+            return blockName ?? ""
+        }
+    }
     var delegate: ReloadDataDelegate!
     private var data: GenModelController
     init(nameBlock: String, frame: NSRect) {

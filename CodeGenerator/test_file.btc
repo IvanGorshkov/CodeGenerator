@@ -1,0 +1,47 @@
+
+<root>
+    <vars>
+        <var_1 type="integer" name="x"></var_1>
+        <var_2 type="integer" name="y"></var_2>
+    </vars>
+    <blocks>
+        <elem_1 block="Старт" name="Старт 1"></elem_1>
+        <elem_2 block="Процесс" name="Процесс 3">
+            <value_1 name="x := 5;"></value_1>
+            <value_2 name="y := 6;"></value_2>
+        </elem_2>
+        <elem_3 block="Ввод" name="Ввод 4">
+            <value_1 name="Read(x);"></value_1>
+        </elem_3>
+        <elem_4 block="Вывод" name="x">
+            <value_1 name="Write(x);"></value_1>
+        </elem_4>
+        <elem_5 block="Условие" name="Условие 6">
+            <value_1 name="x &gt; 0"></value_1>
+            <left>
+                <elem_1 block="Процесс" name="Лев. Процесс 0">
+                    <value_1 name="x := x+12;"></value_1>
+                </elem_1>
+            </left>
+            <right>
+                <elem_1 block="Цикл с предусловием" name="Пр. Цикл с предусловием 0">
+                    <value_1 name="x &lt;&gt; 0"></value_1>
+                    <body>
+                        <elem_1 block="Внешняя процедура" name="Внешняя процедура 0">
+                            <value_1 name="x := Max(x,y);"></value_1>
+                        </elem_1>
+                    </body>
+                </elem_1>
+            </right>
+        </elem_5>
+        <elem_6 block="Счетный цикл" name="Счетный цикл 7">
+            <value_1 name="x := 1 to 10"></value_1>
+            <body>
+                <elem_1 block="Вывод" name="Вывод 0">
+                    <value_1 name="Write(x);"></value_1>
+                </elem_1>
+            </body>
+        </elem_6>
+        <elem_7 block="Конец" name="Конец 2"></elem_7>
+    </blocks>
+</root>

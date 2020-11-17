@@ -29,6 +29,7 @@ class ProcBlock: BaseBlock {
     convenience init(name: String, frame: NSRect) {
         self.init(nameBlock: name, frame: frame)
         contentTintColor = .black
+        title =  "Процедура"
         self.wantsLayer = true
         self.layer?.backgroundColor = NSColor.white.cgColor
         self.isBordered = false

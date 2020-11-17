@@ -18,8 +18,10 @@ class NewVarsController: NSViewController {
         super.viewDidLoad()
         data = GenModelController.shared
         directoryItems = data.getArrayType()
-        tableView.delegate = self
-        tableView.dataSource = self
+        if tableView != nil {
+            tableView.delegate = self
+            tableView.dataSource = self
+        }
         for value in VarType.allCases {
             typesArray.append(value)
             types.addItem(withTitle: value.name())

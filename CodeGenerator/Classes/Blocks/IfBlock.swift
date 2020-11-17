@@ -42,6 +42,5 @@ class IfBlock: BaseBlock {
         textLayer.contentsScale=2;
         textLayer.font = NSFont.systemFont(ofSize: 18, weight: NSFont.Weight.medium)
         self.layer?.addSublayer(textLayer)
-        
     }
 }
