@@ -2,6 +2,16 @@ Program BlockToCode;
 
 var x: integer;
 var y: integer;
+var q: byte;
+var w: shortint;
+var e: longint;
+var r: real;
+var t: single;
+var u: double;
+var i: extended;
+var o: boolean;
+var p: char;
+var z: string;
 Begin
 	x := 5;
 	y := 6;

@@ -1,47 +1,57 @@
 
 <root>
     <vars>
-        <var_1 type="integer" name="x"></var_1>
-        <var_2 type="integer" name="y"></var_2>
+        <var_1 name="x" type="integer"></var_1>
+        <var_2 name="y" type="integer"></var_2>
+        <var_3 name="q" type="byte"></var_3>
+        <var_4 name="w" type="shortint"></var_4>
+        <var_5 name="e" type="longint"></var_5>
+        <var_6 name="r" type="real"></var_6>
+        <var_7 name="t" type="single"></var_7>
+        <var_8 name="u" type="double"></var_8>
+        <var_9 name="i" type="extended"></var_9>
+        <var_10 name="o" type="boolean"></var_10>
+        <var_11 name="p" type="char"></var_11>
+        <var_12 name="z" type="string"></var_12>
     </vars>
     <blocks>
-        <elem_1 block="Старт" name="Старт 1"></elem_1>
-        <elem_2 block="Процесс" name="Процесс 3">
+        <elem_1 name="Старт 1" block="Старт"></elem_1>
+        <elem_2 name="Процесс 3" block="Процесс">
             <value_1 name="x := 5;"></value_1>
             <value_2 name="y := 6;"></value_2>
         </elem_2>
-        <elem_3 block="Ввод" name="Ввод 4">
+        <elem_3 name="Ввод 4" block="Ввод">
             <value_1 name="Read(x);"></value_1>
         </elem_3>
-        <elem_4 block="Вывод" name="x">
+        <elem_4 name="x" block="Вывод">
             <value_1 name="Write(x);"></value_1>
         </elem_4>
-        <elem_5 block="Условие" name="Условие 6">
+        <elem_5 name="Условие 6" block="Условие">
             <value_1 name="x &gt; 0"></value_1>
             <left>
-                <elem_1 block="Процесс" name="Лев. Процесс 0">
+                <elem_1 name="Лев. Процесс 0" block="Процесс">
                     <value_1 name="x := x+12;"></value_1>
                 </elem_1>
             </left>
             <right>
-                <elem_1 block="Цикл с предусловием" name="Пр. Цикл с предусловием 0">
+                <elem_1 name="Пр. Цикл с предусловием 0" block="Цикл с предусловием">
                     <value_1 name="x &lt;&gt; 0"></value_1>
                     <body>
-                        <elem_1 block="Внешняя процедура" name="Внешняя процедура 0">
+                        <elem_1 name="Внешняя процедура 0" block="Внешняя процедура">
                             <value_1 name="x := Max(x,y);"></value_1>
                         </elem_1>
                     </body>
                 </elem_1>
             </right>
         </elem_5>
-        <elem_6 block="Счетный цикл" name="Счетный цикл 7">
+        <elem_6 name="Счетный цикл 7" block="Счетный цикл">
             <value_1 name="x := 1 to 10"></value_1>
             <body>
-                <elem_1 block="Вывод" name="Вывод 0">
+                <elem_1 name="Вывод 0" block="Вывод">
                     <value_1 name="Write(x);"></value_1>
                 </elem_1>
             </body>
         </elem_6>
-        <elem_7 block="Конец" name="Конец 2"></elem_7>
+        <elem_7 name="Конец 2" block="Конец"></elem_7>
     </blocks>
 </root>

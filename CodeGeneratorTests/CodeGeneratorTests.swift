@@ -130,13 +130,16 @@ class CodeGeneratorTests: XCTestCase {
     
     func testisAllVarsInclude() {
         let varsArr = ["integer", "byte", "shortint", "longint", "real", "single", "double", "extended", "boolean", "char", "string"]
+        var varsEnum = [VarType]()
+        for id in Range(1...11) {
+            varsEnum.append(VarType(id: id)!)
+        }
         var i = 0
-        for item in VarType.allCases {
+        for item in varsEnum {
             XCTAssertEqual(item.name(), varsArr[i])
             i += 1
         }
     }
-    
     
     func testAddGenModel() {
         let gModel = GenModelController.shared
@@ -237,6 +240,16 @@ class CodeGeneratorTests: XCTestCase {
             print("не нашел файл")
         }
         
+        GenModelController.shared.removeTypeAll()
+        GenModelController.shared.blocksList.removeAll()
+    }
+    
+    func testCreateXMLFile() {
+        let filepath = Bundle.main.path(forResource: "test_file", ofType: "btc")!
+        let parseXMLFile = XMLParserAlg(path: filepath)
+        parseXMLFile.parseXMLFile()
+        let xmlFile = CreateXML().generateXML()
+        XCTAssertNotNil(xmlFile)
         GenModelController.shared.removeTypeAll()
         GenModelController.shared.blocksList.removeAll()
     }

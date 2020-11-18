@@ -10,12 +10,6 @@ import Foundation
 //Parse using Foundation's XMLParser
 class XML: XMLNode {
     var parser: XMLParser
-    init(data: Data) {
-        self.parser = XMLParser(data: data)
-        super.init()
-        parser.delegate = self
-        parser.parse()
-    }
     init?(contentsOf url: URL) {
         if !FileManager.default.fileExists(atPath: url.path) { return nil }
         guard let parser = XMLParser(contentsOf: url) else { return nil}
@@ -37,9 +31,6 @@ class XMLNode: NSObject {
     override init() {
         self.name = "root"
     }
-    init(name: String) {
-        self.name = name
-    }
     init(name: String, value: String) {
         self.name = name
         self.text = value
@@ -48,6 +39,7 @@ class XMLNode: NSObject {
     func indexIsValid(index: Int) -> Bool {
         return (index >= 0 && index < children.count)
     }
+    
     subscript(index: Int) -> XMLNode {
         get {
             assert(indexIsValid(index: index), "Index out of range")
@@ -73,31 +65,14 @@ class XMLNode: NSObject {
             filteredChild.children = newNode.children
         }
     }
+    
     func addChild(_ node: XMLNode) {
         children.append(node)
         node.parent = self
     }
+    
     func addChild(name: String, value: String) {
         addChild(XMLNode(name: name, value: value))
-    }
-    func removeChild(at index: Int) {
-        children.remove(at: index)
-    }
-    // MARK: Description properties
-    override var description: String {
-        if self is XML, let first = children.first {
-            return "<?xml version=\"1.0\" encoding=\"utf-8\"?>\(first.description)"
-        } else if let name = name {
-            return "<\(name)\(attributesDescription)>\(text)\(childrenDescription)</\(name)>"
-        } else {
-            return ""
-        }
-    }
-    var attributesDescription: String {
-        return attributes.map({" \($0)=\"\($1)\" "}).joined()
-    }
-    var childrenDescription: String {
-        return children.map({ $0.description }).joined()
     }
 }
 extension XMLNode: XMLParserDelegate {

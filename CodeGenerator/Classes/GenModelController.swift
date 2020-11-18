@@ -114,24 +114,6 @@ extension LinkedList {
 //MARK: - Copy Nodes
 extension LinkedList {
 
-    private mutating func copyNodes(settingNodeAt index: Index, to value: Element) {
-
-        var currentIndex = startIndex
-        var currentNode = Node(value: currentIndex == index ? value : currentIndex.node!.value)
-        let newHeadNode = currentNode
-        currentIndex = self.index(after: currentIndex)
-
-        while currentIndex < endIndex {
-            let nextNode = Node(value: currentIndex == index ? value : currentIndex.node!.value)
-            currentNode.next = nextNode
-            nextNode.previous = currentNode
-            currentNode = nextNode
-            currentIndex = self.index(after: currentIndex)
-        }
-        headNode = newHeadNode
-        tailNode = currentNode
-    }
-
     @discardableResult
     private mutating func copyNodes(removing range: Range<Index>) -> Range<Index> {
 
@@ -280,12 +262,6 @@ extension LinkedList: MutableCollection {
         set {
             precondition(position.offset != endIndex.offset, "Index out of range")
 
-            // Copy-on-write semantics for nodes
-            if !isKnownUniquelyReferenced(&headNode) {
-                copyNodes(settingNodeAt: position, to: newValue)
-            } else {
-                position.node?.value = newValue
-            }
         }
     }
 }
@@ -299,25 +275,6 @@ public extension LinkedList {
         replaceSubrange(startIndex..<startIndex, with: CollectionOfOne(newElement))
     }
 
-    mutating func prepend<S>(contentsOf newElements: __owned S) where S: Sequence, S.Element == Element {
-        replaceSubrange(startIndex..<startIndex, with: newElements)
-    }
-
-    @discardableResult
-    mutating func popFirst() -> Element? {
-        if isEmpty {
-            return nil
-        }
-        return removeFirst()
-    }
-
-    @discardableResult
-    mutating func popLast() -> Element? {
-        guard isEmpty else {
-            return nil
-        }
-        return removeLast()
-    }
 }
 
 //MARK: - BidirectionalCollection Conformance
@@ -339,10 +296,6 @@ extension LinkedList: BidirectionalCollection {
 //MARK: - RangeReplaceableCollection Conformance
 extension LinkedList: RangeReplaceableCollection {
 
-    public mutating func append<S>(contentsOf newElements: __owned S) where S: Sequence, Element == S.Element {
-        replaceSubrange(endIndex..<endIndex, with: newElements)
-    }
-
     public mutating func replaceSubrange<S, R>(_ subrange: R, with newElements: __owned S) where S: Sequence, R: RangeExpression, Element == S.Element, Index == R.Bound {
 
         var range = subrange.relative(to: indices)
@@ -355,7 +308,6 @@ extension LinkedList: RangeReplaceableCollection {
             return
         }
 
-        var newElementsCount = 0
 
         // There are no new elements, so range indicates deletion
         guard let nodeChain = NodeChain(of: newElements) else {
@@ -406,10 +358,7 @@ extension LinkedList: RangeReplaceableCollection {
 
             return
         }
-
-        // Obtain the count of the new elements from the node chain composed from them
-        newElementsCount = nodeChain.count
-
+        
         // Replace entire content of list with new elements
         if range.lowerBound == startIndex && range.upperBound == endIndex {
             headNode = nodeChain.head
@@ -463,12 +412,5 @@ extension LinkedList: ExpressibleByArrayLiteral {
 
     public init(arrayLiteral elements: ArrayLiteralElement...) {
         self.init(elements)
-    }
-}
-
-//MARK: - CustomStringConvertible Conformance
-extension LinkedList: CustomStringConvertible {
-    public var description: String {
-        return "[" + lazy.map { "\($0)" }.joined(separator: ", ") + "]"
     }
 }
