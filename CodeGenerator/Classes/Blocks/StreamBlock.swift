@@ -63,7 +63,7 @@ class StreamBlock: BaseBlock {
         createTextLayer()
     }
     
-    func createTextLayer() {
+    private func createTextLayer() {
         textLayer.frame = bounds
         textLayer.string = name
         textLayer.masksToBounds = true

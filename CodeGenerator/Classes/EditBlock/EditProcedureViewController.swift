@@ -8,13 +8,13 @@
 import Cocoa
 
 class EditProcedureViewController: NSViewController {
-    @IBOutlet weak var tableView: NSTableView!
-    @IBOutlet weak var types: NSPopUpButton!
-    @IBOutlet weak var typesProc: NSPopUpButton!
-    @IBOutlet weak var textFieldName: NSTextField!
-    @IBOutlet weak var textFieldParams: NSTextField!
-    @IBOutlet weak var blockName: NSTextField!
-    @IBOutlet weak var eql: NSTextField!
+    @IBOutlet private weak var tableView: NSTableView!
+    @IBOutlet private weak var types: NSPopUpButton!
+    @IBOutlet private weak var typesProc: NSPopUpButton!
+    @IBOutlet private weak var textFieldName: NSTextField!
+    @IBOutlet private weak var textFieldParams: NSTextField!
+    @IBOutlet private weak var blockName: NSTextField!
+    @IBOutlet private weak var eql: NSTextField!
     private var typesArray = [ModelType]()
     private var directoryItems = [ModelType]()
     private var sentacis = [String]()
@@ -34,7 +34,7 @@ class EditProcedureViewController: NSViewController {
         }
     }
     
-    @IBAction func popUpSelectionDidChange(_ sender: NSPopUpButton) {
+    @IBAction private func popUpSelectionDidChange(_ sender: NSPopUpButton) {
         if typesProc.indexOfSelectedItem == 1 {
             types.isHidden = true
             eql.isHidden = true
@@ -46,10 +46,10 @@ class EditProcedureViewController: NSViewController {
     }
     
     
-    @IBAction func add(_ sender: Any) {
+    @IBAction private func add(_ sender: Any) {
         if typesProc.indexOfSelectedItem == 1 {
             if textFieldName.stringValue.isEmpty {
-                let answer = DeleteAlert(question: "Ошибка данных", text: "Незаполненные данные")
+                let answer = Alert(question: "Ошибка данных", text: "Незаполненные данные")
                 answer.showError()
                 return
             }
@@ -57,7 +57,7 @@ class EditProcedureViewController: NSViewController {
             sentacis.append("\(textFieldName.stringValue)(\(textFieldParams.stringValue));")
         } else {
             if textFieldName.stringValue.isEmpty || typesArray.isEmpty {
-                let answer = DeleteAlert(question: "Ошибка данных", text: "Незаполненные данные")
+                let answer = Alert(question: "Ошибка данных", text: "Незаполненные данные")
                 answer.showError()
                 return
             }
@@ -70,7 +70,7 @@ class EditProcedureViewController: NSViewController {
     }
     
     
-    @IBAction func close(_ sender: Any) {
+    @IBAction private func close(_ sender: Any) {
         if let controller = self.storyboard?.instantiateController(withIdentifier: "ViewController") as? ViewController {
             self.view.window?.contentViewController = controller
         }
@@ -91,8 +91,8 @@ extension EditProcedureViewController: NSTableViewDelegate {
         }
         
         DispatchQueue.main.async { [self] in
-            let answer = DeleteAlert(question: "Удалить операцию", text: "Вы уверены, что хотите удалить операцию?")
-            if answer.showAlrt() == true {
+            let answer = Alert(question: "Удалить операцию", text: "Вы уверены, что хотите удалить операцию?")
+            if answer.showDeleteAlert() == true {
                 let selectedTableView = notification.object as! NSTableView
                 myProcess?.values?.remove(at: selectedTableView.selectedRow)
                 sentacis = myProcess?.values ?? []

@@ -51,15 +51,25 @@ class ViewController: NSViewController, ReloadDataDelegate {
             self.view.window?.contentViewController = controller
         }
     }
+    func generateCurrentTimeStamp () -> String {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "yyyy_MM_dd_hh_mm_ss_SSS"
+        return (formatter.string(from: Date()) as NSString) as String
+    }
+    
     
     @IBAction func generate(_ sender: Any) {
-        let generation = Generation(generated: gemMC)
-        if !generation.algIsCorrect() {
-            let errorAlert = DeleteAlert(question: "Ошибка при генерации", text: generation.getError())
+        print(generateCurrentTimeStamp());
+        var text = ""
+        let genManager = GenManager();
+        
+        if !genManager.generate(analyzer: AnalyserPascal(data: gemMC), generation: GenerationPascal(generated: gemMC), text: &text) {
+            let errorAlert = Alert(question: "Ошибка при генерации", text: text)
             errorAlert.showError()
             return
         }
-        textView.string = generation.generat()
+        textView.string = text
+        print(generateCurrentTimeStamp());
     }
     
     override func viewDidLoad() {
@@ -100,7 +110,7 @@ class ViewController: NSViewController, ReloadDataDelegate {
     
     @objc private func goEditForBlock(_ sender: IfBlock) {
         index = gemMC.blocksList.index(gemMC.blocksList.startIndex, offsetBy: sender.tag )
-        editBlcokForViewController.myWileBlock = gemMC.blocksList[index] as? WhileModelBlock
+        editBlcokForViewController.myForBlock = gemMC.blocksList[index] as? WhileModelBlock
         self.view.window?.contentViewController = editBlcokForViewController
     }
     

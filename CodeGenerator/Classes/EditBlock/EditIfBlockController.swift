@@ -8,12 +8,12 @@
 import Cocoa
 
 class EditIfBlockController: NSViewController, CellDelegate {
-    @IBOutlet weak var addIfBlcok: NSPopUpButton!
-    @IBOutlet weak var addElseBlcok: NSPopUpButton!
-    @IBOutlet weak var tableViewIf: NSTableView!
-    @IBOutlet weak var tableViewElse: NSTableView!
-    @IBOutlet weak var blockName: NSTextField!
-    @IBOutlet weak var textField: NSTextField!
+    @IBOutlet private weak var addIfBlcok: NSPopUpButton!
+    @IBOutlet private weak var addElseBlcok: NSPopUpButton!
+    @IBOutlet private weak var tableViewIf: NSTableView!
+    @IBOutlet private weak var tableViewElse: NSTableView!
+    @IBOutlet private weak var blockName: NSTextField!
+    @IBOutlet private weak var textField: NSTextField!
     private lazy var ifEditBlockProsessViewController: EditBlockProsessViewController = {
         return self.storyboard!.instantiateController(withIdentifier: "EditBlockProsessViewController") as! EditBlockProsessViewController
     }()
@@ -67,8 +67,8 @@ class EditIfBlockController: NSViewController, CellDelegate {
             addElseBlcok.addItem(withTitle: value.name())
         }
         guard let myIfModel = myIfModel else { return }
-        addToArrat(array: &ifArray, list: myIfModel.left)
-        addToArrat(array: &elseArray, list: myIfModel.right)
+        addToArray(array: &ifArray, list: myIfModel.left)
+        addToArray(array: &elseArray, list: myIfModel.right)
         setTablesViews()
         
         var blockName = ""
@@ -81,7 +81,7 @@ class EditIfBlockController: NSViewController, CellDelegate {
         textField.stringValue = blockName
     }
     
-    private func addToArrat(array: inout [String], list: LinkedList<ModelBlock>) {
+    private func addToArray(array: inout [String], list: LinkedList<ModelBlock>) {
         for item in list {
             array.append(item.name ?? "noname")
         }
@@ -96,19 +96,19 @@ class EditIfBlockController: NSViewController, CellDelegate {
         tableViewElse.registerForDraggedTypes([.string])
     }
     
-    @IBAction func save(_ sender: Any) {
+    @IBAction private func save(_ sender: Any) {
         myIfModel?.values = [textField.stringValue]
     }
     
     private func addBlock(index: Int, array: inout [String], list: inout LinkedList<ModelBlock>, side: String) {
-        let blockfactory = InfoAboutBlock(selected: blocksArray[index], name: "\(side) \(blocksArray[index].name()) \(list.count)", tag: list.count)
+        let blockfactory = ModelBlcokFactory(selected: blocksArray[index], name: "\(side) \(blocksArray[index].name()) \(list.count)", tag: list.count)
         let createdBlock = blockfactory.produce()
         list.append(createdBlock)
         array.append(createdBlock.name ?? "")
     }
     
-    @IBAction func add(_ sender: Any) {
-        let answer = DeleteAlert(question: "Ошибка данных", text: "Введите условие!")
+    @IBAction private func add(_ sender: Any) {
+        let answer = Alert(question: "Ошибка данных", text: "Введите условие!")
         if textField.stringValue.isEmpty {
             answer.showError()
             return
@@ -124,7 +124,7 @@ class EditIfBlockController: NSViewController, CellDelegate {
         
     }
     
-    @IBAction func close(_ sender: Any) {
+    @IBAction private func close(_ sender: Any) {
         if let controller = self.storyboard?.instantiateController(withIdentifier: "ViewController") as? ViewController {
             self.view.window?.contentViewController = controller
         }
@@ -231,7 +231,7 @@ extension EditIfBlockController: NSTableViewDelegate {
             editProcedureViewController.myProcess = list[selectedIndex]
             self.view.window?.contentViewController = editProcedureViewController
         case .forblock:
-            editBlcokForViewController.myWileBlock = list[selectedIndex] as? WhileModelBlock
+            editBlcokForViewController.myForBlock = list[selectedIndex] as? WhileModelBlock
             self.view.window?.contentViewController = editBlcokForViewController
         default:
             break;

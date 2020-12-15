@@ -8,9 +8,9 @@
 import Cocoa
 
 class NewVarsController: NSViewController {
-    @IBOutlet weak var tableView: NSTableView!
-    @IBOutlet weak var types: NSPopUpButton!
-    @IBOutlet weak var textField: NSTextField!
+    @IBOutlet private weak var tableView: NSTableView!
+    @IBOutlet private weak var types: NSPopUpButton!
+    @IBOutlet private weak var textField: NSTextField!
     private var typesArray = [VarType]()
     private var directoryItems = [ModelType]()
     private var data: GenModelController!
@@ -28,9 +28,9 @@ class NewVarsController: NSViewController {
         }
     }
     
-    @IBAction func add(_ sender: Any) {
+    @IBAction private func add(_ sender: Any) {
         if textField.stringValue.isEmpty {
-            let answer = DeleteAlert(question: "Ошибка данных", text: "Незаполненные данные")
+            let answer = Alert(question: "Ошибка данных", text: "Незаполненные данные")
             answer.showError()
             return
         }
@@ -38,7 +38,7 @@ class NewVarsController: NSViewController {
         let isInclude = directoryItems.first { (row) -> Bool in row.name == textField.stringValue }
         
         if isInclude?.name == textField.stringValue {
-            let answer = DeleteAlert(question: "Ошибка данных", text: "Такокая переменная уже существует")
+            let answer = Alert(question: "Ошибка данных", text: "Такая переменная уже существует")
             answer.showError()
             return
         }
@@ -48,7 +48,7 @@ class NewVarsController: NSViewController {
         tableView.reloadData()
     }
     
-    @IBAction func close(_ sender: Any) {
+    @IBAction private func close(_ sender: Any) {
         if let controller = self.storyboard?.instantiateController(withIdentifier: "ViewController") as? ViewController {
             self.view.window?.contentViewController = controller
         }
@@ -69,8 +69,8 @@ extension NewVarsController: NSTableViewDelegate {
         }
         
         DispatchQueue.main.async { [self] in
-            let answer = DeleteAlert(question: "Удалить операцию", text: "Вы уверены, что хотите удалить операцию?")
-            if answer.showAlrt() == true {
+            let answer = Alert(question: "Удалить операцию", text: "Вы уверены, что хотите удалить операцию?")
+            if answer.showDeleteAlert() == true {
                 let selectedTableView = notification.object as! NSTableView
                 data.removeType(index: selectedTableView.selectedRow)
                 directoryItems = data.getArrayType()

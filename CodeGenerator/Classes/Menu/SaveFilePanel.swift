@@ -8,7 +8,7 @@
 import Foundation
 import Cocoa
 
-class SaveingFiles {
+class FileSystemWindow {
     private let message: String
     private let prompt: String
     private let title: String

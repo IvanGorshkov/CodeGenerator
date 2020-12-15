@@ -65,7 +65,7 @@ class CreateXML {
         parent.addChild(body)
     }
     
-    private func bodyIf(item: ModelBlock, parent: inout XMLElement){
+    private func bodyIf(item: ModelBlock, parent: inout XMLElement) {
         let ifItem = item as! IfModelBlock
         var left = XMLElement(name: "left")
         var j = 1

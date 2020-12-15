@@ -8,13 +8,13 @@
 import Cocoa
 
 class EditBlcokForViewController: NSViewController, CellDelegate {
-    @IBOutlet weak var addBlock: NSPopUpButton!
-    @IBOutlet weak var varity: NSPopUpButton!
-    @IBOutlet weak var forType: NSPopUpButton!
-    @IBOutlet weak var tableView: NSTableView!
-    @IBOutlet weak var blockName: NSTextField!
-    @IBOutlet weak var from: NSTextField!
-    @IBOutlet weak var to: NSTextField!
+    @IBOutlet private weak var addBlock: NSPopUpButton!
+    @IBOutlet private weak var varity: NSPopUpButton!
+    @IBOutlet private weak var forType: NSPopUpButton!
+    @IBOutlet private weak var tableView: NSTableView!
+    @IBOutlet private weak var blockName: NSTextField!
+    @IBOutlet private weak var from: NSTextField!
+    @IBOutlet private weak var to: NSTextField!
     private lazy var ifEditBlockProsessViewController: EditBlockProsessViewController = {
         return self.storyboard!.instantiateController(withIdentifier: "EditBlockProsessViewController") as! EditBlockProsessViewController
     }()
@@ -34,12 +34,12 @@ class EditBlcokForViewController: NSViewController, CellDelegate {
         return self.storyboard!.instantiateController(withIdentifier: "EditBlcokForViewController") as! EditBlcokForViewController
     }()
     private var blocksArray = [Blocks]()
-    private var blocksInWileArray = [String]()
-    var myWileBlock: WhileModelBlock?
+    private var blocksInForArray = [String]()
+    var myForBlock: WhileModelBlock?
     
     func didPressButton(_ tag: Int, _ table: Int) {
-        guard let myWileBlock = myWileBlock else { return }
-        blocksInWileArray.remove(at: tag)
+        guard let myWileBlock = myForBlock else { return }
+        blocksInForArray.remove(at: tag)
         let selectedIndex = myWileBlock.body.index(myWileBlock.body.startIndex, offsetBy: tag)
         myWileBlock.body.remove(at: selectedIndex)
         tableView.reloadData()
@@ -47,14 +47,14 @@ class EditBlcokForViewController: NSViewController, CellDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        blockName.stringValue = "Блок: \(myWileBlock?.name ?? "")"
+        blockName.stringValue = "Блок: \(myForBlock?.name ?? "")"
         for value in Blocks.allCases {
             if value == .start || value == .end { continue }
             blocksArray.append(value)
             addBlock.addItem(withTitle: value.name())
         }
-        for item in myWileBlock?.body ?? [] {
-            blocksInWileArray.append(item.name ?? "noname")
+        for item in myForBlock?.body ?? [] {
+            blocksInForArray.append(item.name ?? "noname")
         }
         
         let directoryItems = GenModelController.shared.getArrayType()
@@ -67,8 +67,8 @@ class EditBlcokForViewController: NSViewController, CellDelegate {
         tableView.registerForDraggedTypes([.string])
         
 
-        if myWileBlock?.values?.count != 0 {
-            guard let strFor = myWileBlock?.values?[0] else { return }
+        if myForBlock?.values?.count != 0 {
+            guard let strFor = myForBlock?.values?[0] else { return }
             let ForAsArray = strFor.split(separator: " ").map{ String($0) }
             if ForAsArray[3] == "downto" {
                 forType.selectItem(at: 1)
@@ -89,32 +89,32 @@ class EditBlcokForViewController: NSViewController, CellDelegate {
 
     }
     
-    @IBAction func save(_ sender: Any) {
-        let answer = DeleteAlert(question: "Ошибка данных", text: "Введите условие!")
+    @IBAction private func save(_ sender: Any) {
+        let answer = Alert(question: "Ошибка данных", text: "Введите условие!")
         if from.stringValue.isEmpty || to.stringValue.isEmpty || ((varity.selectedItem?.title.isEmpty) == nil) {
             answer.showError()
             return
         }
         
-        myWileBlock?.values = ["\(varity.selectedItem?.title ?? "") := \(from.stringValue) \(forType.selectedItem?.title ?? "") \(to.stringValue)"]
+        myForBlock?.values = ["\(varity.selectedItem?.title ?? "") := \(from.stringValue) \(forType.selectedItem?.title ?? "") \(to.stringValue)"]
     }
     
-    @IBAction func add(_ sender: Any) {
-        let answer = DeleteAlert(question: "Ошибка данных", text: "Введите условие!")
+    @IBAction private func add(_ sender: Any) {
+        let answer = Alert(question: "Ошибка данных", text: "Введите условие!")
         if from.stringValue.isEmpty || to.stringValue.isEmpty || ((varity.selectedItem?.title.isEmpty) == nil) {
             answer.showError()
             return
         }
-        guard let myWileBlock = myWileBlock else { return }
+        guard let myWileBlock = myForBlock else { return }
         let eBlock = blocksArray[addBlock.indexOfSelectedItem]
-        let blockfactory = InfoAboutBlock(selected: eBlock, name: "\(eBlock.name()) \(myWileBlock.body.count)", tag: myWileBlock.body.count)
+        let blockfactory = ModelBlcokFactory(selected: eBlock, name: "\(eBlock.name()) \(myWileBlock.body.count)", tag: myWileBlock.body.count)
         let createdBlock = blockfactory.produce()
         myWileBlock.body.append(createdBlock)
-        blocksInWileArray.append(createdBlock.name ?? "")
+        blocksInForArray.append(createdBlock.name ?? "")
         tableView.reloadData()
     }
     
-    @IBAction func close(_ sender: Any) {
+    @IBAction private func close(_ sender: Any) {
         if let controller = self.storyboard?.instantiateController(withIdentifier: "ViewController") as? ViewController {
             self.view.window?.contentViewController = controller
         }
@@ -124,13 +124,13 @@ class EditBlcokForViewController: NSViewController, CellDelegate {
 
 extension EditBlcokForViewController: NSTableViewDataSource {
     func numberOfRows(in tableView: NSTableView) -> Int {
-        return blocksInWileArray.count
+        return blocksInForArray.count
     }
 }
 
 extension EditBlcokForViewController: NSTableViewDelegate {
     func tableView(_ tableView: NSTableView, pasteboardWriterForRow row: Int) -> NSPasteboardWriting? {
-        return blocksInWileArray[row] as NSString
+        return blocksInForArray[row] as NSString
     }
     
     func tableView(_ tableView: NSTableView, validateDrop info: NSDraggingInfo, proposedRow row: Int, proposedDropOperation dropOperation: NSTableView.DropOperation) -> NSDragOperation {
@@ -143,11 +143,11 @@ extension EditBlcokForViewController: NSTableViewDelegate {
         guard let items = info.draggingPasteboard.pasteboardItems,
               let pasteBoardItem = items.first,
               let pasteBoardItemName = pasteBoardItem.string(forType: .string),
-              let index = blocksInWileArray.firstIndex(of: pasteBoardItemName) else { return false }
-        blocksInWileArray.swapAt(index, (index < row ? row - 1 : row))
-        let index_1 = (myWileBlock?.body.index((myWileBlock?.body.startIndex)!, offsetBy: (index < row ? row - 1 : row)))!
-        let index_2 = myWileBlock?.body.index((myWileBlock?.body.startIndex)!, offsetBy: index)
-        myWileBlock?.body.swapAt(index_1, index_2!)
+              let index = blocksInForArray.firstIndex(of: pasteBoardItemName) else { return false }
+        blocksInForArray.swapAt(index, (index < row ? row - 1 : row))
+        let index_1 = (myForBlock?.body.index((myForBlock?.body.startIndex)!, offsetBy: (index < row ? row - 1 : row)))!
+        let index_2 = myForBlock?.body.index((myForBlock?.body.startIndex)!, offsetBy: index)
+        myForBlock?.body.swapAt(index_1, index_2!)
         tableView.beginUpdates()
         tableView.moveRow(at: index, to: (index < row ? row - 1 : row))
         tableView.endUpdates()
@@ -155,7 +155,7 @@ extension EditBlcokForViewController: NSTableViewDelegate {
     }
     
     func tableView(_ tableView: NSTableView, viewFor tableColumn: NSTableColumn?, row: Int) -> NSView? {
-        let text = blocksInWileArray[row]
+        let text = blocksInForArray[row]
         let cellIdentifier = "Cell1"
         
         if let cell = tableView.makeView(withIdentifier: NSUserInterfaceItemIdentifier(rawValue: cellIdentifier), owner: nil) as? BranchingСell {
@@ -173,7 +173,7 @@ extension EditBlcokForViewController: NSTableViewDelegate {
         if tableiew.selectedRow == -1 {
             return
         }
-        guard let myWileBlock = myWileBlock else {
+        guard let myWileBlock = myForBlock else {
             return
         }
         let selectedIndex = myWileBlock.body.index(myWileBlock.body.startIndex, offsetBy: tableiew.selectedRow)
@@ -201,7 +201,7 @@ extension EditBlcokForViewController: NSTableViewDelegate {
                 self.view.window?.contentViewController = editProcedureViewController
                 break;
             case .forblock:
-                editBlcokForViewController.myWileBlock =  myWileBlock.body[selectedIndex] as? WhileModelBlock
+                editBlcokForViewController.myForBlock =  myWileBlock.body[selectedIndex] as? WhileModelBlock
                 self.view.window?.contentViewController = editBlcokForViewController
             default:
                 break;

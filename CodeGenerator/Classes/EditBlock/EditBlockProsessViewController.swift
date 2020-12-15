@@ -30,9 +30,9 @@ class EditBlockProsessViewController: NSViewController {
         }
     }
     
-    @IBAction func add(_ sender: Any) {
+    @IBAction private func add(_ sender: Any) {
         if textField.stringValue.isEmpty || typesArray.isEmpty {
-            let answer = DeleteAlert(question: "Ошибка данных", text: "Незаполненные данные")
+            let answer = Alert(question: "Ошибка данных", text: "Незаполненные данные")
             answer.showError()
             return
         }
@@ -43,7 +43,7 @@ class EditBlockProsessViewController: NSViewController {
     }
     
     
-    @IBAction func close(_ sender: Any) {
+    @IBAction private func close(_ sender: Any) {
         if let controller = self.storyboard?.instantiateController(withIdentifier: "ViewController") as? ViewController {
             self.view.window?.contentViewController = controller
         }
@@ -64,8 +64,8 @@ extension EditBlockProsessViewController: NSTableViewDelegate {
         }
         
         DispatchQueue.main.async { [self] in
-            let answer = DeleteAlert(question: "Удалить операцию", text: "Вы уверены, что хотите удалить операцию?")
-            if answer.showAlrt() == true {
+            let answer = Alert(question: "Удалить операцию", text: "Вы уверены, что хотите удалить операцию?")
+            if answer.showDeleteAlert() == true {
                 let selectedTableView = notification.object as! NSTableView
                 myProcess?.values?.remove(at: selectedTableView.selectedRow)
                 sentacis = myProcess?.values ?? []

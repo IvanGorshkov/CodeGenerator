@@ -19,55 +19,55 @@ class CodeGeneratorTests: XCTestCase {
     }
     
     func testCreatModelEnd() {
-        let fabric = InfoAboutBlock(selected: .end, name: "конец", tag: 0)
+        let fabric = ModelBlcokFactory(selected: .end, name: "конец", tag: 0)
         let block = fabric.produce()
         XCTAssertEqual(block.blocks, Blocks.end)
     }
     
     func testCreatModelStart() {
-        let fabric = InfoAboutBlock(selected: .start, name: "старт", tag: 0)
+        let fabric = ModelBlcokFactory(selected: .start, name: "старт", tag: 0)
         let block = fabric.produce()
         XCTAssertEqual(block.blocks, Blocks.start)
     }
     
     func testCreatModelProcess() {
-        let fabric = InfoAboutBlock(selected: .prosess, name: "процесс", tag: 0)
+        let fabric = ModelBlcokFactory(selected: .prosess, name: "процесс", tag: 0)
         let block = fabric.produce()
         XCTAssertEqual(block.blocks, Blocks.prosess)
     }
     
     func testCreatModelStreamIn() {
-        let fabric = InfoAboutBlock(selected: .instream, name: "Ввод", tag: 0)
+        let fabric = ModelBlcokFactory(selected: .instream, name: "Ввод", tag: 0)
         let block = fabric.produce()
         XCTAssertEqual(block.blocks, Blocks.instream)
     }
     
     func testCreatModelStreamOut() {
-        let fabric = InfoAboutBlock(selected: .outstream, name: "Вывод", tag: 0)
+        let fabric = ModelBlcokFactory(selected: .outstream, name: "Вывод", tag: 0)
         let block = fabric.produce()
         XCTAssertEqual(block.blocks, Blocks.outstream)
     }
     
     func testCreatModelProc() {
-        let fabric = InfoAboutBlock(selected: .procedure, name: "процедура", tag: 0)
+        let fabric = ModelBlcokFactory(selected: .procedure, name: "процедура", tag: 0)
         let block = fabric.produce()
         XCTAssertEqual(block.blocks, Blocks.procedure)
     }
     
     func testCreatModelIf() {
-        let fabric = InfoAboutBlock(selected: .ifblock, name: "условие", tag: 0)
+        let fabric = ModelBlcokFactory(selected: .ifblock, name: "условие", tag: 0)
         let block = fabric.produce()
         XCTAssertEqual(block.blocks, Blocks.ifblock)
     }
     
     func testCreatModelWhile() {
-        let fabric = InfoAboutBlock(selected: .whileblock, name: "цикл while", tag: 0)
+        let fabric = ModelBlcokFactory(selected: .whileblock, name: "цикл while", tag: 0)
         let block = fabric.produce()
         XCTAssertEqual(block.blocks, Blocks.whileblock)
     }
     
     func testCreatModelFor() {
-        let fabric = InfoAboutBlock(selected: .forblock, name: "цикл for", tag: 0)
+        let fabric = ModelBlcokFactory(selected: .forblock, name: "цикл for", tag: 0)
         let block = fabric.produce()
         XCTAssertEqual(block.blocks, Blocks.forblock)
     }
@@ -95,7 +95,11 @@ class CodeGeneratorTests: XCTestCase {
     }
     
     func testGenerationEmptyFile()  {
-        let emptyFile = Generation(generated: GenModelController.shared)
+        let gModel = GenModelController.shared
+        let emptyFile = AnalyserPascal(data: gModel)
+        let genManager = GenManager()
+        var str = ""
+        XCTAssertFalse(genManager.generate(analyzer: emptyFile, generation: GenerationPascal(generated: gModel), text: &str))
         XCTAssertFalse(emptyFile.algIsCorrect())
         XCTAssertEqual(emptyFile.getError(), "Отсутствует end")
         GenModelController.shared.removeTypeAll()
@@ -105,7 +109,8 @@ class CodeGeneratorTests: XCTestCase {
     func testGenerationWithEnd()  {
         let savingEnd = SaveBlock(block: .end, name: "Конец")
         savingEnd.save()
-        let emptyFile = Generation(generated: GenModelController.shared)
+        let gModel = GenModelController.shared
+        let emptyFile = AnalyserPascal(data: gModel)
         XCTAssertFalse(emptyFile.algIsCorrect())
         XCTAssertEqual(emptyFile.getError(), "Отсутствует start")
         GenModelController.shared.removeTypeAll()
@@ -115,7 +120,8 @@ class CodeGeneratorTests: XCTestCase {
     func testGenerationWithStart()  {
         let savingEnd = SaveBlock(block: .start, name: "Старт")
         savingEnd.save()
-        let emptyFile = Generation(generated: GenModelController.shared)
+        let gModel = GenModelController.shared
+        let emptyFile = AnalyserPascal(data: gModel)
         XCTAssertFalse(emptyFile.algIsCorrect())
         XCTAssertEqual(emptyFile.getError(), "Отсутствует end")
         GenModelController.shared.removeTypeAll()
@@ -217,7 +223,8 @@ class CodeGeneratorTests: XCTestCase {
         let filepath = Bundle.main.path(forResource: "test_file", ofType: "btc")!
         let parseXMLFile = XMLParserAlg(path: filepath)
         parseXMLFile.parseXMLFile()
-        let file = Generation(generated: GenModelController.shared)
+        let gModel = GenModelController.shared
+        let file = AnalyserPascal(data: gModel)
         XCTAssertTrue(file.algIsCorrect())
         GenModelController.shared.removeTypeAll()
         GenModelController.shared.blocksList.removeAll()
@@ -227,12 +234,15 @@ class CodeGeneratorTests: XCTestCase {
         let filepath = Bundle.main.path(forResource: "test_file", ofType: "btc")!
         let parseXMLFile = XMLParserAlg(path: filepath)
         parseXMLFile.parseXMLFile()
-        let file = Generation(generated: GenModelController.shared)
-        XCTAssertTrue(file.algIsCorrect())
+        let file = GenerationPascal(generated: GenModelController.shared)
+        let fileAnalyzer = AnalyserPascal(data: GenModelController.shared)
         if let filepath = Bundle.main.path(forResource: "test_file", ofType: "pas") {
             do {
                 let contents = try String(contentsOfFile: filepath)
-                XCTAssertEqual(file.generat(), contents)
+                let genManager = GenManager()
+                var str = ""
+                XCTAssertTrue(genManager.generate(analyzer: fileAnalyzer, generation: file, text: &str))
+                XCTAssertEqual(str, contents)
             } catch {
                 print("не смог загрузить файл")
             }

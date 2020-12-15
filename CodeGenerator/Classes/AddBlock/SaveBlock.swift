@@ -9,7 +9,7 @@ import Foundation
 
 class SaveBlock {
     public func save() {
-        let blockfactory = InfoAboutBlock(selected: block, name: (name == nil ? block.name() + " \(gemMC.blocksList.count + 1)" : name)!, tag:  gemMC.blocksList.count)
+        let blockfactory = ModelBlcokFactory(selected: block, name: (name == nil ? block.name() + " \(gemMC.blocksList.count + 1)" : name)!, tag:  gemMC.blocksList.count)
         let createdBlock = blockfactory.produce()
         switch block {
         case .start:

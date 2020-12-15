@@ -7,7 +7,7 @@
 
 import Cocoa
 
-class DeleteAlert: NSAlert {
+class Alert: NSAlert {
     private let question: String
     private let text: String
     init(question: String, text: String) {
@@ -16,7 +16,7 @@ class DeleteAlert: NSAlert {
         
     }
     
-    func showAlrt() -> Bool {
+    func showDeleteAlert() -> Bool {
         messageText = question
         informativeText = text
         alertStyle = NSAlert.Style.informational

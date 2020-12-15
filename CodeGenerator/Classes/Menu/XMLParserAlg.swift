@@ -66,41 +66,41 @@ class XMLParserAlg {
             let name =  blocks.attributes["name"]
             switch blocks.attributes["block"] {
             case "Старт":
-                let factory = InfoAboutBlock(selected: .start, name: name ?? "", tag: i)
+                let factory = ModelBlcokFactory(selected: .start, name: name ?? "", tag: i)
                 parantList.append(factory.produce())
             case "Конец":
-                let factory = InfoAboutBlock(selected: .end, name: name ?? "", tag: i)
+                let factory = ModelBlcokFactory(selected: .end, name: name ?? "", tag: i)
                 parantList.append(factory.produce())
             case "Процесс":
-                let factory = InfoAboutBlock(selected: .prosess, name: name ?? "", tag: i)
+                let factory = ModelBlcokFactory(selected: .prosess, name: name ?? "", tag: i)
                 parantList.append(factory.produceWithValue(blocks: blocks))
                 break;
             case "Ввод":
-                let factory = InfoAboutBlock(selected: .instream, name: name ?? "", tag: i)
+                let factory = ModelBlcokFactory(selected: .instream, name: name ?? "", tag: i)
                 parantList.append(factory.produceWithValue(blocks: blocks))
                 break;
             case "Вывод":
-                let factory = InfoAboutBlock(selected: .outstream, name: name ?? "", tag: i)
+                let factory = ModelBlcokFactory(selected: .outstream, name: name ?? "", tag: i)
                 parantList.append(factory.produceWithValue(blocks: blocks))
                 break;
             case "Внешняя процедура":
-                let factory = InfoAboutBlock(selected: .procedure, name: name ?? "", tag: i)
+                let factory = ModelBlcokFactory(selected: .procedure, name: name ?? "", tag: i)
                 parantList.append(factory.produceWithValue(blocks: blocks))
                 break;
             case "Условие":
-                let factory = InfoAboutBlock(selected: .ifblock, name: name ?? "", tag: i)
+                let factory = ModelBlcokFactory(selected: .ifblock, name: name ?? "", tag: i)
                 var ifbody = factory.produce() as! IfModelBlock
                 ifBody(parent: blocks, index: i, parentIfModel: &ifbody)
                 parantList.append(ifbody)
                 break;
             case "Цикл с предусловием":
-                let factory = InfoAboutBlock(selected: .whileblock, name: name ?? "", tag: i)
+                let factory = ModelBlcokFactory(selected: .whileblock, name: name ?? "", tag: i)
                 var whileBody = factory.produce() as! WhileModelBlock
                 CycleBody(parent: blocks, index: i, whileblock: &whileBody)
                 parantList.append(whileBody)
                 break;
             case "Счетный цикл":
-                let factory = InfoAboutBlock(selected: .forblock, name: name ?? "", tag: i)
+                let factory = ModelBlcokFactory(selected: .forblock, name: name ?? "", tag: i)
                 var forBody = factory.produce() as! WhileModelBlock
                 CycleBody(parent: blocks, index: i, whileblock: &forBody)
                 parantList.append(forBody)

@@ -12,30 +12,29 @@ class GenModelController {
     static let shared = GenModelController()
     public var blocksList = LinkedList<ModelBlock>()
     public func addType(name: String, type: VarType) {
-        var_types.append(ModelType(name: name, type: type))
+        varTypes.append(ModelType(name: name, type: type))
     }
     
     public func removeType(index: Int) {
-        var_types.remove(at: index)
+        varTypes.remove(at: index)
     }
     
     public func removeTypeAll() {
-        var_types.removeAll()
+        varTypes.removeAll()
     }
     
     
     public func getArrayType() -> [ModelType] {
-        return var_types
+        return varTypes
     }
     
-    private var var_types = [ModelType]()
+    private var varTypes = [ModelType]()
 }
-
 
 public struct LinkedList<Element> {
 
-    private var headNode: Node?
-    private var tailNode: Node?
+    private var headNode: Node<Element>?
+    private var tailNode: Node<Element>?
     public private(set) var count: Int = 0
 
     public init() { }
@@ -43,24 +42,20 @@ public struct LinkedList<Element> {
 }
 
 //MARK: - LinkedList Node
-extension LinkedList {
+ fileprivate class Node<Element> {
+    public var value: Element
+    public var next: Node?
+    public weak var previous: Node?
 
-    fileprivate class Node {
-        public var value: Element
-        public var next: Node?
-        public weak var previous: Node?
-
-        public init(value: Element) {
-            self.value = value
-        }
+    public init(value: Element) {
+        self.value = value
     }
-
 }
 
 //MARK: - Initializers
 public extension LinkedList {
 
-    private init(_ nodeChain: NodeChain?) {
+    private init(_ nodeChain: NodeChain<Element>?) {
         guard let chain = nodeChain else {
             return
         }
@@ -79,40 +74,56 @@ public extension LinkedList {
 
 }
 
-//MARK: NodeChain
-extension LinkedList {
-    private struct NodeChain {
-        let head: Node!
-        let tail: Node!
-        private(set) var count: Int
+private struct NodeChain<Element> {
+    let head: Node<Element>!
+    let tail: Node<Element>!
+    private(set) var count: Int
 
-        // Creates a chain of nodes from a sequence. Returns `nil` if the sequence is empty.
-        init?<S>(of sequence: S) where S: Sequence, S.Element == Element {
-            var iterator = sequence.makeIterator()
+    // Creates a chain of nodes from a sequence. Returns `nil` if the sequence is empty.
+    init?<S>(of sequence: S) where S: Sequence, S.Element == Element {
+        var iterator = sequence.makeIterator()
 
-            guard let firstValue = iterator.next() else {
-                return nil
-            }
-
-            var currentNode = Node(value: firstValue)
-            head = currentNode
-            count = 1
-
-            while let nextElement = iterator.next() {
-                let nextNode = Node(value: nextElement)
-                currentNode.next = nextNode
-                nextNode.previous = currentNode
-                currentNode = nextNode
-                count += 1
-            }
-            tail = currentNode
+        guard let firstValue = iterator.next() else {
+            return nil
         }
 
+        var currentNode = Node(value: firstValue)
+        head = currentNode
+        count = 1
+
+        while let nextElement = iterator.next() {
+            let nextNode = Node(value: nextElement)
+            currentNode.next = nextNode
+            nextNode.previous = currentNode
+            currentNode = nextNode
+            count += 1
+        }
+        tail = currentNode
     }
+
 }
+
 
 //MARK: - Copy Nodes
 extension LinkedList {
+
+    private mutating func copyNodes(settingNodeAt index: Index, to value: Element) {
+
+        var currentIndex = startIndex
+        var currentNode = Node(value: currentIndex == index ? value : currentIndex.node!.value)
+        let newHeadNode = currentNode
+        currentIndex = self.index(after: currentIndex)
+
+        while currentIndex < endIndex {
+            let nextNode = Node(value: currentIndex == index ? value : currentIndex.node!.value)
+            currentNode.next = nextNode
+            nextNode.previous = currentNode
+            currentNode = nextNode
+            currentIndex = self.index(after: currentIndex)
+        }
+        headNode = newHeadNode
+        tailNode = currentNode
+    }
 
     @discardableResult
     private mutating func copyNodes(removing range: Range<Index>) -> Range<Index> {
@@ -163,7 +174,6 @@ extension LinkedList {
 
 }
 
-
 //MARK: - Computed Properties
 public extension LinkedList {
     var head: Element? {
@@ -175,31 +185,30 @@ public extension LinkedList {
     }
 }
 
+public struct Iterator<Element>: IteratorProtocol {
+
+    private var currentNode: Node<Element>?
+
+    fileprivate init(node: Node<Element>?) {
+        currentNode = node
+    }
+
+    public mutating func next() -> Element? {
+        guard let node = currentNode else {
+            return nil
+        }
+        currentNode = node.next
+        return node.value
+    }
+}
+
 //MARK: - Sequence Conformance
 extension LinkedList: Sequence {
 
     public typealias Element = Element
 
-    public __consuming func makeIterator() -> Iterator {
+    public __consuming func makeIterator() -> Iterator<Element> {
         return Iterator(node: headNode)
-    }
-
-    public struct Iterator: IteratorProtocol {
-
-        private var currentNode: Node?
-
-        fileprivate init(node: Node?) {
-            currentNode = node
-        }
-
-        public mutating func next() -> Element? {
-            guard let node = currentNode else {
-                return nil
-            }
-            currentNode = node.next
-            return node.value
-        }
-
     }
 }
 
@@ -226,25 +235,6 @@ extension LinkedList: Collection {
         precondition(i.offset != endIndex.offset, "LinkedList index is out of bounds")
         return Index(node: i.node?.next, offset: i.offset + 1)
     }
-
-    public struct Index: Comparable {
-        fileprivate weak var node: Node?
-        fileprivate var offset: Int
-
-        fileprivate init(node: Node?, offset: Int) {
-            self.node = node
-            self.offset = offset
-        }
-
-        public static func ==(lhs: Index, rhs: Index) -> Bool {
-            return lhs.offset == rhs.offset
-        }
-
-        public static func <(lhs: Index, rhs: Index) -> Bool {
-            return lhs.offset < rhs.offset
-        }
-    }
-
 }
 
 
@@ -262,6 +252,12 @@ extension LinkedList: MutableCollection {
         set {
             precondition(position.offset != endIndex.offset, "Index out of range")
 
+            // Copy-on-write semantics for nodes
+            if !isKnownUniquelyReferenced(&headNode) {
+                copyNodes(settingNodeAt: position, to: newValue)
+            } else {
+                position.node?.value = newValue
+            }
         }
     }
 }
@@ -275,14 +271,53 @@ public extension LinkedList {
         replaceSubrange(startIndex..<startIndex, with: CollectionOfOne(newElement))
     }
 
+    mutating func prepend<S>(contentsOf newElements: __owned S) where S: Sequence, S.Element == Element {
+        replaceSubrange(startIndex..<startIndex, with: newElements)
+    }
+
+    @discardableResult
+    mutating func popFirst() -> Element? {
+        if isEmpty {
+            return nil
+        }
+        return removeFirst()
+    }
+
+    @discardableResult
+    mutating func popLast() -> Element? {
+        guard isEmpty else {
+            return nil
+        }
+        return removeLast()
+    }
 }
+
+
 
 //MARK: - BidirectionalCollection Conformance
 extension LinkedList: BidirectionalCollection {
     public var last: Element? {
         return tail
     }
+    
+    public struct Index: Comparable {
+        fileprivate weak var node: Node<Element>?
+        fileprivate var offset: Int
 
+        fileprivate init(node: Node<Element>?, offset: Int) {
+            self.node = node
+            self.offset = offset
+        }
+
+        public static func ==(lhs: Index, rhs: Index) -> Bool {
+            return lhs.offset == rhs.offset
+        }
+
+        public static func <(lhs: Index, rhs: Index) -> Bool {
+            return lhs.offset < rhs.offset
+        }
+    }
+    
     public func index(before i: Index) -> Index {
         precondition(i.offset != startIndex.offset, "LinkedList index is out of bounds")
         if i.offset == count {
@@ -296,6 +331,10 @@ extension LinkedList: BidirectionalCollection {
 //MARK: - RangeReplaceableCollection Conformance
 extension LinkedList: RangeReplaceableCollection {
 
+    public mutating func append<S>(contentsOf newElements: __owned S) where S: Sequence, Element == S.Element {
+        replaceSubrange(endIndex..<endIndex, with: newElements)
+    }
+
     public mutating func replaceSubrange<S, R>(_ subrange: R, with newElements: __owned S) where S: Sequence, R: RangeExpression, Element == S.Element, Index == R.Bound {
 
         var range = subrange.relative(to: indices)
@@ -308,6 +347,7 @@ extension LinkedList: RangeReplaceableCollection {
             return
         }
 
+        var newElementsCount = 0
 
         // There are no new elements, so range indicates deletion
         guard let nodeChain = NodeChain(of: newElements) else {
@@ -358,7 +398,10 @@ extension LinkedList: RangeReplaceableCollection {
 
             return
         }
-        
+
+        // Obtain the count of the new elements from the node chain composed from them
+        newElementsCount = nodeChain.count
+
         // Replace entire content of list with new elements
         if range.lowerBound == startIndex && range.upperBound == endIndex {
             headNode = nodeChain.head

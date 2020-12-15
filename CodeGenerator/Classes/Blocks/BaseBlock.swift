@@ -39,7 +39,7 @@ class BaseBlock: NSButton {
         return tag
     }
     
-    @objc func swap(sender: NSMenuItem)  {
+    @objc private func swap(sender: NSMenuItem)  {
         let indexFrom = data.blocksList.index(data.blocksList.startIndex, offsetBy: self.getTag())
         let indexTo = data.blocksList.index(data.blocksList.startIndex, offsetBy: sender.tag)
         data.blocksList[indexTo].tag = self.getTag()
@@ -48,7 +48,7 @@ class BaseBlock: NSButton {
         delegate.reloadTable()
     }
     
-    @objc func deleteblock(sender: NSMenuItem)  {
+    @objc private func deleteBlock(sender: NSMenuItem)  {
         let index = data.blocksList.index(data.blocksList.startIndex, offsetBy: getTag())
         data.blocksList.remove(at: index)
         delegate.reloadTable()
@@ -61,7 +61,7 @@ class BaseBlock: NSButton {
         let menu = NSMenu()
         let deleteItem = NSMenuItem(
             title: "Удалить \(self.blockName ?? "")",
-            action:  #selector(deleteblock(sender: )),
+            action:  #selector(deleteBlock(sender: )),
             keyEquivalent: "Q"
         )
         deleteItem.target = self

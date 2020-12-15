@@ -7,8 +7,8 @@
 
 import Cocoa
 
-class SaveFileMenu: NSMenu {
-    @IBAction func clearFile(_ sender: NSMenuItem) {
+class WorkFileMenu: NSMenu {
+    @IBAction private func clearFile(_ sender: NSMenuItem) {
         GenModelController.shared.blocksList.removeAll()
         GenModelController.shared.removeTypeAll()
         if let window = NSApplication.shared.mainWindow {
@@ -17,11 +17,18 @@ class SaveFileMenu: NSMenu {
             }
         }
     }
+    func generateCurrentTimeStamp () -> String {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "yyyy_MM_dd_hh_mm_ss_SSS"
+        return (formatter.string(from: Date()) as NSString) as String
+    }
     
-    @IBAction func saveFile(_ sender: NSMenuItem) {
+    @IBAction private func saveFile(_ sender: NSMenuItem) {
         let xmlFile = CreateXML()
+        print(generateCurrentTimeStamp())
         let xmlDoc = xmlFile.generateXML()
-        let saveMenu = SaveingFiles(message: "Сохранить документ", prompt: "Выбрать", title: "Введите название документа", types: ["btc"], save: "Сохранить")
+        print(generateCurrentTimeStamp())
+        let saveMenu = FileSystemWindow(message: "Сохранить документ", prompt: "Выбрать", title: "Введите название документа", types: ["btc"], save: "Сохранить")
         saveMenu.saveDocument { (url) in
             do {
                 let xmlData = xmlDoc.xmlData(options: .nodePrettyPrint)
@@ -33,15 +40,17 @@ class SaveFileMenu: NSMenu {
         }
     }
     
-    @IBAction func export(_ sender: NSMenuItem) {
-        let generation = Generation(generated: GenModelController.shared)
-        if !generation.algIsCorrect() {
-            let errorAlert = DeleteAlert(question: "Ошибка при генерации", text: generation.getError())
+    @IBAction private func export(_ sender: NSMenuItem) {
+        var text = ""
+        let genManager = GenManager();
+        
+        if !genManager.generate(analyzer: AnalyserPascal(data: GenModelController.shared), generation: GenerationPascal(generated:  GenModelController.shared), text: &text) {
+            let errorAlert = Alert(question: "Ошибка при генерации", text: text)
             errorAlert.showError()
             return
         }
-        let pascalFile = generation.generat()
-        let saveMenu = SaveingFiles(message: "Выбретите диркеторию для экспорта документа", prompt: "Выбрать", title: "файл для экспорта", types: ["pas"], save: "Экспорт")
+        let pascalFile = text
+        let saveMenu = FileSystemWindow(message: "Выбретите диркеторию для экспорта документа", prompt: "Выбрать", title: "файл для экспорта", types: ["pas"], save: "Экспорт")
         saveMenu.saveDocument { (url) in
             do {
                 try pascalFile.write(to: url, atomically: false, encoding: .utf8)
@@ -52,13 +61,15 @@ class SaveFileMenu: NSMenu {
         }
     }
     
-    @IBAction func openFile(sender: AnyObject) {
-        let saveMenu = SaveingFiles(message: "", prompt: "", title: "", types: ["btc"], save: "")
+    @IBAction private func openFile(sender: AnyObject) {
+        let saveMenu = FileSystemWindow(message: "", prompt: "", title: "", types: ["btc"], save: "")
         saveMenu.openDocument { (path) in
             let parseXMLFile = XMLParserAlg(path: path)
             GenModelController.shared.blocksList.removeAll()
             GenModelController.shared.removeTypeAll()
+            print(self.generateCurrentTimeStamp())
             parseXMLFile.parseXMLFile()
+            print(self.generateCurrentTimeStamp())
             if let window = NSApplication.shared.mainWindow {
                 if let viewController = window.contentViewController as? ViewController {
                     viewController.reloadTable()

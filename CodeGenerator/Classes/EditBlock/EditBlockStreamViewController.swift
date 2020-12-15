@@ -39,12 +39,12 @@ class EditBlockStreamViewController: NSViewController {
         nameFunc = types.selectedItem!.title
     }
     
-    @IBAction func popUpSelectionDidChange(_ sender: NSPopUpButton) {
+    @IBAction private func popUpSelectionDidChange(_ sender: NSPopUpButton) {
         nameFunc = types.selectedItem!.title
     }
     
     private func findErrors() -> Bool {
-        let answer = DeleteAlert(question: "Ошибка данных", text: "Незаполненные данные")
+        let answer = Alert(question: "Ошибка данных", text: "Незаполненные данные")
         if textField.stringValue.isEmpty {
             answer.showError()
             return true
@@ -52,7 +52,7 @@ class EditBlockStreamViewController: NSViewController {
         return false;
     }
     
-    @IBAction func add(_ sender: Any) {
+    @IBAction private func add(_ sender: Any) {
         if myStream?.blocks == .instream {
             if findErrors() {
                 return
@@ -67,7 +67,7 @@ class EditBlockStreamViewController: NSViewController {
         tableView.reloadData()
     }
     
-    @IBAction func close(_ sender: Any) {
+    @IBAction private func close(_ sender: Any) {
         if let controller = self.storyboard?.instantiateController(withIdentifier: "ViewController") as? ViewController {
             self.view.window?.contentViewController = controller
         }
@@ -88,8 +88,8 @@ extension EditBlockStreamViewController: NSTableViewDelegate {
         }
         
         DispatchQueue.main.async { [self] in
-            let answer = DeleteAlert(question: "Удалить операцию", text: "Вы уверены, что хотите удалить операцию?")
-            if answer.showAlrt() == true {
+            let answer = Alert(question: "Удалить операцию", text: "Вы уверены, что хотите удалить операцию?")
+            if answer.showDeleteAlert() == true {
                 myStream?.values?.remove(at: selectedTableView.selectedRow)
                 sentacis = myStream?.values ?? []
                 let indexSet = IndexSet(integer:selectedTableView.selectedRow)

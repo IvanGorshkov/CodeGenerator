@@ -8,10 +8,10 @@
 import Cocoa
 
 class EditBlockWhileViewController: NSViewController, CellDelegate {
-    @IBOutlet weak var addBlock: NSPopUpButton!
-    @IBOutlet weak var tableView: NSTableView!
-    @IBOutlet weak var blockName: NSTextField!
-    @IBOutlet weak var textField: NSTextField!
+    @IBOutlet private weak var addBlock: NSPopUpButton!
+    @IBOutlet private weak var tableView: NSTableView!
+    @IBOutlet private weak var blockName: NSTextField!
+    @IBOutlet private weak var textField: NSTextField!
     private lazy var ifEditBlockProsessViewController: EditBlockProsessViewController = {
         return self.storyboard!.instantiateController(withIdentifier: "EditBlockProsessViewController") as! EditBlockProsessViewController
     }()
@@ -66,19 +66,19 @@ class EditBlockWhileViewController: NSViewController, CellDelegate {
         textField.stringValue = blockName
     }
     
-    @IBAction func save(_ sender: Any) {
+    @IBAction private func save(_ sender: Any) {
         myWileBlock?.values = [textField.stringValue]
     }
     
-    @IBAction func add(_ sender: Any) {
-        let answer = DeleteAlert(question: "Ошибка данных", text: "Введите условие!")
+    @IBAction private func add(_ sender: Any) {
+        let answer = Alert(question: "Ошибка данных", text: "Введите условие!")
         if textField.stringValue.isEmpty {
             answer.showError()
             return
         }
         guard let myWileBlock = myWileBlock else { return }
         let eBlock = blocksArray[addBlock.indexOfSelectedItem]
-        let blockfactory = InfoAboutBlock(selected: eBlock, name: "\(eBlock.name()) \(myWileBlock.body.count)", tag: myWileBlock.body.count)
+        let blockfactory = ModelBlcokFactory(selected: eBlock, name: "\(eBlock.name()) \(myWileBlock.body.count)", tag: myWileBlock.body.count)
         let createdBlock = blockfactory.produce()
         myWileBlock.body.append(createdBlock)
         blocksInWileArray.append(createdBlock.name ?? "")
@@ -172,7 +172,7 @@ extension EditBlockWhileViewController: NSTableViewDelegate {
                 self.view.window?.contentViewController = editProcedureViewController
                 break;
             case .forblock:
-                editBlcokForViewController.myWileBlock =  myWileBlock.body[selectedIndex] as? WhileModelBlock
+                editBlcokForViewController.myForBlock =  myWileBlock.body[selectedIndex] as? WhileModelBlock
                 self.view.window?.contentViewController = editBlcokForViewController
             default:
                 break;

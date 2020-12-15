@@ -58,7 +58,7 @@ class WhileModelBlock: ModelBlock {
     var body = LinkedList<ModelBlock>()
 }
 
-class InfoAboutBlock: BlockFactory {
+class ModelBlcokFactory: BlockFactory {
     func produce() -> ModelBlock {
         if block == .ifblock {
             return IfModelBlock(blocks: block, name: name, tag: tag)
