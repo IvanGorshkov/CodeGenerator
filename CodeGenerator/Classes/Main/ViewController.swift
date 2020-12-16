@@ -59,17 +59,16 @@ class ViewController: NSViewController, ReloadDataDelegate {
     
     
     @IBAction func generate(_ sender: Any) {
-        print(generateCurrentTimeStamp());
-        var text = ""
         let genManager = GenManager();
-        
+        var text = ""
+        print(generateCurrentTimeStamp());
         if !genManager.generate(analyzer: AnalyserPascal(data: gemMC), generation: GenerationPascal(generated: gemMC), text: &text) {
             let errorAlert = Alert(question: "Ошибка при генерации", text: text)
             errorAlert.showError()
             return
         }
-        textView.string = text
         print(generateCurrentTimeStamp());
+        textView.string = text
     }
     
     override func viewDidLoad() {

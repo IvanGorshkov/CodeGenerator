@@ -135,14 +135,14 @@
 		70DB516D257CE99300F17942 /* Analyser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Analyser.swift; sourceTree = "<group>"; };
 		70DB5172257CE9E300F17942 /* AnalyserPascal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnalyserPascal.swift; sourceTree = "<group>"; };
 		70DB5177257D1B0300F17942 /* GenManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenManager.swift; sourceTree = "<group>"; };
-		70E7B6DF251B9301005B8656 /* CodeGenerator.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CodeGenerator.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		70E7B6DF251B9301005B8656 /* BlockToCode.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BlockToCode.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		70E7B6E2251B9301005B8656 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		70E7B6E4251B9301005B8656 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		70E7B6E6251B9302005B8656 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		70E7B6E9251B9302005B8656 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		70E7B6EB251B9302005B8656 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		70E7B6EC251B9302005B8656 /* CodeGenerator.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = CodeGenerator.entitlements; sourceTree = "<group>"; };
-		70E7B6F1251B9302005B8656 /* CodeGeneratorTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CodeGeneratorTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		70E7B6F1251B9302005B8656 /* BlockToCodeTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = BlockToCodeTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		70E7B6F5251B9302005B8656 /* CodeGeneratorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CodeGeneratorTests.swift; sourceTree = "<group>"; };
 		70E7B6F7251B9302005B8656 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		70E7B700251B9302005B8656 /* CodeGeneratorUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CodeGeneratorUITests.swift; sourceTree = "<group>"; };
@@ -282,8 +282,8 @@
 		70E7B6E0251B9301005B8656 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				70E7B6DF251B9301005B8656 /* CodeGenerator.app */,
-				70E7B6F1251B9302005B8656 /* CodeGeneratorTests.xctest */,
+				70E7B6DF251B9301005B8656 /* BlockToCode.app */,
+				70E7B6F1251B9302005B8656 /* BlockToCodeTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -342,9 +342,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		70E7B6DE251B9301005B8656 /* CodeGenerator */ = {
+		70E7B6DE251B9301005B8656 /* BlockToCode */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 70E7B705251B9302005B8656 /* Build configuration list for PBXNativeTarget "CodeGenerator" */;
+			buildConfigurationList = 70E7B705251B9302005B8656 /* Build configuration list for PBXNativeTarget "BlockToCode" */;
 			buildPhases = (
 				70E7B6DB251B9301005B8656 /* Sources */,
 				70E7B6DC251B9301005B8656 /* Frameworks */,
@@ -354,14 +354,14 @@
 			);
 			dependencies = (
 			);
-			name = CodeGenerator;
+			name = BlockToCode;
 			productName = CodeGenerator;
-			productReference = 70E7B6DF251B9301005B8656 /* CodeGenerator.app */;
+			productReference = 70E7B6DF251B9301005B8656 /* BlockToCode.app */;
 			productType = "com.apple.product-type.application";
 		};
-		70E7B6F0251B9302005B8656 /* CodeGeneratorTests */ = {
+		70E7B6F0251B9302005B8656 /* BlockToCodeTests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 70E7B708251B9302005B8656 /* Build configuration list for PBXNativeTarget "CodeGeneratorTests" */;
+			buildConfigurationList = 70E7B708251B9302005B8656 /* Build configuration list for PBXNativeTarget "BlockToCodeTests" */;
 			buildPhases = (
 				70E7B6ED251B9302005B8656 /* Sources */,
 				70E7B6EE251B9302005B8656 /* Frameworks */,
@@ -372,9 +372,9 @@
 			dependencies = (
 				70E7B6F3251B9302005B8656 /* PBXTargetDependency */,
 			);
-			name = CodeGeneratorTests;
+			name = BlockToCodeTests;
 			productName = CodeGeneratorTests;
-			productReference = 70E7B6F1251B9302005B8656 /* CodeGeneratorTests.xctest */;
+			productReference = 70E7B6F1251B9302005B8656 /* BlockToCodeTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
 /* End PBXNativeTarget section */
@@ -395,7 +395,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 70E7B6DA251B9301005B8656 /* Build configuration list for PBXProject "CodeGenerator" */;
+			buildConfigurationList = 70E7B6DA251B9301005B8656 /* Build configuration list for PBXProject "BlockToCode" */;
 			compatibilityVersion = "Xcode 9.3";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -408,8 +408,8 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				70E7B6DE251B9301005B8656 /* CodeGenerator */,
-				70E7B6F0251B9302005B8656 /* CodeGeneratorTests */,
+				70E7B6DE251B9301005B8656 /* BlockToCode */,
+				70E7B6F0251B9302005B8656 /* BlockToCodeTests */,
 			);
 		};
 /* End PBXProject section */
@@ -538,7 +538,7 @@
 /* Begin PBXTargetDependency section */
 		70E7B6F3251B9302005B8656 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 70E7B6DE251B9301005B8656 /* CodeGenerator */;
+			target = 70E7B6DE251B9301005B8656 /* BlockToCode */;
 			targetProxy = 70E7B6F2251B9302005B8656 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
@@ -732,7 +732,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = dm.codegen.com.CodeGeneratorTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/CodeGenerator.app/Contents/MacOS/CodeGenerator";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/BlockToCode.app/Contents/MacOS/BlockToCode";
 			};
 			name = Debug;
 		};
@@ -754,14 +754,14 @@
 				PRODUCT_BUNDLE_IDENTIFIER = dm.codegen.com.CodeGeneratorTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/CodeGenerator.app/Contents/MacOS/CodeGenerator";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/BlockToCode.app/Contents/MacOS/BlockToCode";
 			};
 			name = Release;
 		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		70E7B6DA251B9301005B8656 /* Build configuration list for PBXProject "CodeGenerator" */ = {
+		70E7B6DA251B9301005B8656 /* Build configuration list for PBXProject "BlockToCode" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				70E7B703251B9302005B8656 /* Debug */,
@@ -770,7 +770,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		70E7B705251B9302005B8656 /* Build configuration list for PBXNativeTarget "CodeGenerator" */ = {
+		70E7B705251B9302005B8656 /* Build configuration list for PBXNativeTarget "BlockToCode" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				70E7B706251B9302005B8656 /* Debug */,
@@ -779,7 +779,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		70E7B708251B9302005B8656 /* Build configuration list for PBXNativeTarget "CodeGeneratorTests" */ = {
+		70E7B708251B9302005B8656 /* Build configuration list for PBXNativeTarget "BlockToCodeTests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				70E7B709251B9302005B8656 /* Debug */,

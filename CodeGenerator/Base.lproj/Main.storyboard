@@ -12,11 +12,11 @@
                 <application id="hnw-xV-0zn" customClass="Application" sceneMemberID="viewController">
                     <menu key="mainMenu" title="Main Menu" systemMenu="main" id="AYu-sK-qS6">
                         <items>
-                            <menuItem title="CodeGenerator" id="1Xt-HY-uBw">
+                            <menuItem title="BlockToCode" id="1Xt-HY-uBw">
                                 <modifierMask key="keyEquivalentModifierMask"/>
-                                <menu key="submenu" title="CodeGenerator" systemMenu="apple" id="uQy-DD-JDr">
+                                <menu key="submenu" title="BlockToCode" systemMenu="apple" id="uQy-DD-JDr">
                                     <items>
-                                        <menuItem title="About CodeGenerator" id="5kV-Vb-QxS">
+                                        <menuItem title="About BlockToCode" id="5kV-Vb-QxS">
                                             <modifierMask key="keyEquivalentModifierMask"/>
                                             <connections>
                                                 <action selector="orderFrontStandardAboutPanel:" target="Ady-hI-5gd" id="Exp-CZ-Vem"/>
@@ -30,7 +30,7 @@
                                             <menu key="submenu" title="Services" systemMenu="services" id="hz9-B4-Xy5"/>
                                         </menuItem>
                                         <menuItem isSeparatorItem="YES" id="4je-JR-u6R"/>
-                                        <menuItem title="Hide CodeGenerator" keyEquivalent="h" id="Olw-nP-bQN">
+                                        <menuItem title="Hide BlockToCode" keyEquivalent="h" id="Olw-nP-bQN">
                                             <connections>
                                                 <action selector="hide:" target="Ady-hI-5gd" id="PnN-Uc-m68"/>
                                             </connections>
@@ -48,7 +48,7 @@
                                             </connections>
                                         </menuItem>
                                         <menuItem isSeparatorItem="YES" id="kCx-OE-vgT"/>
-                                        <menuItem title="Quit CodeGenerator" keyEquivalent="q" id="4sb-4s-VLi">
+                                        <menuItem title="Quit BlockToCode" keyEquivalent="q" id="4sb-4s-VLi">
                                             <connections>
                                                 <action selector="terminate:" target="Ady-hI-5gd" id="Te7-pn-YzF"/>
                                             </connections>
@@ -56,27 +56,27 @@
                                     </items>
                                 </menu>
                             </menuItem>
-                            <menuItem title="File" id="dMs-cI-mzQ">
+                            <menuItem title="Файл" id="dMs-cI-mzQ">
                                 <modifierMask key="keyEquivalentModifierMask"/>
-                                <menu key="submenu" title="File" id="bib-Uj-vzu" customClass="WorkFileMenu" customModule="CodeGenerator" customModuleProvider="target">
+                                <menu key="submenu" title="Файл" id="bib-Uj-vzu" customClass="WorkFileMenu" customModule="BlockToCode" customModuleProvider="target">
                                     <items>
-                                        <menuItem title="New" keyEquivalent="n" id="Was-JA-tGl">
+                                        <menuItem title="Новый" keyEquivalent="n" id="Was-JA-tGl">
                                             <connections>
                                                 <action selector="clearFile:" target="bib-Uj-vzu" id="0On-sD-GRZ"/>
                                             </connections>
                                         </menuItem>
-                                        <menuItem title="Open" keyEquivalent="o" id="IAo-SY-fd9">
+                                        <menuItem title="Импорт" keyEquivalent="o" id="IAo-SY-fd9">
                                             <connections>
                                                 <action selector="openFileWithSender:" target="bib-Uj-vzu" id="Ep2-da-lgo"/>
                                             </connections>
                                         </menuItem>
                                         <menuItem isSeparatorItem="YES" id="m54-Is-iLE"/>
-                                        <menuItem title="Save" keyEquivalent="s" id="pxx-59-PXV">
+                                        <menuItem title="Сохранить" keyEquivalent="s" id="pxx-59-PXV">
                                             <connections>
                                                 <action selector="saveFile:" target="bib-Uj-vzu" id="6b4-fI-IVe"/>
                                             </connections>
                                         </menuItem>
-                                        <menuItem title="Export" keyEquivalent="e" id="Bw7-FT-i3A">
+                                        <menuItem title="Экспорт" keyEquivalent="e" id="Bw7-FT-i3A">
                                             <connections>
                                                 <action selector="export:" target="bib-Uj-vzu" id="5nl-UU-gZV"/>
                                             </connections>
@@ -91,7 +91,7 @@
                         <outlet property="delegate" destination="Voe-Tx-rLC" id="PrD-fu-P6m"/>
                     </connections>
                 </application>
-                <customObject id="Voe-Tx-rLC" customClass="AppDelegate" customModule="CodeGenerator" customModuleProvider="target"/>
+                <customObject id="Voe-Tx-rLC" customClass="AppDelegate" customModule="BlockToCode" customModuleProvider="target"/>
                 <customObject id="YLy-65-1bz" customClass="NSFontManager"/>
                 <customObject id="Ady-hI-5gd" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
@@ -121,7 +121,7 @@
         <!--View Controller-->
         <scene sceneID="hIz-AP-VOD">
             <objects>
-                <viewController storyboardIdentifier="ViewController" id="XfG-lQ-9wD" customClass="ViewController" customModule="CodeGenerator" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="ViewController" id="XfG-lQ-9wD" customClass="ViewController" customModule="BlockToCode" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" id="m2S-Jp-Qdl">
                         <rect key="frame" x="0.0" y="0.0" width="482" height="394"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -263,7 +263,7 @@
         <!--Add New Block Controller-->
         <scene sceneID="erl-bf-eyr">
             <objects>
-                <viewController storyboardIdentifier="AddNewBlockController" id="cxE-TV-JM0" customClass="AddNewBlockController" customModule="CodeGenerator" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="AddNewBlockController" id="cxE-TV-JM0" customClass="AddNewBlockController" customModule="BlockToCode" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" id="VVc-vV-qxh">
                         <rect key="frame" x="0.0" y="0.0" width="452" height="333"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -365,7 +365,7 @@
         <!--New Vars Controller-->
         <scene sceneID="TpZ-pC-fZM">
             <objects>
-                <viewController storyboardIdentifier="NewVarsController" id="kNz-BC-PbD" customClass="NewVarsController" customModule="CodeGenerator" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="NewVarsController" id="kNz-BC-PbD" customClass="NewVarsController" customModule="BlockToCode" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" id="Py7-jC-rYd">
                         <rect key="frame" x="0.0" y="0.0" width="447" height="292"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -452,7 +452,7 @@
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
                                         <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" columnSelection="YES" multipleSelection="NO" autosaveColumns="NO" rowSizeStyle="automatic" headerView="EyQ-k8-JNn" viewBased="YES" id="3yt-ih-m2l">
-                                            <rect key="frame" x="0.0" y="0.0" width="425" height="123"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="425" height="120"/>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                             <size key="intercellSpacing" width="3" height="2"/>
                                             <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
@@ -546,7 +546,7 @@
                                     <autoresizingMask key="autoresizingMask"/>
                                 </scroller>
                                 <tableHeaderView key="headerView" wantsLayer="YES" id="EyQ-k8-JNn">
-                                    <rect key="frame" x="0.0" y="0.0" width="425" height="25"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="425" height="28"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                 </tableHeaderView>
                             </scrollView>
@@ -590,7 +590,7 @@
         <!--Edit Block Prosess View Controller-->
         <scene sceneID="UFY-Mp-Yun">
             <objects>
-                <viewController storyboardIdentifier="EditBlockProsessViewController" id="aCR-6f-bO3" customClass="EditBlockProsessViewController" customModule="CodeGenerator" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="EditBlockProsessViewController" id="aCR-6f-bO3" customClass="EditBlockProsessViewController" customModule="BlockToCode" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" id="W3W-Ye-fua">
                         <rect key="frame" x="0.0" y="0.0" width="481" height="311"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -663,7 +663,7 @@
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
                                         <tableView verticalHuggingPriority="750" ambiguous="YES" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" columnSelection="YES" multipleSelection="NO" autosaveColumns="NO" rowHeight="33" rowSizeStyle="automatic" headerView="SgH-JZ-G1H" viewBased="YES" id="bJg-V9-cGl">
-                                            <rect key="frame" x="0.0" y="0.0" width="459" height="173"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="459" height="170"/>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                             <size key="intercellSpacing" width="3" height="2"/>
                                             <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
@@ -721,7 +721,7 @@
                                     <autoresizingMask key="autoresizingMask"/>
                                 </scroller>
                                 <tableHeaderView key="headerView" wantsLayer="YES" id="SgH-JZ-G1H">
-                                    <rect key="frame" x="0.0" y="0.0" width="459" height="25"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="459" height="28"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                 </tableHeaderView>
                             </scrollView>
@@ -763,7 +763,7 @@
         <!--Edit Block Stream View Controller-->
         <scene sceneID="9jC-ZG-tp2">
             <objects>
-                <viewController storyboardIdentifier="EditBlockStreamViewController" id="XCu-C4-1oP" customClass="EditBlockStreamViewController" customModule="CodeGenerator" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="EditBlockStreamViewController" id="XCu-C4-1oP" customClass="EditBlockStreamViewController" customModule="BlockToCode" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" id="fV0-Pi-znX">
                         <rect key="frame" x="0.0" y="0.0" width="481" height="311"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -839,7 +839,7 @@
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
                                         <tableView verticalHuggingPriority="750" ambiguous="YES" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" columnSelection="YES" multipleSelection="NO" autosaveColumns="NO" rowHeight="33" rowSizeStyle="automatic" headerView="rnq-gr-NWe" viewBased="YES" id="Wxl-fk-RXl">
-                                            <rect key="frame" x="0.0" y="0.0" width="459" height="173"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="459" height="170"/>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                             <size key="intercellSpacing" width="3" height="2"/>
                                             <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
@@ -897,7 +897,7 @@
                                     <autoresizingMask key="autoresizingMask"/>
                                 </scroller>
                                 <tableHeaderView key="headerView" wantsLayer="YES" id="rnq-gr-NWe">
-                                    <rect key="frame" x="0.0" y="0.0" width="459" height="25"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="459" height="28"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                 </tableHeaderView>
                             </scrollView>
@@ -950,7 +950,7 @@
         <!--Edit If Block Controller-->
         <scene sceneID="sFb-ft-syR">
             <objects>
-                <viewController storyboardIdentifier="EditIfBlockController" id="iAB-4M-5Yc" customClass="EditIfBlockController" customModule="CodeGenerator" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="EditIfBlockController" id="iAB-4M-5Yc" customClass="EditIfBlockController" customModule="BlockToCode" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" id="5RT-qu-fuB">
                         <rect key="frame" x="0.0" y="0.0" width="582" height="371"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -1019,7 +1019,7 @@
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
                                         <tableView verticalHuggingPriority="750" tag="1" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" columnSelection="YES" multipleSelection="NO" autosaveColumns="NO" rowHeight="33" rowSizeStyle="automatic" headerView="1GF-H3-Uue" viewBased="YES" id="Jwc-I0-2Rv">
-                                            <rect key="frame" x="0.0" y="0.0" width="279" height="173"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="279" height="170"/>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                             <size key="intercellSpacing" width="3" height="2"/>
                                             <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
@@ -1037,7 +1037,7 @@
                                                     </textFieldCell>
                                                     <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
                                                     <prototypeCellViews>
-                                                        <tableCellView identifier="Cell1" misplaced="YES" id="hl9-l1-aqC" customClass="BranchingСell" customModule="CodeGenerator" customModuleProvider="target">
+                                                        <tableCellView identifier="Cell1" misplaced="YES" id="hl9-l1-aqC" customClass="BranchingСell" customModule="BlockToCode" customModuleProvider="target">
                                                             <rect key="frame" x="11" y="1" width="218" height="33"/>
                                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                             <subviews>
@@ -1095,7 +1095,7 @@
                                     <autoresizingMask key="autoresizingMask"/>
                                 </scroller>
                                 <tableHeaderView key="headerView" wantsLayer="YES" id="1GF-H3-Uue">
-                                    <rect key="frame" x="0.0" y="0.0" width="279" height="25"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="279" height="28"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                 </tableHeaderView>
                             </scrollView>
@@ -1106,7 +1106,7 @@
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
                                         <tableView verticalHuggingPriority="750" ambiguous="YES" tag="2" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" columnSelection="YES" multipleSelection="NO" autosaveColumns="NO" rowHeight="33" rowSizeStyle="automatic" headerView="3HB-0M-A9P" viewBased="YES" id="3AG-fw-kaT">
-                                            <rect key="frame" x="0.0" y="0.0" width="279" height="173"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="279" height="170"/>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                             <size key="intercellSpacing" width="3" height="2"/>
                                             <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
@@ -1124,7 +1124,7 @@
                                                     </textFieldCell>
                                                     <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
                                                     <prototypeCellViews>
-                                                        <tableCellView identifier="Cell1" misplaced="YES" id="ZDD-Ho-tGi" customClass="BranchingСell" customModule="CodeGenerator" customModuleProvider="target">
+                                                        <tableCellView identifier="Cell1" misplaced="YES" id="ZDD-Ho-tGi" customClass="BranchingСell" customModule="BlockToCode" customModuleProvider="target">
                                                             <rect key="frame" x="11" y="1" width="218" height="33"/>
                                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                             <subviews>
@@ -1179,7 +1179,7 @@
                                     <autoresizingMask key="autoresizingMask"/>
                                 </scroller>
                                 <tableHeaderView key="headerView" wantsLayer="YES" id="3HB-0M-A9P">
-                                    <rect key="frame" x="0.0" y="0.0" width="279" height="25"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="279" height="28"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                 </tableHeaderView>
                             </scrollView>
@@ -1302,7 +1302,7 @@
         <!--Edit Block While View Controller-->
         <scene sceneID="kFu-GD-Mcv">
             <objects>
-                <viewController storyboardIdentifier="EditBlockWhileViewController" id="Duf-XO-YDC" customClass="EditBlockWhileViewController" customModule="CodeGenerator" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="EditBlockWhileViewController" id="Duf-XO-YDC" customClass="EditBlockWhileViewController" customModule="BlockToCode" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" id="3yZ-BM-9Wg">
                         <rect key="frame" x="0.0" y="0.0" width="582" height="342"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -1364,7 +1364,7 @@
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
                                         <tableView verticalHuggingPriority="750" ambiguous="YES" tag="1" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" columnSelection="YES" multipleSelection="NO" autosaveColumns="NO" rowHeight="34" rowSizeStyle="automatic" headerView="cyL-0M-qd1" viewBased="YES" id="mrh-DG-whU">
-                                            <rect key="frame" x="0.0" y="0.0" width="560" height="173"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="560" height="170"/>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                             <size key="intercellSpacing" width="3" height="2"/>
                                             <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
@@ -1382,7 +1382,7 @@
                                                     </textFieldCell>
                                                     <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
                                                     <prototypeCellViews>
-                                                        <tableCellView identifier="Cell1" misplaced="YES" id="Etc-Us-o3C" customClass="BranchingСell" customModule="CodeGenerator" customModuleProvider="target">
+                                                        <tableCellView identifier="Cell1" misplaced="YES" id="Etc-Us-o3C" customClass="BranchingСell" customModule="BlockToCode" customModuleProvider="target">
                                                             <rect key="frame" x="11" y="1" width="499" height="34"/>
                                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                             <subviews>
@@ -1440,7 +1440,7 @@
                                     <autoresizingMask key="autoresizingMask"/>
                                 </scroller>
                                 <tableHeaderView key="headerView" wantsLayer="YES" id="cyL-0M-qd1">
-                                    <rect key="frame" x="0.0" y="0.0" width="560" height="25"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="560" height="28"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                 </tableHeaderView>
                             </scrollView>
@@ -1517,7 +1517,7 @@
         <!--Edit Procedure View Controller-->
         <scene sceneID="Wmo-qK-bat">
             <objects>
-                <viewController storyboardIdentifier="EditProcedureViewController" id="i0u-bP-KgK" customClass="EditProcedureViewController" customModule="CodeGenerator" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="EditProcedureViewController" id="i0u-bP-KgK" customClass="EditProcedureViewController" customModule="BlockToCode" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" id="ksI-gb-Q2l">
                         <rect key="frame" x="0.0" y="0.0" width="690" height="345"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -1531,10 +1531,10 @@
                                 </textFieldCell>
                             </textField>
                             <stackView distribution="equalSpacing" orientation="horizontal" alignment="centerY" spacing="10" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="9Q7-cP-6R0">
-                                <rect key="frame" x="10" y="204" width="670" height="71"/>
+                                <rect key="frame" x="10" y="123" width="670" height="152"/>
                                 <subviews>
                                     <popUpButton verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="xcw-FH-VfG">
-                                        <rect key="frame" x="-3" y="22" width="39" height="25"/>
+                                        <rect key="frame" x="-3" y="62" width="39" height="25"/>
                                         <popUpButtonCell key="cell" type="push" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" id="itA-hu-WsX">
                                             <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
                                             <font key="font" metaFont="menu"/>
@@ -1542,7 +1542,7 @@
                                         </popUpButtonCell>
                                     </popUpButton>
                                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="JOg-Te-QPx">
-                                        <rect key="frame" x="48" y="25" width="23" height="21"/>
+                                        <rect key="frame" x="47" y="66" width="23" height="21"/>
                                         <textFieldCell key="cell" lineBreakMode="clipping" alignment="center" title=":=" id="eeA-g2-360">
                                             <font key="font" size="17" name="HelveticaNeue"/>
                                             <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -1550,7 +1550,7 @@
                                         </textFieldCell>
                                     </textField>
                                     <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="NLG-fs-Hi4">
-                                        <rect key="frame" x="87" y="25" width="84" height="21"/>
+                                        <rect key="frame" x="86" y="66" width="84" height="21"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="84" id="OGo-mP-Dz6"/>
                                         </constraints>
@@ -1561,7 +1561,7 @@
                                         </textFieldCell>
                                     </textField>
                                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="249" translatesAutoresizingMaskIntoConstraints="NO" id="0z5-01-ljv">
-                                        <rect key="frame" x="186" y="25" width="13" height="21"/>
+                                        <rect key="frame" x="185" y="66" width="13" height="21"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="21" id="wNf-0p-LlO"/>
                                         </constraints>
@@ -1572,7 +1572,7 @@
                                         </textFieldCell>
                                     </textField>
                                     <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="aNe-pu-zbp">
-                                        <rect key="frame" x="215" y="25" width="429" height="21"/>
+                                        <rect key="frame" x="214" y="66" width="430" height="21"/>
                                         <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" placeholderString="Параметры" drawsBackground="YES" id="pAd-hB-o4t">
                                             <font key="font" metaFont="system"/>
                                             <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
@@ -1580,7 +1580,7 @@
                                         </textFieldCell>
                                     </textField>
                                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="q9b-R0-LbU">
-                                        <rect key="frame" x="659" y="25" width="13" height="21"/>
+                                        <rect key="frame" x="659" y="66" width="13" height="21"/>
                                         <textFieldCell key="cell" lineBreakMode="clipping" alignment="center" title=")" id="H7u-yW-rK5">
                                             <font key="font" size="17" name="HelveticaNeue"/>
                                             <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -1616,13 +1616,13 @@
                                 </customSpacing>
                             </stackView>
                             <scrollView autohidesScrollers="YES" horizontalLineScroll="36" horizontalPageScroll="10" verticalLineScroll="36" verticalPageScroll="10" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3V2-eR-wsl">
-                                <rect key="frame" x="10" y="40" width="670" height="154"/>
+                                <rect key="frame" x="10" y="40" width="670" height="73"/>
                                 <clipView key="contentView" id="bwb-fG-75W">
-                                    <rect key="frame" x="1" y="1" width="668" height="152"/>
+                                    <rect key="frame" x="1" y="1" width="668" height="71"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
                                         <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" columnSelection="YES" multipleSelection="NO" autosaveColumns="NO" rowHeight="34" rowSizeStyle="automatic" headerView="Igs-Fw-1ug" viewBased="YES" id="xFZ-GK-9iw">
-                                            <rect key="frame" x="0.0" y="0.0" width="668" height="127"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="668" height="43"/>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                             <size key="intercellSpacing" width="3" height="2"/>
                                             <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
@@ -1677,7 +1677,7 @@
                                     <autoresizingMask key="autoresizingMask"/>
                                 </scroller>
                                 <tableHeaderView key="headerView" wantsLayer="YES" id="Igs-Fw-1ug">
-                                    <rect key="frame" x="0.0" y="0.0" width="668" height="25"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="668" height="28"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                 </tableHeaderView>
                             </scrollView>
@@ -1752,7 +1752,7 @@
         <!--Edit Blcok For View Controller-->
         <scene sceneID="OVX-Iv-n5w">
             <objects>
-                <viewController storyboardIdentifier="EditBlcokForViewController" id="P7r-ne-Dmt" customClass="EditBlcokForViewController" customModule="CodeGenerator" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="EditBlcokForViewController" id="P7r-ne-Dmt" customClass="EditBlcokForViewController" customModule="BlockToCode" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" id="Pd6-cJ-1tS">
                         <rect key="frame" x="0.0" y="0.0" width="582" height="342"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -1897,7 +1897,7 @@
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
                                         <tableView verticalHuggingPriority="750" ambiguous="YES" tag="1" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" columnSelection="YES" multipleSelection="NO" autosaveColumns="NO" rowHeight="33" rowSizeStyle="automatic" headerView="Kix-oT-HB5" viewBased="YES" id="bFY-gN-YLk">
-                                            <rect key="frame" x="0.0" y="0.0" width="560" height="173"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="560" height="170"/>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                             <size key="intercellSpacing" width="3" height="2"/>
                                             <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
@@ -1915,7 +1915,7 @@
                                                     </textFieldCell>
                                                     <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
                                                     <prototypeCellViews>
-                                                        <tableCellView identifier="Cell1" id="80P-fK-91h" customClass="BranchingСell" customModule="CodeGenerator" customModuleProvider="target">
+                                                        <tableCellView identifier="Cell1" id="80P-fK-91h" customClass="BranchingСell" customModule="BlockToCode" customModuleProvider="target">
                                                             <rect key="frame" x="11" y="1" width="499" height="33"/>
                                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                             <subviews>
@@ -1973,7 +1973,7 @@
                                     <autoresizingMask key="autoresizingMask"/>
                                 </scroller>
                                 <tableHeaderView key="headerView" wantsLayer="YES" id="Kix-oT-HB5">
-                                    <rect key="frame" x="0.0" y="0.0" width="560" height="25"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="560" height="28"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                 </tableHeaderView>
                             </scrollView>

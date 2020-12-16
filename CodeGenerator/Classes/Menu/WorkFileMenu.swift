@@ -19,7 +19,7 @@ class WorkFileMenu: NSMenu {
     }
     func generateCurrentTimeStamp () -> String {
         let formatter = DateFormatter()
-        formatter.dateFormat = "yyyy_MM_dd_hh_mm_ss_SSS"
+        formatter.dateFormat = "yyyy MM dd hh:mm:ss.SSS"
         return (formatter.string(from: Date()) as NSString) as String
     }
     
